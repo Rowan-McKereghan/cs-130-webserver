@@ -14,8 +14,7 @@
 #include <boost/asio.hpp>
 #include "session.h"
 #include "server.h"
-
-using boost::asio::ip::tcp;
+#include "config_parser.h"
 
 int main(int argc, char* argv[])
 {
@@ -23,14 +22,20 @@ int main(int argc, char* argv[])
   {
     if (argc != 2)
     {
-      std::cerr << "Usage: async_tcp_echo_server <port>\n";
+      std::cerr << "Usage: async_tcp_echo_server <config_file_path>\n";
       return 1;
     }
 
     boost::asio::io_service io_service;
 
-    using namespace std; // For atoi.
-    server s(io_service, atoi(argv[1]));
+    NginxConfigParser parser;
+    NginxConfig config;
+    short port;
+    bool success = parser.GetPortNumber(argv[1], &config, &port);
+    if (!success)
+      return 1;
+
+    server s(io_service, port);
 
     io_service.run();
   }
