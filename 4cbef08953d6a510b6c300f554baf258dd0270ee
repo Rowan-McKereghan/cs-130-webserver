@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30f366a3_4b1fa7e3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-17T04:26:43Z",
+      "side": 1,
+      "message": "we aren\u0027t quite done with this yet as we will need the parser as well",
+      "parentUuid": "bdec2834_6be8e882",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9cc354c_52e35085",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-04-17T01:23:51Z",
       "side": 1,
       "message": "Remove this TODO as well.",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa9908dc_153d9346",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-17T04:26:43Z",
+      "side": 1,
+      "message": "we aren\u0027t quite done with this yet as we will need the parser as well",
+      "parentUuid": "c9cc354c_52e35085",
       "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -69,6 +105,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "317fedde_6cdf0c15",
+        "filename": "src/server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-17T04:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3edc714_01038c0e",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dacf4f05_d3c3df07",
@@ -82,6 +136,24 @@
       "writtenOn": "2023-04-17T01:23:51Z",
       "side": 1,
       "message": "[Same as for the server class] Can you give a brief description of what this class represents?",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99676343_cd268882",
+        "filename": "src/session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-17T04:26:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dacf4f05_d3c3df07",
       "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
