@@ -59,7 +59,8 @@ class NginxConfigParser {
     TOKEN_STATE_TOKEN_TYPE_NORMAL = 4
   };
 
-  TokenType ParseToken(std::istream* input, std::string* value, bool& seenWhitespace);
+  TokenType ParseToken(std::istream* input, std::string* value,
+                       bool& seenWhitespace);
 };
 
 #endif

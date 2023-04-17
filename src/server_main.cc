@@ -8,20 +8,18 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
 #include <cstdlib>
 #include <iostream>
-#include <boost/bind.hpp>
-#include <boost/asio.hpp>
-#include "session.h"
-#include "server.h"
-#include "config_parser.h"
 
-int main(int argc, char* argv[])
-{
-  try
-  {
-    if (argc != 2)
-    {
+#include "config_parser.h"
+#include "server.h"
+#include "session.h"
+
+int main(int argc, char* argv[]) {
+  try {
+    if (argc != 2) {
       fprintf(stderr, "Usage: async_tcp_echo_server <config_file_path>\n");
       return 1;
     }
@@ -31,15 +29,14 @@ int main(int argc, char* argv[])
     NginxConfigParser parser;
     NginxConfig config;
     short port;
-    if (!parser.Parse(argv[1], &config) || !parser.GetPortNumber(&config, &port))
+    if (!parser.Parse(argv[1], &config) ||
+        !parser.GetPortNumber(&config, &port))
       return 1;
 
     server s(io_service, port);
 
     io_service.run();
-  }
-  catch (std::exception& e)
-  {
+  } catch (std::exception& e) {
     fprintf(stderr, "Exception: %s\n", e.what());
   }
 
