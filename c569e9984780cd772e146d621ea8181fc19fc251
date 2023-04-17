@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e036377_6adf7c75",
+        "filename": ".clang-format",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T21:18:04Z",
+      "side": 1,
+      "message": "Could we maybe remove all the comments? I think this file can be one line.",
+      "revId": "c569e9984780cd772e146d621ea8181fc19fc251",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa6c03c5_3b762e32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T21:18:04Z",
+      "side": 1,
+      "message": "Looks good; we should remove the extra text in .clang-format however.",
+      "revId": "c569e9984780cd772e146d621ea8181fc19fc251",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
