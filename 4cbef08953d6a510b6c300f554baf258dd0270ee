@@ -53,6 +53,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef9fdf7a_e21853e1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T04:31:12Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "30f366a3_4b1fa7e3",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9cc354c_52e35085",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "we aren\u0027t quite done with this yet as we will need the parser as well",
       "parentUuid": "c9cc354c_52e35085",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1164d4db_cee98139",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T04:31:12Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "aa9908dc_153d9346",
       "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
