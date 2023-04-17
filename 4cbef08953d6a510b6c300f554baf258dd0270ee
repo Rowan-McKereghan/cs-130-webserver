@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73ed32f4_ecd8177b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T01:23:51Z",
+      "side": 1,
+      "message": "Good patchset! Just a couple small comments that I think might help readability.",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdec2834_6be8e882",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T01:23:51Z",
+      "side": 1,
+      "message": "I think we should remove this TODO in this patchset.",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9cc354c_52e35085",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T01:23:51Z",
+      "side": 1,
+      "message": "Remove this TODO as well.",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3edc714_01038c0e",
+        "filename": "src/server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T01:23:51Z",
+      "side": 1,
+      "message": "Can you give a brief description of what this class represents?",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dacf4f05_d3c3df07",
+        "filename": "src/session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T01:23:51Z",
+      "side": 1,
+      "message": "[Same as for the server class] Can you give a brief description of what this class represents?",
+      "revId": "4cbef08953d6a510b6c300f554baf258dd0270ee",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
