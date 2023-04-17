@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d359c9f_682d9eb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T17:18:56Z",
+      "side": 1,
+      "message": "Pretty good overall just a lot of small things as a result of this being the first (real) commit.",
+      "revId": "fe71cdba02bab3076c9511480a7acd9b9d34ce2d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86da6e09_baaa3755",
+        "filename": "src/config_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T17:18:56Z",
+      "side": 1,
+      "message": "Can we remove this?",
+      "revId": "fe71cdba02bab3076c9511480a7acd9b9d34ce2d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "688e2db4_65a0b237",
+        "filename": "src/config_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T17:18:56Z",
+      "side": 1,
+      "message": "I see `printf` here going to `stdout` but in server_main.cc we print error messages to `cerr`. Could we try to unify these messages? I think stderr makes sense regardless of the call we use.",
+      "revId": "fe71cdba02bab3076c9511480a7acd9b9d34ce2d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89d1585b_e7394a23",
+        "filename": "src/config_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T17:18:56Z",
+      "side": 1,
+      "message": "Code Style appears to be inconsistent. As we don\u0027t already have a defined format, we can push to the next patch-set so that all formatting changes are in one patchset. Could we add a .clang-format file to the root of the repo to specify the style? Per our discussion, we can base off of Google\u0027s style. See [1](https://gist.github.com/idelsink/c25049d8c987890935f4), [2](https://clang.llvm.org/docs/ClangFormatStyleOptions.html).",
+      "revId": "fe71cdba02bab3076c9511480a7acd9b9d34ce2d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b43fca1_9f6a4ea1",
+        "filename": "src/server_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T17:18:56Z",
+      "side": 1,
+      "message": "I think we might want to separate parsing from checking for a port number so that we can fetch other values in the future without re-parsing. Maybe we call parse directly from main and just pass the config ref as we already do.",
+      "revId": "fe71cdba02bab3076c9511480a7acd9b9d34ce2d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ada4af26_6afc9cab",
+        "filename": "tests/config_parser_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T17:18:56Z",
+      "side": 1,
+      "message": "Could we get a couple short descriptive comments, for the various tests? Some of the filenames are helpful but the numbered ones would benefit from at least a broad description.",
+      "revId": "fe71cdba02bab3076c9511480a7acd9b9d34ce2d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fb6c960_704dc434",
+        "filename": "tests/config_parser_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-17T17:18:56Z",
+      "side": 1,
+      "message": "Might make sense to directly call `EXPECT_TRUE(parser.Parse(\"BasicTests/empty\", \u0026out_config);` for each test but I\u0027ll leave this up to you.",
+      "revId": "fe71cdba02bab3076c9511480a7acd9b9d34ce2d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
