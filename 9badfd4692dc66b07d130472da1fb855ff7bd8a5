@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89650ae5_40efd935",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-04-18T23:38:21Z",
+      "side": 1,
+      "message": "changed functions to create formatting independent of socket writing",
+      "revId": "9badfd4692dc66b07d130472da1fb855ff7bd8a5",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
