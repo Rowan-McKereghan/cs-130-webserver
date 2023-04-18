@@ -33,6 +33,24 @@
       "message": "Can you make the case consistent (camel_case in this case)?",
       "revId": "29e72d59bbd03e252a41a835588b8ab2083a482c",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d90b788_0d83e1d0",
+        "filename": "src/session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-04-18T22:24:29Z",
+      "side": 1,
+      "message": "changed to snake case to match other handlers.",
+      "parentUuid": "d8c517d1_4adfad5f",
+      "revId": "29e72d59bbd03e252a41a835588b8ab2083a482c",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
