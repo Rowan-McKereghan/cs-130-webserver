@@ -16,6 +16,23 @@
       "message": "Addressed all comments.",
       "revId": "29e72d59bbd03e252a41a835588b8ab2083a482c",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8c517d1_4adfad5f",
+        "filename": "src/session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-18T19:45:29Z",
+      "side": 1,
+      "message": "Can you make the case consistent (camel_case in this case)?",
+      "revId": "29e72d59bbd03e252a41a835588b8ab2083a482c",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
