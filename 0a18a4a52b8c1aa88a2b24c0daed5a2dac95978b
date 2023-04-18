@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a6a7cdf_9468f1d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-04-18T18:44:42Z",
+      "side": 1,
+      "message": "Squashed previous commits and added them to main re: your comment",
+      "revId": "0a18a4a52b8c1aa88a2b24c0daed5a2dac95978b",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
