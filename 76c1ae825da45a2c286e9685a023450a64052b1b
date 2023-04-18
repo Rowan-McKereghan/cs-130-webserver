@@ -16,6 +16,23 @@
       "message": "sorry alex you can just look at this one lol",
       "revId": "76c1ae825da45a2c286e9685a023450a64052b1b",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40faba8f_a173c220",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-18T16:51:48Z",
+      "side": 1,
+      "message": "This patchset needs to be squashed and based off of main. The patchset it is based on will not be merged as it was an incomplete patchset for testing only.",
+      "revId": "76c1ae825da45a2c286e9685a023450a64052b1b",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
