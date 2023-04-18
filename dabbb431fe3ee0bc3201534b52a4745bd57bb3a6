@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "960f7453_08b878d0",
+        "filename": "include/session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-18T19:30:03Z",
+      "side": 1,
+      "message": "Can you remove this and instead put a TODO?",
+      "revId": "dabbb431fe3ee0bc3201534b52a4745bd57bb3a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150565aa_7a02977f",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-18T19:30:03Z",
+      "side": 1,
+      "message": "Can you add a TODO here?",
+      "revId": "dabbb431fe3ee0bc3201534b52a4745bd57bb3a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eba135fc_e524f0fb",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-18T19:30:03Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "dabbb431fe3ee0bc3201534b52a4745bd57bb3a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c07407a1_cad1e468",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-18T19:30:03Z",
+      "side": 1,
+      "message": "Last what? Can you be more descriptive?",
+      "revId": "dabbb431fe3ee0bc3201534b52a4745bd57bb3a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18126dd9_29135030",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-18T19:30:03Z",
+      "side": 1,
+      "message": "This unused test print should be removed.",
+      "revId": "dabbb431fe3ee0bc3201534b52a4745bd57bb3a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
