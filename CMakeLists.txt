@@ -24,7 +24,7 @@ enable_testing()
 
 # Enable GoogleTest
 include(GoogleTest)
-add_subdirectory(/usr/src/googletest googletest)
+# add_subdirectory(/usr/src/googletest googletest)
 
 # Enable Boost
 # Use static libraries so binaries can be deployed without a full boost install
