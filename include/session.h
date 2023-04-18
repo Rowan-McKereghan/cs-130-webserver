@@ -23,13 +23,18 @@ class session {
 
   void handle_write(const boost::system::error_code& error);
 
+  void handleHTTPwrite(const boost::system::error_code& error);
+
   boost::asio::ip::tcp::socket socket_;
   enum { max_length = 1024 };
   char data_[max_length];
+  //char full_request[8192]; //general max length for webservers, for later when we need a body
   char date[100];
   time_t t;
   struct tm *myTime;
-  std::string HTTPResponse = "HTTP/1.1 200 OK\n";
+  //int content_length; //see above comment for http body=
+  bool end_of_request = false;
+  std::string HTTPResponse;
 };
 
 #endif
