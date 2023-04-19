@@ -16,6 +16,24 @@
       "message": "Can we copy from the tests folder and put somewhere else as the primary config?",
       "revId": "56a9d15b7f00fefc1a9967d8bd3a835e781a2348",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cafc0631_8376bace",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-19T05:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "038d79e3_d64164e6",
+      "revId": "56a9d15b7f00fefc1a9967d8bd3a835e781a2348",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
