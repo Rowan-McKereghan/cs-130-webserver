@@ -34,6 +34,24 @@
       "parentUuid": "038d79e3_d64164e6",
       "revId": "56a9d15b7f00fefc1a9967d8bd3a835e781a2348",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1efd1d15_43a185f7",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-19T05:05:36Z",
+      "side": 1,
+      "message": "I moved it to a new folder called configs.",
+      "parentUuid": "038d79e3_d64164e6",
+      "revId": "56a9d15b7f00fefc1a9967d8bd3a835e781a2348",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
