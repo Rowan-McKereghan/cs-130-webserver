@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c89b639c_d83435ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-04-19T03:57:14Z",
+      "side": 1,
+      "message": "Added new config (outside of tests), LGTM!",
+      "revId": "3eb5cd3c7c03fe978bcbc41dddd2a93cb2b05ba6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
