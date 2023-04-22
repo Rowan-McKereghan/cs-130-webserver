@@ -23,4 +23,11 @@ steps:
     '-t', 'gcr.io/$PROJECT_ID/ctrl-c-ctrl-v:latest',
     '.'
   ]
-images: ['gcr.io/$PROJECT_ID/ctrl-c-ctrl-v:base', 'gcr.io/$PROJECT_ID/ctrl-c-ctrl-v:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-f', 'docker/coverage.Dockerfile',
+    '-t', 'gcr.io/$PROJECT_ID/ctrl-c-ctrl-v:coverage',
+    '.'
+  ]
+images: ['gcr.io/$PROJECT_ID/ctrl-c-ctrl-v:base', 'gcr.io/$PROJECT_ID/ctrl-c-ctrl-v:latest', 'gcr.io/$PROJECT_ID/ctrl-c-ctrl-v:coverage']
