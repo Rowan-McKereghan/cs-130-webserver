@@ -1,5 +1,7 @@
 #include "config_parser.h"
 
+#include <iostream>
+
 #include "gtest/gtest.h"
 
 class NginxConfigParserTest : public ::testing::Test {
@@ -7,13 +9,31 @@ class NginxConfigParserTest : public ::testing::Test {
   NginxConfigParser parser;
   NginxConfig out_config;
   short port;
+
+  void SetUp() override {
+    // Change working directory
+    chdir("config_parser");
+  }
 };
 
-// baisc tests with no special behavior
+// basic tests with no special behavior
 TEST_F(NginxConfigParserTest, BasicTests) {
   EXPECT_TRUE(parser.Parse("BasicTests/basic1", &out_config));
   EXPECT_TRUE(parser.Parse("BasicTests/basic2", &out_config));
   EXPECT_TRUE(parser.Parse("BasicTests/empty", &out_config));
+}
+
+// test configs with comments
+TEST_F(NginxConfigParserTest, CommentTests) {
+  EXPECT_TRUE(parser.Parse("CommentTests/comment1", &out_config));
+  EXPECT_FALSE(parser.Parse("CommentTests/comment_hides_token", &out_config));
+}
+
+// test given ToString functions
+TEST_F(NginxConfigParserTest, ToStringTests) {
+  parser.Parse("BasicTests/basic1", &out_config);
+  ASSERT_EQ(out_config.ToString(0)[10], '\n');
+  ASSERT_EQ(out_config.ToString(1)[12], '\n');
 }
 
 // test that parser enforces whitespace in cases of

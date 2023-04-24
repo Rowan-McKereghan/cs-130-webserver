@@ -28,21 +28,23 @@ void session::format_http_response() {
 }
 
 void session::check_if_http_request_ends(size_t bytes_transferred) {
-  if (data_[bytes_transferred - 1] == '\n' && data_[bytes_transferred - 2] == '\n') {  
+  if (data_[bytes_transferred - 1] == '\n' &&
+      data_[bytes_transferred - 2] == '\n') {
     // check for last line of http request ("\n\n"), exit in handle_write if so
-    session::end_of_request = true;
+    end_of_request = true;
   }
   if (data_[bytes_transferred - 1] == '\n' &&
       data_[bytes_transferred - 2] == '\r' &&
       data_[bytes_transferred - 3] == '\n' &&
       data_[bytes_transferred - 4] == '\r') {
-        // check for last line of http request ("\r\n\r\n", other possible case), exit in handle_write if so
-        session::end_of_request = true;
+    // check for last line of http request ("\r\n\r\n", other possible case),
+    // exit in handle_write if so
+    end_of_request = true;
   }
 }
 
 void session::start() {
-  session::format_http_response();
+  format_http_response();
   boost::asio::async_write(socket_, boost::asio::buffer(HTTPResponse),
                            boost::bind(&session::handle_http_write, this,
                                        boost::asio::placeholders::error));
@@ -55,7 +57,7 @@ void session::start() {
 void session::handle_read(const boost::system::error_code& error,
                           size_t bytes_transferred) {
   if (!error) {
-    session::check_if_http_request_ends(bytes_transferred);
+    check_if_http_request_ends(bytes_transferred);
     boost::asio::async_write(socket_,
                              boost::asio::buffer(data_, bytes_transferred),
                              boost::bind(&session::handle_write, this,
@@ -66,7 +68,7 @@ void session::handle_read(const boost::system::error_code& error,
 }
 
 void session::handle_write(const boost::system::error_code& error) {
-  if (!error && !session::end_of_request) {
+  if (!error && !end_of_request) {
     socket_.async_read_some(
         boost::asio::buffer(data_, max_length),
         boost::bind(&session::handle_read, this,
