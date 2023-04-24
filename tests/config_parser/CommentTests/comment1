@@ -1,0 +1,8 @@
+foo;
+
+#} } } } } invalid syntax but it's ok
+
+bar {
+  xyz;
+#this is a comment
+}

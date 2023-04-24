@@ -33,8 +33,12 @@ int main(int argc, char* argv[]) {
         !parser.GetPortNumber(&config, &port))
       return 1;
 
-    server s(io_service, port);
+    auto session_constructor = [](boost::asio::io_service& io_service) {
+      return new session(io_service);
+    };
 
+    server s(io_service, port, session_constructor);
+    s.start_accept();
     io_service.run();
   } catch (std::exception& e) {
     fprintf(stderr, "Exception: %s\n", e.what());
