@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3edbb7db_1206219d",
+        "filename": "include/I_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-24T23:46:54Z",
+      "side": 1,
+      "message": "It\u0027d be helpful if you described what this file was doing in a comment.",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9337ff3_557d4099",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-24T23:46:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure why the code style changed here. Aren\u0027t we using a fixed codestyle?",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57548684_36c4b612",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-24T23:46:54Z",
+      "side": 1,
+      "message": "Changes removing the session:: namespace could have been made in the original refactor.",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9241d5a5_c91877de",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-24T23:46:54Z",
+      "side": 1,
+      "message": "There is likely a way to test this through session\u0027s start method instead of making this functions public.",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "752c5abf_39e7b17a",
+        "filename": "tests/server/server_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-24T23:46:54Z",
+      "side": 1,
+      "message": "Probably best to remove commented methods :)",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de95f94b_202aeebe",
+        "filename": "tests/session/session_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-24T23:46:54Z",
+      "side": 1,
+      "message": "We should probably keep everything except start private and find a different way to test.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
