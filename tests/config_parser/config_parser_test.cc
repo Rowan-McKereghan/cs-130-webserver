@@ -1,5 +1,7 @@
 #include "config_parser.h"
 
+#include <iostream>
+
 #include "gtest/gtest.h"
 
 class NginxConfigParserTest : public ::testing::Test {
@@ -7,6 +9,11 @@ class NginxConfigParserTest : public ::testing::Test {
   NginxConfigParser parser;
   NginxConfig out_config;
   short port;
+
+  void SetUp() override {
+    // Change working directory
+    chdir("config_parser");
+  }
 };
 
 // baisc tests with no special behavior
