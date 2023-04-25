@@ -18,6 +18,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28c0f1d1_0b79108c",
+        "filename": "tests/IntegrationDiffs/expected_nc_incorrect.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-04-25T21:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7946aa48_412ecab8",
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb98f43d_df93fe63",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-04-25T18:03:27Z",
       "side": 1,
       "message": "Nit: Mark this #TODO for clarity",
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fda27d1c_ea35d5be",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-04-25T21:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb98f43d_df93fe63",
       "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -58,6 +94,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "867722ac_2f848c07",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-04-25T21:11:25Z",
+      "side": 1,
+      "message": "changed the file naming system so that each test should have manually created file names (easier for clarity as well) but this means there is only one file per run so if you run the test again it will overwrite the diff from the previous integration test",
+      "parentUuid": "ee555e7e_4928da30",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cfd8339_f3e950ad",
@@ -71,6 +131,30 @@
       "writtenOn": "2023-04-25T18:03:27Z",
       "side": 1,
       "message": "Also duplicated",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2941f8_5ae191d6",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-04-25T21:11:25Z",
+      "side": 1,
+      "message": "changed so that it is updated in the if statement instead",
+      "parentUuid": "0cfd8339_f3e950ad",
       "range": {
         "startLine": 66,
         "startChar": 0,
