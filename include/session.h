@@ -20,10 +20,10 @@ class session : public I_session {
 
   void start() override;
 
-  void handle_read(const boost::system::error_code& error,
-                   size_t bytes_transferred);
+  virtual void handle_read(const boost::system::error_code& error,
+                           size_t bytes_transferred);
 
-  void handle_write(const boost::system::error_code& error);
+  virtual void handle_write(const boost::system::error_code& error);
 
   void handle_http_write(const boost::system::error_code& error);
 

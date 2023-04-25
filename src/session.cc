@@ -31,7 +31,7 @@ void session::check_if_http_request_ends(size_t bytes_transferred) {
   if (data_[bytes_transferred - 1] == '\n' &&
       data_[bytes_transferred - 2] == '\n') {
     // check for last line of http request ("\n\n"), exit in handle_write if so
-    session::end_of_request = true;
+    end_of_request = true;
   }
   if (data_[bytes_transferred - 1] == '\n' &&
       data_[bytes_transferred - 2] == '\r' &&
@@ -39,7 +39,7 @@ void session::check_if_http_request_ends(size_t bytes_transferred) {
       data_[bytes_transferred - 4] == '\r') {
     // check for last line of http request ("\r\n\r\n", other possible case),
     // exit in handle_write if so
-    session::end_of_request = true;
+    end_of_request = true;
   }
 }
 
@@ -68,7 +68,7 @@ void session::handle_read(const boost::system::error_code& error,
 }
 
 void session::handle_write(const boost::system::error_code& error) {
-  if (!error && !session::end_of_request) {
+  if (!error && !end_of_request) {
     socket_.async_read_some(
         boost::asio::buffer(data_, max_length),
         boost::bind(&session::handle_read, this,
