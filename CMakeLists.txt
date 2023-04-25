@@ -50,6 +50,13 @@ target_link_libraries(webserver config_parser_lib)
 add_executable(config_parser_test tests/config_parser_test.cc)
 target_link_libraries(config_parser_test config_parser_lib gtest_main)
 
+# Add integration test script
+
+add_test(NAME integration_test
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration_test.sh
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+
+
 # Update with test binary
 gtest_discover_tests(config_parser_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
