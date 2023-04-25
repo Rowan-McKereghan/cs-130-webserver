@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7946aa48_412ecab8",
+        "filename": "tests/IntegrationDiffs/expected_nc_incorrect.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-25T18:03:27Z",
+      "side": 1,
+      "message": "Nit: Mark this #TODO instead of TBD",
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb98f43d_df93fe63",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-25T18:03:27Z",
+      "side": 1,
+      "message": "Nit: Mark this #TODO for clarity",
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee555e7e_4928da30",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-25T18:03:27Z",
+      "side": 1,
+      "message": "This code is duplicated from line 14. Is there any way we can restructure the script to remove this problem?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cfd8339_f3e950ad",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-04-25T18:03:27Z",
+      "side": 1,
+      "message": "Also duplicated",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "9946366066da41f8715cb8b2273f4e91888a4d14",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
