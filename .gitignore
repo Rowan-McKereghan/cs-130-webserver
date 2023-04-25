@@ -3,3 +3,5 @@
 build
 build_*
 mirror
+integration_result*
+integration_*.txt
