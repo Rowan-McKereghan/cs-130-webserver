@@ -18,6 +18,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e1142c2_128778db",
+        "filename": "include/I_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-26T03:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3edbb7db_1206219d",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9337ff3_557d4099",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-04-24T23:46:54Z",
       "side": 1,
       "message": "I\u0027m not sure why the code style changed here. Aren\u0027t we using a fixed codestyle?",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4bd34dd_d94c3401",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-26T03:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9337ff3_557d4099",
       "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -52,6 +88,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "226c7531_fd5a18e2",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-26T03:45:55Z",
+      "side": 1,
+      "message": "this is a change associated with polymorphism so it makes sense with this patchset",
+      "parentUuid": "57548684_36c4b612",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9241d5a5_c91877de",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-04-24T23:46:54Z",
       "side": 1,
       "message": "There is likely a way to test this through session\u0027s start method instead of making this functions public.",
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5a5d49b_0a23fc68",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-26T03:45:55Z",
+      "side": 1,
+      "message": "added new test cases to address this",
+      "parentUuid": "9241d5a5_c91877de",
       "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -92,6 +164,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c62d053f_6d7c91ff",
+        "filename": "tests/server/server_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-26T03:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752c5abf_39e7b17a",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de95f94b_202aeebe",
@@ -105,6 +201,30 @@
       "writtenOn": "2023-04-24T23:46:54Z",
       "side": 1,
       "message": "We should probably keep everything except start private and find a different way to test.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "782b95b2ce37d226bb4de69db3cb435a55328863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8a6830d_1c7b1c44",
+        "filename": "tests/session/session_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-26T03:45:55Z",
+      "side": 1,
+      "message": "spent a lot of time on this and ultimately the potential implementations added to much complexity to be worth pursuing",
+      "parentUuid": "de95f94b_202aeebe",
       "range": {
         "startLine": 45,
         "startChar": 0,

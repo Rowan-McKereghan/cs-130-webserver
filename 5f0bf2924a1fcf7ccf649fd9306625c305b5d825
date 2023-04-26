@@ -16,6 +16,24 @@
       "message": "I don\u0027t think we should do this to improve test case coverage. There\u0027s likely a better way to test simply using functions that were previously public.",
       "revId": "5f0bf2924a1fcf7ccf649fd9306625c305b5d825",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1fdc942_2abfa8e8",
+        "filename": "include/session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-04-26T03:45:55Z",
+      "side": 0,
+      "message": "it\u0027s a necessary compromise for the sake of making the code testable",
+      "parentUuid": "b382801e_f2e3931a",
+      "revId": "5f0bf2924a1fcf7ccf649fd9306625c305b5d825",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
