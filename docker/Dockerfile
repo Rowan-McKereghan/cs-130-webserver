@@ -16,11 +16,10 @@ RUN ctest --output-on_failure
 # Define deploy stage
 FROM ubuntu:jammy as deploy
 
-# COPY --from=builder /usr/src/project/build/bin/example_server .
 COPY --from=builder /usr/src/project/build/bin/webserver .
 COPY --from=builder /usr/src/project/configs/simple_config .
 
-EXPOSE 800
+EXPOSE 80
 
 # Use ENTRYPOINT to specify the binary name
 ENTRYPOINT ["./webserver"]
