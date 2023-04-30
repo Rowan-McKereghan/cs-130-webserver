@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 
+#include "logger.h"
+
 session::session(boost::asio::io_service& io_service) : socket_(io_service) {}
 
 boost::asio::ip::tcp::socket& session::socket() { return socket_; }
@@ -56,13 +58,23 @@ void session::start() {
 
 void session::handle_read(const boost::system::error_code& error,
                           size_t bytes_transferred) {
-  if (!error) {
+  boost::system::error_code ec;
+  boost::asio::ip::tcp::endpoint endpoint = socket_.remote_endpoint(ec);
+  if (ec == boost::system::errc::success) {
+    LOG(trace) << "Request from IP: " << endpoint.address().to_string();
+  } else {
+    LOG(warning) << "Failed to obtain remote endpoint of socket: "
+                 << format_error(ec);
+  }
+
+  if (error == boost::system::errc::success) {
     check_if_http_request_ends(bytes_transferred);
     boost::asio::async_write(socket_,
                              boost::asio::buffer(data_, bytes_transferred),
                              boost::bind(&session::handle_write, this,
                                          boost::asio::placeholders::error));
   } else {
+    log_error(error, "An error occurred");
     delete this;
   }
 }
