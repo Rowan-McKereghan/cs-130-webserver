@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "I_session.h"
+#include "logger.h"
 
 using boost::asio::ip::tcp;
 
@@ -24,9 +25,15 @@ void server::start_accept() {
 }
 
 void server::handle_accept(I_session* new_session,
-                           const boost::system::error_code& error) {
-  if (!error) new_session->start();
+                           const boost::system::error_code& ec) {
+  if (ec == boost::system::errc::success) {
+    LOG(trace) << "Handling Request.";
+    new_session->start();
+  } else {
+    log_error(ec, "Failed to handle request");
+  }
 
+  LOG(trace) << "Finished handling request, accepting new requests.";
   start_accept();
 }
 
