@@ -17,6 +17,8 @@
 #include <string>
 #include <vector>
 
+#include "logger.h"
+
 // helper function headers
 std::string process_esc(std::string token);
 bool is_number(const std::string& s);
@@ -280,11 +282,11 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
     last_token_type = token_type;
   }
   if (error == 1) {
-    fprintf(stderr, "No whitespace between %s and %s\n",
-            TokenTypeAsString(last_token_type), TokenTypeAsString(token_type));
+    LOG(error) << "No whitespace between " << TokenTypeAsString(last_token_type)
+               << " and " << TokenTypeAsString(token_type);
   } else {
-    fprintf(stderr, "Bad transition from %s to %s\n",
-            TokenTypeAsString(last_token_type), TokenTypeAsString(token_type));
+    LOG(error) << "Bad transition from " << TokenTypeAsString(last_token_type)
+               << " to " << TokenTypeAsString(token_type);
   }
   return false;
 }
@@ -293,7 +295,7 @@ bool NginxConfigParser::Parse(const char* file_name, NginxConfig* config) {
   std::ifstream config_file;
   config_file.open(file_name);
   if (!config_file.good()) {
-    fprintf(stderr, "Failed to open config file: %s\n", file_name);
+    LOG(error) << "Failed to open config file" << file_name;
     return false;
   }
 
@@ -331,7 +333,6 @@ bool NginxConfigParser::GetPortNumber(NginxConfig* config, short* port) {
       }
     }
   }
-  fprintf(stderr, "No port number found\n");
   return false;
 }
 
