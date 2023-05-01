@@ -177,6 +177,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46e08fb1_b96e5292",
+        "filename": "src/logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T07:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05fe46e8_b7d7ac7c",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5faaaba1_3391d32d",
