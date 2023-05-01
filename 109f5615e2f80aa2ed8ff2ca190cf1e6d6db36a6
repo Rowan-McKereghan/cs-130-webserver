@@ -52,6 +52,42 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8521f9d3_dea18c4b",
+        "filename": "include/logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-01T03:22:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "419052ad_c6a9e316",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b4e1cce_a4b9f794",
+        "filename": "include/logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-01T03:22:41Z",
+      "side": 1,
+      "message": "I\u0027ll reference the enum.",
+      "parentUuid": "b229f8ce_e9dd59e5",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d28c9f8d_f236737d",
@@ -65,6 +101,30 @@
       "writtenOn": "2023-05-01T03:17:51Z",
       "side": 1,
       "message": "maybe replace these two functions with a single function with a default parameter",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b9c0fb_7cf63fd9",
+        "filename": "src/logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-01T03:22:41Z",
+      "side": 1,
+      "message": "Can\u0027t. The default parameter is the timestamped filename. I think overloading is a cleaner alternative to passing an empty string (or nullptr, etc.).",
+      "parentUuid": "d28c9f8d_f236737d",
       "range": {
         "startLine": 26,
         "startChar": 0,
@@ -92,6 +152,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b40f5d4_d023882d",
+        "filename": "src/logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-01T03:22:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5faaaba1_3391d32d",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62d081c5_45ccff1b",
@@ -105,6 +183,24 @@
       "writtenOn": "2023-05-01T03:17:51Z",
       "side": 1,
       "message": "add another test cases that tests logging different levels of severity",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c18577c9_2322278b",
+        "filename": "tests/logger/logger_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-01T03:22:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62d081c5_45ccff1b",
       "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
