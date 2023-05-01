@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0750d349_49d45371",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:17:51Z",
+      "side": 1,
+      "message": "Code looks good overall! Just a few small changes to improve documentation and test coverage.",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b229f8ce_e9dd59e5",
+        "filename": "include/logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:17:51Z",
+      "side": 1,
+      "message": "also add a list of different severities (info, error, fatal, and others that may exist)",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "419052ad_c6a9e316",
+        "filename": "include/logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:17:51Z",
+      "side": 1,
+      "message": "add a short description of the class here",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28c9f8d_f236737d",
+        "filename": "src/logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:17:51Z",
+      "side": 1,
+      "message": "maybe replace these two functions with a single function with a default parameter",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5faaaba1_3391d32d",
+        "filename": "src/logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:17:51Z",
+      "side": 1,
+      "message": "pull this out as a constant",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62d081c5_45ccff1b",
+        "filename": "tests/logger/logger_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:17:51Z",
+      "side": 1,
+      "message": "add another test cases that tests logging different levels of severity",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
