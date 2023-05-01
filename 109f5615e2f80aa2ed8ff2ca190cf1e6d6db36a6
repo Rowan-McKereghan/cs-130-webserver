@@ -88,6 +88,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "644e9ab8_c305fbad",
+        "filename": "include/logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:53:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b4e1cce_a4b9f794",
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d28c9f8d_f236737d",
@@ -125,6 +143,30 @@
       "side": 1,
       "message": "Can\u0027t. The default parameter is the timestamped filename. I think overloading is a cleaner alternative to passing an empty string (or nullptr, etc.).",
       "parentUuid": "d28c9f8d_f236737d",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 53
+      },
+      "revId": "109f5615e2f80aa2ed8ff2ca190cf1e6d6db36a6",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05fe46e8_b7d7ac7c",
+        "filename": "src/logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-01T03:53:59Z",
+      "side": 1,
+      "message": "I was suggesting to pass the filename as a default parameter defined in the header file, which does build and pass all tests on my end.",
+      "parentUuid": "17b9c0fb_7cf63fd9",
       "range": {
         "startLine": 26,
         "startChar": 0,
