@@ -29,17 +29,12 @@ class session : public I_session {
 
   virtual void format_http_response();
 
-  virtual void check_if_http_request_ends(size_t bytes_transferred);
-
   boost::asio::ip::tcp::socket socket_;
   enum { max_length = 1024 };
-  // TODO: include something like "char full_request[8192]", the general max
-  // length for http requests with bodies for webservers is 8KB
   char data_[max_length];
   char date[100];
   time_t t;
   struct tm* myTime;
-  bool end_of_request = false;
   std::string HTTPResponse;
 };
 
