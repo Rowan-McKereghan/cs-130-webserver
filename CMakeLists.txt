@@ -37,8 +37,13 @@ include_directories(include)
 # Update name and srcs
 add_library(server_lib src/server.cc)
 add_library(session_lib src/session.cc)
+add_library(request_processor_lib src/request_processor.cc)
+add_library(request_handler_echo_lib src/request_handler_echo.cc)
+add_library(request_handler_static_lib src/request_handler_static.cc)
+add_library(response_lib src/response.cc)
 add_library(config_parser_lib src/config_parser.cc)
 add_library(logger_lib src/logger.cc)
+
 
 # Update executable name, srcs, and deps
 add_executable(webserver src/server_main.cc)
@@ -48,7 +53,8 @@ target_link_libraries(webserver session_lib)
 target_link_libraries(webserver config_parser_lib)
 target_link_libraries(webserver logger_lib)
 target_link_libraries(server_lib logger_lib Boost::log Boost::log_setup)
-target_link_libraries(session_lib logger_lib Boost::log Boost::log_setup)
+target_link_libraries(session_lib logger_lib request_processor_lib response_lib Boost::log Boost::log_setup)
+target_link_libraries(request_processor_lib request_handler_echo_lib request_handler_static_lib)
 
 
 # Update test executable name, srcs, and deps
