@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9ce88df_d1d8f88a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T04:27:55Z",
+      "side": 1,
+      "message": "Looks good as a starting point. Ready to merge!",
+      "revId": "115f56c81ae5e104af5ad59b82435b8752c8d405",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
