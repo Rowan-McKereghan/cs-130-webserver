@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a060dd51_f81b37df",
+        "filename": "include/session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T05:55:10Z",
+      "side": 1,
+      "message": "I think this TODO is left over from the initial starter code, we should probably delete it if we don\u0027t plan on implementing it.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7603a5d5_cc93a74d",
+        "filename": "src/request_handler_echo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T05:55:10Z",
+      "side": 1,
+      "message": "looks like we used .length() everywhere else, should probably change this one for consistency",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd618e05_4a4f9fbc",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T05:55:10Z",
+      "side": 1,
+      "message": "I would consider changing this name to \"request_handler_file\" since static is a keyword with a different meaning.",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff43a320_e7bf09e2",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T05:55:10Z",
+      "side": 1,
+      "message": "we can probably directly trim any leading whitespace for the value here with something like str.erase(0, str.find_first_not_of(\u0027 \u0027)), I believe multiple spaces after the colon are still valid",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a0df83f_7ee9b02a",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T05:55:10Z",
+      "side": 1,
+      "message": "we are doing more than just parsing the request in this method, so its name should probably indicate that.",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c228a8_8f6833c3",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T05:55:10Z",
+      "side": 1,
+      "message": "\"\\r\\n\" for sake of consistency",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
