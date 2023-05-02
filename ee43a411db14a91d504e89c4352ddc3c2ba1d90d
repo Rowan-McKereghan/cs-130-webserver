@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f06d3316_7da6af05",
+        "filename": "include/HTTPHeader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-02T04:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8df7abd_a1ac0ac9",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce57bd16_e5f92189",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-02T04:03:30Z",
       "side": 1,
       "message": "consider changing the class name to reflect the fact that it is an interface",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "630ad887_9c2a8cb8",
+        "filename": "include/request_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-02T04:25:06Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "ce57bd16_e5f92189",
       "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4d5c4aa_dd0eecf0",
+        "filename": "include/request_processor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-02T04:25:06Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary. It is fairly self explanatory since we are using this method to Parse the request string.",
+      "parentUuid": "896045d7_a0ad664b",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4babc7ac_a971d94f",
         "filename": "src/request_processor.cc",
         "patchSetId": 1
@@ -82,6 +136,24 @@
       "writtenOn": "2023-05-02T04:03:30Z",
       "side": 1,
       "message": "don\u0027t forget to add the 404 case",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "939b6cd4_c6542032",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-02T04:25:06Z",
+      "side": 1,
+      "message": "Added a todo!",
+      "parentUuid": "4babc7ac_a971d94f",
       "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
