@@ -1,5 +1,4 @@
 #include "session.h"
-#include "request_processor.h"
 
 #include <time.h>
 
@@ -8,6 +7,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+
+#include "request_processor.h"
 #include "response.h"
 using namespace std;
 
@@ -56,7 +57,6 @@ void session::start() {
                   boost::asio::placeholders::bytes_transferred));
 }
 
-
 void session::handle_read(const boost::system::error_code& error,
                           size_t bytes_transferred) {
   boost::system::error_code ec;
@@ -69,23 +69,19 @@ void session::handle_read(const boost::system::error_code& error,
   }
 
   if (error == boost::system::errc::success) {
-	
-	  RequestProcessor req_processor;
+    RequestProcessor req_processor;
 
-	  Response res;
-	  req_processor.ParseRequest(data_, res);
-	  
-	  string temp_data = "This is a sample request\n";
+    Response res;
+    req_processor.ParseRequest(data_, res);
 
-	  string response = res.generate_http_response();
-	  response += temp_data;
-	  const char* response_c_string = response.c_str();
+    auto response = res.generate_http_response();
+    response += res.data;
+    const char* response_c_string = response.c_str();
 
-
-     boost::asio::async_write(socket_, 
-                              boost::asio::buffer(response_c_string, response.length()), 
-                              boost::bind(&session::handle_write, this, 
-                                          boost::asio::placeholders::error));
+    boost::asio::async_write(
+        socket_, boost::asio::buffer(response_c_string, response.length()),
+        boost::bind(&session::handle_write, this,
+                    boost::asio::placeholders::error));
   } else {
     log_error(error, "An error occurred");
     delete this;
@@ -93,9 +89,9 @@ void session::handle_read(const boost::system::error_code& error,
 }
 
 void session::handle_write(const boost::system::error_code& error) {
-	if (!error) {
-		delete this;
-	}
+  if (!error) {
+    delete this;
+  }
 }
 
 void session::handle_http_write(const boost::system::error_code& error) {
