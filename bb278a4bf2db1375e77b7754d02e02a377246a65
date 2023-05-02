@@ -24,6 +24,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa4185ec_ac75e665",
+        "filename": "include/session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-02T06:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a060dd51_f81b37df",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7603a5d5_cc93a74d",
@@ -37,6 +61,24 @@
       "writtenOn": "2023-05-02T05:55:10Z",
       "side": 1,
       "message": "looks like we used .length() everywhere else, should probably change this one for consistency",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e4c4cc4_9304ba51",
+        "filename": "src/request_handler_echo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-02T06:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7603a5d5_cc93a74d",
       "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16811354_1993918d",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-02T06:18:55Z",
+      "side": 1,
+      "message": "Not added or covered by this patchset. Should be addressed in a followup patchset implementing this functionality.",
+      "parentUuid": "dd618e05_4a4f9fbc",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff43a320_e7bf09e2",
         "filename": "src/request_processor.cc",
         "patchSetId": 1
@@ -71,6 +131,24 @@
       "writtenOn": "2023-05-02T05:55:10Z",
       "side": 1,
       "message": "we can probably directly trim any leading whitespace for the value here with something like str.erase(0, str.find_first_not_of(\u0027 \u0027)), I believe multiple spaces after the colon are still valid",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ff9ddd7_e49e9397",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-02T06:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff43a320_e7bf09e2",
       "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -92,6 +170,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba7e1164_08ade919",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-02T06:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0df83f_7ee9b02a",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4c228a8_8f6833c3",
@@ -105,6 +201,24 @@
       "writtenOn": "2023-05-02T05:55:10Z",
       "side": 1,
       "message": "\"\\r\\n\" for sake of consistency",
+      "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fce65593_b5948a9d",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-02T06:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4c228a8_8f6833c3",
       "revId": "bb278a4bf2db1375e77b7754d02e02a377246a65",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
