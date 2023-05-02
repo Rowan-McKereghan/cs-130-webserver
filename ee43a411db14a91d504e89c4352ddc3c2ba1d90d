@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21f2a246_e5b494a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T04:03:30Z",
+      "side": 1,
+      "message": "Great work! Skeleton makes sense and is a strong starting point for a refactor. Just a few naming and documentation changes for now to improve readability.",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8df7abd_a1ac0ac9",
+        "filename": "include/HTTPHeader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T04:03:30Z",
+      "side": 1,
+      "message": "change class name to match file name",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce57bd16_e5f92189",
+        "filename": "include/request_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T04:03:30Z",
+      "side": 1,
+      "message": "consider changing the class name to reflect the fact that it is an interface",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "896045d7_a0ad664b",
+        "filename": "include/request_processor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T04:03:30Z",
+      "side": 1,
+      "message": "add a comment to explain the parameters; unclear why req is a string and res is an object",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4babc7ac_a971d94f",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-02T04:03:30Z",
+      "side": 1,
+      "message": "don\u0027t forget to add the 404 case",
+      "revId": "ee43a411db14a91d504e89c4352ddc3c2ba1d90d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
