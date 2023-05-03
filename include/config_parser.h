@@ -36,6 +36,7 @@ class NginxConfigParser {
   bool Parse(std::istream* config_file, NginxConfig* config);
   bool Parse(const char* file_name, NginxConfig* config);
   bool GetPortNumber(NginxConfig* config, short* port);
+  std::string GetRootPath(NginxConfig* config);
 
  private:
   enum TokenType {

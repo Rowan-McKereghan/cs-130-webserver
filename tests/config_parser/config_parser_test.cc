@@ -92,3 +92,14 @@ TEST_F(NginxConfigParserTest, GetPortNumber) {
   EXPECT_FALSE(parser.Parse("GetPortNumber/port_negative", &out_config) &&
                parser.GetPortNumber(&out_config, &port));
 }
+
+TEST_F(NginxConfigParserTest, GetRootPath) { //test extraction of root field of server subheader in parser file
+  parser.Parse("GetPortNumber/success_pn2", &out_config);
+  ASSERT_EQ(parser.GetRootPath(&out_config), "");
+  out_config = NginxConfig();
+  parser.Parse("GetPortNumber/success_pn1", &out_config);
+  ASSERT_EQ(parser.GetRootPath(&out_config), "/home/ubuntu/sites/foo/");
+  out_config = NginxConfig();
+  parser.Parse("GetPortNumber/success_default_root", &out_config);
+  ASSERT_EQ(parser.GetRootPath(&out_config), "/usr/src/projects/");
+}

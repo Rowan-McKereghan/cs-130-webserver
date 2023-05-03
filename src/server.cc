@@ -2,6 +2,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 #include <cstdlib>
 #include <iostream>
 
@@ -11,14 +12,15 @@
 using boost::asio::ip::tcp;
 
 server::server(
-    boost::asio::io_service& io_service, short port,
-    std::function<I_session*(boost::asio::io_service&)> session_constructor)
+    boost::asio::io_service& io_service, short port, boost::filesystem::path root,
+    std::function<I_session*(boost::asio::io_service&, boost::filesystem::path)> session_constructor)
     : io_service_(io_service),
-      acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
+      acceptor_(io_service, tcp::endpoint(tcp::v4(), port)), 
+      root_(root),
       session_constructor_(session_constructor) {}
 
 void server::start_accept() {
-  cur_session = session_constructor_(io_service_);
+  cur_session = session_constructor_(io_service_, root_);
   acceptor_.async_accept(cur_session->socket(),
                          boost::bind(&server::handle_accept, this, cur_session,
                                      boost::asio::placeholders::error));

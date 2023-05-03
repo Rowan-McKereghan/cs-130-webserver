@@ -44,7 +44,10 @@ target_link_libraries(webserver config_parser_lib)
 target_link_libraries(webserver logger_lib)
 target_link_libraries(server_lib logger_lib Boost::log Boost::log_setup)
 target_link_libraries(session_lib logger_lib request_processor_lib response_lib Boost::log Boost::log_setup)
-target_link_libraries(request_processor_lib request_handler_echo_lib request_handler_static_lib)
+target_link_libraries(request_processor_lib request_handler_echo_lib request_handler_static_lib Boost::log Boost::log_setup)
+target_link_libraries(request_handler_static_lib logger_lib response_lib Boost::log Boost::log_setup)
+target_link_libraries(response_lib logger_lib request_handler_static_lib Boost::log Boost::log_setup)
+
 # Update test executable name, srcs, and deps
 add_executable(config_parser_test tests/config_parser/config_parser_test.cc)
 add_executable(webserver_test tests/server/server_test.cc)
@@ -52,6 +55,8 @@ add_executable(session_test tests/session/session_test.cc)
 add_executable(logger_test tests/logger/logger_test.cc)
 add_executable(request_test tests/request/request_processor_test.cc)
 add_executable(request_handler_echo_test tests/request/request_handler_echo_test.cc)
+add_executable(request_handler_static_test tests/request/request_handler_static_test.cc)
+
 
 target_link_libraries(config_parser_test config_parser_lib gtest_main Boost::log)
 target_link_libraries(webserver_test server_lib gtest_main gmock_main Boost::log)
@@ -59,6 +64,7 @@ target_link_libraries(session_test session_lib gtest_main gmock_main Boost::log)
 target_link_libraries(logger_test logger_lib gtest_main gmock_main Boost::log)
 target_link_libraries(request_test request_processor_lib gtest_main gmock_main Boost::log)
 target_link_libraries(request_handler_echo_test request_handler_echo_lib gtest_main)
+target_link_libraries(request_handler_static_test request_handler_static_lib gtest_main)
 # Add integration test script
 add_test(NAME integration_test
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration_test.sh
@@ -70,6 +76,7 @@ gtest_discover_tests(session_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
 gtest_discover_tests(logger_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(request_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(request_handler_echo_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+gtest_discover_tests(request_handler_static_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 # Update with target/test targets
 include(cmake/CodeCoverageReportConfig.cmake)
-generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_test request_handler_echo_test)
+generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_test request_handler_echo_test request_handler_static_test)

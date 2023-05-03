@@ -75,34 +75,31 @@ Request Request::ParseHTTPRequest(const std::string &req) {
   req_obj.uri_base_path = Request::extract_uri_base_path(req_obj.uri);
   return req_obj;
 }
-void RequestProcessor::RouteRequest(string req, Response &res) {
+void RequestProcessor::RouteRequest(string req, boost::filesystem::path root, Response &res) {
   Request req_obj = Request::ParseHTTPRequest(req);
   LOG(trace) << "URI is: " << req_obj.uri
              << " with basepath: " << req_obj.uri_base_path;
-  I_RequestHandler *handler;
   if (req_obj.uri_base_path == "echo") {
     RequestHandlerEcho handler;
     handler.HandleRequest(req_obj, res);
   } else if (req_obj.uri_base_path == "static") {
-    // TODO - get base_dir from config parser
-    string base_dir = "/src";
-    RequestHandlerStatic handler(base_dir);
+    RequestHandlerStatic handler(root);
     handler.HandleRequest(req_obj, res);
   } else {
     LOG(warning) << "Invalid URI Acessed: " << req_obj.uri;
 	// TODO - make constants files for all request types when we have more default responses
 	// in the future
-    res.data = "404 Not Found\r\n\r\n";
-	HTTPHeader contentType;
-	contentType.name = "Content-Type";
-	contentType.value = "text/HTML";
-	HTTPHeader contentLength;
-	contentLength.name = "Content-Length";
-	contentLength.value = res.data.length();
-	std::vector<HTTPHeader> headers;
-	headers.push_back(contentType);
-	headers.push_back(contentLength);
-	res.headers = headers;
-	res.status_code = NOT_FOUND;
+    res.data = "400 Bad Request\r\n\r\n";
+    HTTPHeader contentType;
+    contentType.name = "Content-Type";
+    contentType.value = "text/HTML";
+    HTTPHeader contentLength;
+    contentLength.name = "Content-Length";
+    contentLength.value = res.data.length();
+    std::vector<HTTPHeader> headers;
+    headers.push_back(contentType);
+    headers.push_back(contentLength);
+    res.headers = headers;
+    res.status_code = BAD_REQUEST;
   }
 }

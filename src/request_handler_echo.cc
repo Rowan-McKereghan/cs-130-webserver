@@ -1,5 +1,6 @@
 #include "request_handler_echo.h"
 void RequestHandlerEcho::HandleRequest(const Request &req, Response &res) {
+  res.is_serving_file = false;
   // Set the response status code
   res.status_code = 200;
   // Set the response content type
