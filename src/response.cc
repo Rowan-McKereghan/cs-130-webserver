@@ -1,13 +1,21 @@
 #include "response.h"
+
 #include <ctime>
-#include <sstream>
 #include <fstream>
+#include <sstream>
 
 #include "logger.h"
+
+
 std::string Response::generate_http_response() {
   std::ostringstream res;
+
+  auto it = status_code_map.find(status_code);
+  auto status_description = it != status_code_map.end() ? it->second : "Unknown Status Code";
+
   // Generate the status line
-  res << "HTTP/1.1 " << status_code << " OK\r\n";
+  res << "HTTP/1.1 " << status_code << " "
+      << status_description << "\r\n";
   // Generate the date header
   time_t t;
   struct tm* myTime;
@@ -25,7 +33,7 @@ std::string Response::generate_http_response() {
   // Add an empty line to separate headers from the body
   res << "\r\n";
   // Add the response body
-  if(!is_serving_file) {
+  if (!is_serving_file) {
     res << data;
   }
   return res.str();

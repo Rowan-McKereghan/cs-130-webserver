@@ -1,3 +1,10 @@
 server {
     listen 80;
+    static_file_paths {
+        /static/subdir ../tests/static_test_files;
+    }
+    echo_paths {
+        /echo;
+        /echo1/echo2;
+    }
 }

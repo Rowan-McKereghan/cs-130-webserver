@@ -13,10 +13,10 @@ fname=IntegrationDiffs/integration_result_curl_basic.txt
 
 # ----------------
 # BASIC CURL TEST
-
+# Should return nothing
 curl localhost:80 -s -S -o "$fname"
 
-diff -b "IntegrationDiffs/expected_curl_basic.txt" "$fname"
+diff -b  -I '^Date*' "IntegrationDiffs/expected_curl_basic.txt" "$fname"
 
 diffExit=$?
 

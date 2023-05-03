@@ -11,12 +11,16 @@
 #include <string>
 
 #include "I_session.h"
+#include "config_parser.h"
+#include "serving_config.h"
 
 // session for handling async reads and writes through a socket
 
 class session : public I_session {
  public:
-  session(boost::asio::io_service& io_service, boost::filesystem::path root);
+  session(boost::asio::io_service& io_service, ServingConfig serving_config)
+      : socket_(io_service), serving_config_(serving_config) {}
+
   boost::asio::ip::tcp::socket& socket() override;
 
   void start() override;
@@ -26,8 +30,6 @@ class session : public I_session {
 
   void handle_write(const boost::system::error_code& error);
 
-  void handle_http_write(const boost::system::error_code& error);
-
   boost::asio::ip::tcp::socket socket_;
   enum { max_length = 1024 };
   char data_[max_length];
@@ -35,7 +37,7 @@ class session : public I_session {
   time_t t;
   struct tm* myTime;
   std::string HTTPResponse;
-  boost::filesystem::path root_;
+  ServingConfig serving_config_;
 };
 
 #endif
