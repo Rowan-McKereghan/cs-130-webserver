@@ -21,11 +21,19 @@
 
 int main(int argc, char* argv[]) {
   try {
+    // Log SIGINT
+    signal(SIGINT, [](int signum) {
+      LOG(info) << "Received SIGINT: " << signum << ", Exiting";
+      std::exit(signum);
+    });
+
+    // Configure Boost logging
     init_logging();
+
     LOG(info) << "Starting server...";
 
     if (argc != 2) {
-      LOG(error) << "Usage: async_tcp_echo_server <config_file_path>";
+      LOG(error) << "Usage: webserver <config_file_path>";
       return 1;
     }
 
@@ -45,15 +53,17 @@ int main(int argc, char* argv[]) {
     LOG(info) << "Config file parsed successfully. Port: " << port;
 
     boost::filesystem::path root{parser.GetRootPath(&config)};
-    if(boost::filesystem::is_empty(root) || !boost::filesystem::exists(root)) {
+    if (boost::filesystem::is_empty(root) || !boost::filesystem::exists(root)) {
       LOG(error) << "Invalid root path in nginx configuration file";
-      root = {"Invalid Path"}; // this should fail later so we can serve 404 if static files are requested
-    }
-    else {
-      LOG(info) << "Existing root path " << root.string() << " parsed successfully";
+      root = {"Invalid Path"};  // this should fail later so we can serve 404 if
+                                // static files are requested
+    } else {
+      LOG(info) << "Existing root path " << root.string()
+                << " parsed successfully";
     }
 
-    auto session_constructor = [](boost::asio::io_service& io_service, boost::filesystem::path root) {
+    auto session_constructor = [](boost::asio::io_service& io_service,
+                                  boost::filesystem::path root) {
       return new session(io_service, root);
     };
 
@@ -61,7 +71,7 @@ int main(int argc, char* argv[]) {
     s.start_accept();
     io_service.run();
   } catch (std::exception& e) {
-    LOG(fatal) << "Exception: " << e.what();
+    LOG(fatal) << "Encountered exception: " << e.what() << ", Exiting";
   }
 
   return 0;

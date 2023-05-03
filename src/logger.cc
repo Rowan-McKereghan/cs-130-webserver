@@ -42,7 +42,7 @@ void init_logging(const std::string& log_file_path) {
 
   // Set minimum severity level to trace (e.g., emit all logs)
   logging::core::get()->set_filter(logging::trivial::severity >=
-                                   logging::trivial::trace);
+                                   logging::trivial::info);
 }
 
 std::string format_error(const boost::system::error_code& error) {
