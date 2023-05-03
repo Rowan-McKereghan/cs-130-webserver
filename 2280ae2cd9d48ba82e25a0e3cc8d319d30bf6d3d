@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1705d12c_02364237",
+        "filename": "src/logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T20:42:22Z",
+      "side": 1,
+      "message": "change comment to match code change",
+      "revId": "2280ae2cd9d48ba82e25a0e3cc8d319d30bf6d3d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
