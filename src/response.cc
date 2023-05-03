@@ -1,7 +1,8 @@
 #include "response.h"
+
 #include <ctime>
-#include <sstream>
 #include <fstream>
+#include <sstream>
 
 #include "logger.h"
 std::string Response::generate_http_response() {
@@ -25,7 +26,7 @@ std::string Response::generate_http_response() {
   // Add an empty line to separate headers from the body
   res << "\r\n";
   // Add the response body
-  if(!is_serving_file) {
+  if (!is_serving_file) {
     res << data;
   }
   return res.str();

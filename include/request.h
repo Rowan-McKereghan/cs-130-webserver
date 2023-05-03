@@ -9,8 +9,7 @@ class Request {
  public:
   std::string method;
   std::string uri;
-  std::string uri_base_path;
-  boost::filesystem::path root_;
+  boost::filesystem::path file_path;
   int http_version;
   std::vector<HTTPHeader> headers;
   std::string body;

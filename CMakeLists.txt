@@ -37,14 +37,16 @@ add_library(request_handler_static_lib src/request_handler_static.cc)
 add_library(response_lib src/response.cc)
 add_library(config_parser_lib src/config_parser.cc)
 add_library(logger_lib src/logger.cc)
+add_library(serving_config_lib src/serving_config.cc)
 
 add_executable(webserver src/server_main.cc)
-target_link_libraries(webserver server_lib session_lib config_parser_lib logger_lib ${Boost_LIBRARIES})
+target_link_libraries(webserver server_lib session_lib config_parser_lib logger_lib serving_config_lib ${Boost_LIBRARIES})
 target_link_libraries(server_lib logger_lib ${Boost_LIBRARIES})
 target_link_libraries(session_lib logger_lib request_processor_lib response_lib ${Boost_LIBRARIES})
 target_link_libraries(request_processor_lib request_handler_echo_lib request_handler_static_lib ${Boost_LIBRARIES})
 target_link_libraries(request_handler_static_lib logger_lib response_lib ${Boost_LIBRARIES})
 target_link_libraries(response_lib logger_lib request_handler_static_lib ${Boost_LIBRARIES})
+target_link_libraries(serving_config_lib logger_lib config_parser_lib ${Boost_LIBRARIES})
 
 add_executable(config_parser_test tests/config_parser/config_parser_test.cc)
 add_executable(webserver_test tests/server/server_test.cc)
@@ -53,6 +55,7 @@ add_executable(logger_test tests/logger/logger_test.cc)
 add_executable(request_test tests/request/request_processor_test.cc)
 add_executable(request_handler_echo_test tests/request/request_handler_echo_test.cc)
 add_executable(request_handler_static_test tests/request/request_handler_static_test.cc)
+add_executable(serving_config_test tests/serving_config/serving_config_test.cc)
 
 target_link_libraries(webserver_test server_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(session_test session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
@@ -61,6 +64,7 @@ target_link_libraries(request_handler_static_test request_handler_static_lib log
 target_link_libraries(config_parser_test config_parser_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(logger_test logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(request_handler_echo_test request_handler_echo_lib gtest_main ${Boost_LIBRARIES})
+target_link_libraries(serving_config_test serving_config_lib gtest_main ${Boost_LIBRARIES})
 
 add_test(NAME integration_test
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration_test.sh
@@ -73,6 +77,7 @@ gtest_discover_tests(logger_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/t
 gtest_discover_tests(request_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(request_handler_echo_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(request_handler_static_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+gtest_discover_tests(serving_config_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 include(cmake/CodeCoverageReportConfig.cmake)
-generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_test request_handler_echo_test request_handler_static_test)
+generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_test request_handler_echo_test request_handler_static_test serving_config_test)

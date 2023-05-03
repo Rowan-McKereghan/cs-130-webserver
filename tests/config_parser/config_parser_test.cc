@@ -1,5 +1,7 @@
 #include "config_parser.h"
 
+#include "serving_config.h"
+
 #include <iostream>
 
 #include "gtest/gtest.h"
@@ -8,6 +10,8 @@ class NginxConfigParserTest : public ::testing::Test {
  protected:
   NginxConfigParser parser;
   NginxConfig out_config;
+  ServingConfig serving_config;
+
   short port;
 
   void SetUp() override {
@@ -65,41 +69,4 @@ TEST_F(NginxConfigParserTest, SuccessiveClosingBrackets) {
       parser.Parse("SuccessiveClosingBrackets/success_brackets2", &out_config));
   EXPECT_TRUE(
       parser.Parse("SuccessiveClosingBrackets/success_brackets3", &out_config));
-}
-
-// test correct extraction of port number
-TEST_F(NginxConfigParserTest, GetPortNumber) {
-  // now need to clear config every time since successful parsing keeps parsed
-  // config in pointer, even if getting port number fails
-  EXPECT_TRUE(parser.Parse("GetPortNumber/success_pn1", &out_config) &&
-              parser.GetPortNumber(&out_config, &port));
-  out_config = NginxConfig();
-  EXPECT_TRUE(parser.Parse("GetPortNumber/success_pn2", &out_config) &&
-              parser.GetPortNumber(&out_config, &port));
-  out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("GetPortNumber/no_port_number", &out_config) &&
-               parser.GetPortNumber(&out_config, &port));
-  out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("GetPortNumber/no_server_label", &out_config) &&
-               parser.GetPortNumber(&out_config, &port));
-  out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("GetPortNumber/nested_too_deep", &out_config) &&
-               parser.GetPortNumber(&out_config, &port));
-  out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("GetPortNumber/port_not_number", &out_config) &&
-               parser.GetPortNumber(&out_config, &port));
-  out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("GetPortNumber/port_negative", &out_config) &&
-               parser.GetPortNumber(&out_config, &port));
-}
-
-TEST_F(NginxConfigParserTest, GetRootPath) { //test extraction of root field of server subheader in parser file
-  parser.Parse("GetPortNumber/success_pn2", &out_config);
-  ASSERT_EQ(parser.GetRootPath(&out_config), "");
-  out_config = NginxConfig();
-  parser.Parse("GetPortNumber/success_pn1", &out_config);
-  ASSERT_EQ(parser.GetRootPath(&out_config), "/home/ubuntu/sites/foo/");
-  out_config = NginxConfig();
-  parser.Parse("GetPortNumber/success_default_root", &out_config);
-  ASSERT_EQ(parser.GetRootPath(&out_config), "/usr/src/projects/");
 }
