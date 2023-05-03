@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "746d3aec_82388a8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T06:40:58Z",
+      "side": 1,
+      "message": "Looks good combined with the next commit",
+      "revId": "d34f27b7c6c51813eefc645d1ccfaa18f4d6748a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ce24bb0_2d20d482",
