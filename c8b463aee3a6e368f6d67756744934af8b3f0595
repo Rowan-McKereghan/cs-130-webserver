@@ -18,6 +18,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9367fb93_8b4d855a",
+        "filename": "src/config_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-03T20:05:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4acf3996_635d8404",
+      "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb9bdd2a_387c0f27",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-05-03T18:37:01Z",
       "side": 1,
       "message": "maybe change this to \u003d\u003d 3 so we force the specific line to have structure of [\"root\", \u003cpath\u003e, \";\"]",
+      "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d19e4f8_92c478c8",
+        "filename": "src/config_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-03T20:05:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb9bdd2a_387c0f27",
       "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -52,6 +88,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "693846a2_833c0a6c",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-03T20:05:34Z",
+      "side": 1,
+      "message": "Wrote TODOs for all of these instances.",
+      "parentUuid": "4cf3d03d_03e73f7c",
+      "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60134e15_b6168800",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-05-03T18:37:01Z",
       "side": 1,
       "message": "add a comment about the significance of the magic number",
+      "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c18d175e_7575a0f2",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-03T20:05:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60134e15_b6168800",
       "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -86,6 +158,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b11a96b5_b48134dd",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-03T20:05:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38f8323e_6c2f2d6b",
+      "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b55f9dbc_f437a2ae",
@@ -103,6 +193,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23fdd8f9_32d962d5",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-03T20:05:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b55f9dbc_f437a2ae",
+      "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81890988_82d21837",
@@ -116,6 +224,24 @@
       "writtenOn": "2023-05-03T18:37:01Z",
       "side": 1,
       "message": "why was the error handling deleted after the if block?",
+      "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "771d5fbf_1f0820ce",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-03T20:05:34Z",
+      "side": 1,
+      "message": "Sorry, I mistook this for an extra write() error check. Added it back.",
+      "parentUuid": "81890988_82d21837",
       "revId": "c8b463aee3a6e368f6d67756744934af8b3f0595",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
