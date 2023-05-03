@@ -1,11 +1,7 @@
 #include "request_processor.h"
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 #include "request_handler_echo.h"
 
-class MockRequestHandlerEcho : public RequestHandlerEcho {
-	MOCK_METHOD(void, HandleRequest, (const Request &req, Response &res), (override));
-};
 
 // Test the Request::ParseHTTPRequest() method
 TEST(RequestParserTest, ValidEchoRequest) {
@@ -119,5 +115,4 @@ TEST(RequestProcessorTest, RouteRequest) {
   EXPECT_EQ(res.status_code, OK);
   EXPECT_EQ(res.headers.size(), 2);
   EXPECT_EQ(res.data, req);
-  Response res_empty;
 }

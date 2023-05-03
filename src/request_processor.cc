@@ -79,7 +79,7 @@ void RequestProcessor::RouteRequest(string req, Response &res) {
   Request req_obj = Request::ParseHTTPRequest(req);
   LOG(trace) << "URI is: " << req_obj.uri
              << " with basepath: " << req_obj.uri_base_path;
-  I_RequestHandler* handler;
+  I_RequestHandler *handler;
   if (req_obj.uri_base_path == "echo") {
     RequestHandlerEcho handler;
     handler.HandleRequest(req_obj, res);
@@ -90,5 +90,19 @@ void RequestProcessor::RouteRequest(string req, Response &res) {
     handler.HandleRequest(req_obj, res);
   } else {
     LOG(warning) << "Invalid URI Acessed: " << req_obj.uri;
+	// TODO - make constants files for all request types when we have more default responses
+	// in the future
+    res.data = "404 Not Found\r\n\r\n";
+	HTTPHeader contentType;
+	contentType.name = "Content-Type";
+	contentType.value = "text/HTML";
+	HTTPHeader contentLength;
+	contentLength.name = "Content-Length";
+	contentLength.value = res.data.length();
+	std::vector<HTTPHeader> headers;
+	headers.push_back(contentType);
+	headers.push_back(contentLength);
+	res.headers = headers;
+	res.status_code = NOT_FOUND;
   }
 }
