@@ -40,9 +40,9 @@ void init_logging(const std::string& log_file_path) {
               0, 0, 0),  // Rotate at midnight
       keywords::auto_flush = true, keywords::format = log_format);
 
-  // Set minimum severity level to trace (e.g., emit all logs)
+  // Set minimum severity level to info (e.g., emit logs at info level or above)
   logging::core::get()->set_filter(logging::trivial::severity >=
-                                   logging::trivial::trace);
+                                   logging::trivial::info);
 }
 
 std::string format_error(const boost::system::error_code& error) {
