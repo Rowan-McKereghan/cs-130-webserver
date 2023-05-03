@@ -1,6 +1,10 @@
 #include "request_processor.h"
 #include "gtest/gtest.h"
+
+#include <boost/asio.hpp>
+#include <boost/filesystem.hpp>
 #include "request_handler_echo.h"
+
 
 
 // Test the Request::ParseHTTPRequest() method
@@ -73,6 +77,7 @@ TEST(RequestParserTest,
 }
 
 TEST(RequestParserTest, InvalidRequestType) {
+  boost::asio::ip::tcp::socket* socket;
   std::string req =
       "GET /invalid_uri HTTP/1.1\r\n"
       "Host:    localhost\r\n"
@@ -88,15 +93,17 @@ TEST(RequestParserTest, InvalidRequestType) {
       "Connection: keep-alive\r\n"
       "\r\n";
   Request req_obj = Request::ParseHTTPRequest(req);
-  Response res;
+  Response res(socket);
   RequestProcessor req_processor;
-  req_processor.RouteRequest(req, res);
+  boost::filesystem::path root1{"/usr/src/projects/"};
+  req_processor.RouteRequest(req, root1, res);
   EXPECT_EQ(res.status_code, NOT_FOUND);
   EXPECT_EQ(res.headers.size(), 2);
   EXPECT_EQ(res.data, "404 Not Found\r\n\r\n");
 }
 
 TEST(RequestProcessorTest, RouteRequest) {
+  boost::asio::ip::tcp::socket* socket;
   std::string req =
       "GET /echo HTTP/1.1\r\n"
       "Host: localhost\r\n"
@@ -109,9 +116,10 @@ TEST(RequestProcessorTest, RouteRequest) {
       "Accept-Encoding: gzip, deflate\r\n"
       "Connection: keep-alive\r\n"
       "\r\n";
-  Response res;
+  Response res(socket);
   RequestProcessor req_processor;
-  req_processor.RouteRequest(req, res);
+  boost::filesystem::path root1{"/usr/src/projects/"};
+  req_processor.RouteRequest(req, root1, res);
   EXPECT_EQ(res.status_code, OK);
   EXPECT_EQ(res.headers.size(), 2);
   EXPECT_EQ(res.data, req);

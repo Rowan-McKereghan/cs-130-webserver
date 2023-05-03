@@ -1,19 +1,23 @@
 
+
 #include "session.h"
 
 #include <time.h>
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <string>
 
 #include "request_processor.h"
 #include "response.h"
+
 using namespace std;
 #include "logger.h"
-session::session(boost::asio::io_service& io_service) : socket_(io_service) {}
+session::session(boost::asio::io_service& io_service, boost::filesystem::path root) : socket_(io_service), root_(root) {}
 boost::asio::ip::tcp::socket& session::socket() { return socket_; }
 
 void session::start() {
@@ -34,18 +38,11 @@ void session::handle_read(const boost::system::error_code& error,
   }
   if (error == boost::system::errc::success) {
     RequestProcessor req_processor;
-    Response res;
-    req_processor.RouteRequest(data_, res);
-    auto response = res.generate_http_response();
-    response += res.data;
-    const char* response_c_string = response.c_str();
-    boost::asio::async_write(
-        socket_, boost::asio::buffer(response_c_string, response.length()),
-        boost::bind(&session::handle_write, this,
-                    boost::asio::placeholders::error));
-  } else {
-    log_error(error, "An error occurred");
-    delete this;
+    Response res(&socket_); // Pass the socket to the response object
+    req_processor.RouteRequest(data_, root_, res);
+    const char* response_c_string = res.generate_http_response().c_str();
+    boost::asio::async_write(socket_, boost::asio::buffer(response_c_string, res.generate_http_response().length()),
+                              boost::bind(&session::handle_write, this, boost::asio::placeholders::error));
   }
 }
 void session::handle_write(const boost::system::error_code& error) {

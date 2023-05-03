@@ -1,6 +1,9 @@
 #include "response.h"
 #include <ctime>
 #include <sstream>
+#include <fstream>
+
+#include "logger.h"
 std::string Response::generate_http_response() {
   std::ostringstream res;
   // Generate the status line
@@ -22,6 +25,17 @@ std::string Response::generate_http_response() {
   // Add an empty line to separate headers from the body
   res << "\r\n";
   // Add the response body
-  res << data;
+  if(!is_serving_file) {
+    res << data;
+  }
   return res.str();
+}
+
+void Response::write_to_socket(const std::string& message) {
+  boost::system::error_code ec;
+  boost::asio::write(*this->socket_, boost::asio::buffer(message), ec);
+  if (ec) {
+    log_error(ec, "Failed to write headers to socket");
+    return;
+  }
 }

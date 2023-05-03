@@ -75,7 +75,7 @@ Request Request::ParseHTTPRequest(const std::string &req) {
   req_obj.uri_base_path = Request::extract_uri_base_path(req_obj.uri);
   return req_obj;
 }
-void RequestProcessor::RouteRequest(string req, Response &res) {
+void RequestProcessor::RouteRequest(string req, boost::filesystem::path root, Response &res) {
   Request req_obj = Request::ParseHTTPRequest(req);
   LOG(trace) << "URI is: " << req_obj.uri
              << " with basepath: " << req_obj.uri_base_path;
@@ -84,14 +84,13 @@ void RequestProcessor::RouteRequest(string req, Response &res) {
     RequestHandlerEcho handler;
     handler.HandleRequest(req_obj, res);
   } else if (req_obj.uri_base_path == "static") {
-    // TODO - get base_dir from config parser
-    string base_dir = "/src";
-    RequestHandlerStatic handler(base_dir);
+    RequestHandlerStatic handler(root);
     handler.HandleRequest(req_obj, res);
   } else {
     LOG(warning) << "Invalid URI Acessed: " << req_obj.uri;
 	// TODO - make constants files for all request types when we have more default responses
 	// in the future
+  // I didn't write this, but shouldn't this be 400, not 404? --Rowan
     res.data = "404 Not Found\r\n\r\n";
 	HTTPHeader contentType;
 	contentType.name = "Content-Type";
