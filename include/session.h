@@ -11,12 +11,15 @@
 #include <string>
 
 #include "I_session.h"
+#include "config_parser.h"
 
 // session for handling async reads and writes through a socket
 
 class session : public I_session {
  public:
-  session(boost::asio::io_service& io_service, boost::filesystem::path root);
+  session(boost::asio::io_service& io_service, ServingConfig serving_config)
+      : socket_(io_service), serving_config_(serving_config) {}
+
   boost::asio::ip::tcp::socket& socket() override;
 
   void start() override;
@@ -35,7 +38,7 @@ class session : public I_session {
   time_t t;
   struct tm* myTime;
   std::string HTTPResponse;
-  boost::filesystem::path root_;
+  ServingConfig serving_config_;
 };
 
 #endif

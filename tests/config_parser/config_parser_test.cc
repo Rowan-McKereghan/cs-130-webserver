@@ -8,6 +8,8 @@ class NginxConfigParserTest : public ::testing::Test {
  protected:
   NginxConfigParser parser;
   NginxConfig out_config;
+  ServingConfig serving_config;
+
   short port;
 
   void SetUp() override {
@@ -93,13 +95,88 @@ TEST_F(NginxConfigParserTest, GetPortNumber) {
                parser.GetPortNumber(&out_config, &port));
 }
 
-TEST_F(NginxConfigParserTest, GetRootPath) { //test extraction of root field of server subheader in parser file
-  parser.Parse("GetPortNumber/success_pn2", &out_config);
-  ASSERT_EQ(parser.GetRootPath(&out_config), "");
-  out_config = NginxConfig();
-  parser.Parse("GetPortNumber/success_pn1", &out_config);
-  ASSERT_EQ(parser.GetRootPath(&out_config), "/home/ubuntu/sites/foo/");
-  out_config = NginxConfig();
-  parser.Parse("GetPortNumber/success_default_root", &out_config);
-  ASSERT_EQ(parser.GetRootPath(&out_config), "/usr/src/projects/");
+// Tests for IsValidURI method
+TEST_F(NginxConfigParserTest, ValidURI) {
+  EXPECT_TRUE(parser.IsValidURI("/path/to/resource"));
+  EXPECT_TRUE(parser.IsValidURI("/path/to/resource.ext"));
+  EXPECT_TRUE(parser.IsValidURI("/path/to/resource-with-dash"));
+  EXPECT_TRUE(parser.IsValidURI(
+      "/path/to/resource_with_underscore_and_trailing_slash/"));
+}
+
+TEST_F(NginxConfigParserTest, InvalidURI) {
+  EXPECT_FALSE(parser.IsValidURI("path/to/resource"));
+  EXPECT_FALSE(parser.IsValidURI("/path/to/resource?query=param"));
+  EXPECT_FALSE(parser.IsValidURI("/path/to/resource#hashtag"));
+}
+
+// Tests for VerifyServerConfig method
+TEST_F(NginxConfigParserTest, EmptyConfig) {
+  EXPECT_FALSE(parser.VerifyServerConfig(serving_config));
+}
+
+TEST_F(NginxConfigParserTest, InvalidStaticFilePath) {
+  serving_config.static_file_paths.push_back(
+      {"path/to/resource", "/nonexistent/file"});
+  EXPECT_FALSE(parser.VerifyServerConfig(serving_config));
+}
+
+TEST_F(NginxConfigParserTest, ValidStaticFilePath) {
+  // Relative to tests/config_parser
+  serving_config.static_file_paths.push_back(
+      {"/path/to/resource", "../static_test_files"});
+  EXPECT_TRUE(parser.VerifyServerConfig(serving_config));
+}
+
+TEST_F(NginxConfigParserTest, InvalidEchoPath) {
+  serving_config.echo_paths.push_back("/path/to/resource#hash");
+  EXPECT_FALSE(parser.VerifyServerConfig(serving_config));
+}
+
+TEST_F(NginxConfigParserTest, ValidEchoPath) {
+  serving_config.echo_paths.push_back("/path/to/resource");
+  EXPECT_TRUE(parser.VerifyServerConfig(serving_config));
+}
+
+TEST_F(NginxConfigParserTest, EmptyServingConfig) {
+  parser.Parse("BasicTests/empty", &out_config);
+  parser.GetServingConfig(&out_config, serving_config);
+  ASSERT_EQ(serving_config.echo_paths.size(), 0);
+  ASSERT_EQ(serving_config.static_file_paths.size(), 0);
+}
+
+TEST_F(NginxConfigParserTest, CombinedServingConfig) {
+  parser.Parse("GetFilePaths/success_combined", &out_config);
+  parser.GetServingConfig(&out_config, serving_config);
+  ASSERT_EQ(serving_config.echo_paths.size(), 1);
+  ASSERT_EQ(serving_config.echo_paths[0], "/echoing");
+  ASSERT_EQ(serving_config.static_file_paths.size(), 1);
+  ASSERT_EQ(serving_config.static_file_paths[0].first, "/static3");
+  ASSERT_EQ(serving_config.static_file_paths[0].second, "../static_test_files");
+}
+
+TEST_F(NginxConfigParserTest, EchoServingConfig) {
+  parser.Parse("GetFilePaths/success_echo_only", &out_config);
+  parser.GetServingConfig(&out_config, serving_config);
+  ASSERT_EQ(serving_config.echo_paths.size(), 1);
+  ASSERT_EQ(serving_config.echo_paths[0], "/echoing");
+}
+TEST_F(NginxConfigParserTest, StaticServingConfig) {
+  parser.Parse("GetFilePaths/success_static_path_only", &out_config);
+  parser.GetServingConfig(&out_config, serving_config);
+
+  ASSERT_EQ(serving_config.echo_paths.size(), 0);
+  ASSERT_EQ(serving_config.static_file_paths.size(), 1);
+  ASSERT_EQ(serving_config.static_file_paths[0].first, "/static3");
+  ASSERT_EQ(serving_config.static_file_paths[0].second, "../static_test_files");
+}
+
+TEST_F(NginxConfigParserTest, PartialSuccessServingConfig) {
+  parser.Parse("GetFilePaths/partial_success", &out_config);
+  parser.GetServingConfig(&out_config, serving_config);
+  ASSERT_EQ(serving_config.echo_paths.size(), 1);
+  ASSERT_EQ(serving_config.echo_paths[0], "/potato");
+  ASSERT_EQ(serving_config.static_file_paths.size(), 1);
+  ASSERT_EQ(serving_config.static_file_paths[0].first, "/static3");
+  ASSERT_EQ(serving_config.static_file_paths[0].second, "../static_test_files");
 }

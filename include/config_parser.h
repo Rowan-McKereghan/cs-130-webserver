@@ -25,6 +25,11 @@ class NginxConfig {
   std::vector<std::shared_ptr<NginxConfigStatement>> statements_;
 };
 
+struct ServingConfig {
+  std::vector<std::pair<std::string, std::string>> static_file_paths;
+  std::vector<std::string> echo_paths;
+};
+
 // The driver that parses a config file and generates an NginxConfig.
 class NginxConfigParser {
  public:
@@ -36,7 +41,9 @@ class NginxConfigParser {
   bool Parse(std::istream* config_file, NginxConfig* config);
   bool Parse(const char* file_name, NginxConfig* config);
   bool GetPortNumber(NginxConfig* config, short* port);
-  std::string GetRootPath(NginxConfig* config);
+  bool IsValidURI(const std::string& uri);
+  bool VerifyServerConfig(ServingConfig& server_config);
+  bool GetServingConfig(NginxConfig* config, ServingConfig& serving_config);
 
  private:
   enum TokenType {
