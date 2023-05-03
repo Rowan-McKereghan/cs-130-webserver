@@ -16,6 +16,24 @@
       "message": "in the future it might be a good idea to make a function that auto-formats requests to make testing easier. Maybe note this as a TODO?",
       "revId": "aed618b4159a3d49cb65db7f7cb970c72f0f67be",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f2428df_14ac1837",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-03T06:39:31Z",
+      "side": 1,
+      "message": "I marked this as a todo for when we create default responses for more failure error codes.",
+      "parentUuid": "1d3c3494_2a927aa4",
+      "revId": "aed618b4159a3d49cb65db7f7cb970c72f0f67be",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
