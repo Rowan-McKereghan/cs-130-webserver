@@ -79,6 +79,7 @@ void RequestProcessor::RouteRequest(string req, Response &res) {
   Request req_obj = Request::ParseHTTPRequest(req);
   LOG(trace) << "URI is: " << req_obj.uri
              << " with basepath: " << req_obj.uri_base_path;
+  I_RequestHandler* handler;
   if (req_obj.uri_base_path == "echo") {
     RequestHandlerEcho handler;
     handler.HandleRequest(req_obj, res);
