@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df18bebb_032fd220",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "400 response handling was removed for this patchset, so not ready to merge yet. Additionally, I made a few refactoring suggestions.",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3443451d_afd27221",
+        "filename": "include/config_parser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "comment to explain this struct would be helpful (the key-value relationship between uri and filepath isn\u0027t clear from just using a pair)",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84b6c7b4_d8b8de58",
+        "filename": "src/config_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "might make sense to refactor the post-tokenization stuff (extracting port number and paths) into a separate class), this file is getting pretty bloated",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eaa40e0_588350a9",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "could return instead of breaking so the other two blocks aren\u0027t run unnecessarily",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc5e25cf_e90cdd87",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "same thing here",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94c7fe5b_a2b40b41",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "can also eliminate these flags if we return in the above blocks",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b0bb169_53d843d7",
+        "filename": "src/request_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "remember to re-implement the 400 response handling",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abe17857_cd4768e9",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "might not need the if condition here since we should delete regardless of error?",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16302654_432dff8a",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T23:41:04Z",
+      "side": 1,
+      "message": "not part of the commit but I don\u0027t think this gets called anywhere anymore",
+      "revId": "dc8f37dcfe832007443db19f77a2c87cc36f96cb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
