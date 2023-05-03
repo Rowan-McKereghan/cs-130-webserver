@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7314c53e_d703c5fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-03T20:53:08Z",
+      "side": 1,
+      "message": "Sorry about the mistake with the tokenizer, looks good to me!",
+      "revId": "c334e03780b7c3fd9a06c91bcb638da405609988",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
