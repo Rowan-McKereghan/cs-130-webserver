@@ -336,6 +336,35 @@ bool NginxConfigParser::GetPortNumber(NginxConfig* config, short* port) {
   return false;
 }
 
+std::string NginxConfigParser::GetRootPath(NginxConfig* config) {
+  if (config != nullptr) {  // handle empty config
+    /* need to look for this structure:
+    server {
+      ...
+      root /path/to/dir
+      ...
+    }
+    */
+    for (auto statement : config->statements_) {
+      std::vector<std::string> tokens = statement->tokens_;
+      // find outer "server" declaration
+      if (tokens.size() >= 1 && tokens[0] == "server") {
+        NginxConfig* child_block = statement->child_block_.get();
+        if (child_block != nullptr) {
+          for (auto block_statement : child_block->statements_) {
+            std::vector<std::string> block_tokens = block_statement->tokens_;
+            // look for root /path/to/dir in child block
+            if (block_tokens.size() >= 2 && block_tokens[0] == "root") {
+              return block_tokens[1]; //handle case for invalid root path in server code
+            }
+          }
+        }
+      }
+    }
+  }
+  return ""; //handle case for root path DNE in server code
+}
+
 // helper function for converting escape sequences into the chars they represent
 // only support for '\\', '\'' inside "", and '"' inside ''
 std::string process_esc(std::string token) {

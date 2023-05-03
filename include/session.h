@@ -5,6 +5,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -15,7 +16,7 @@
 
 class session : public I_session {
  public:
-  session(boost::asio::io_service& io_service);
+  session(boost::asio::io_service& io_service, boost::filesystem::path root);
   boost::asio::ip::tcp::socket& socket() override;
 
   void start() override;
@@ -34,6 +35,7 @@ class session : public I_session {
   time_t t;
   struct tm* myTime;
   std::string HTTPResponse;
+  boost::filesystem::path root_;
 };
 
 #endif
