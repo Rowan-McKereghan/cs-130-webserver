@@ -18,6 +18,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e97ffd6e_8aaed490",
+        "filename": "tests/request/request_handler_echo_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-03T06:39:24Z",
+      "side": 1,
+      "message": "Finished it in the latest patchset in fixed test case.",
+      "parentUuid": "6ce24bb0_2d20d482",
+      "revId": "d34f27b7c6c51813eefc645d1ccfaa18f4d6748a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76b1b617_0748555b",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-05-03T06:18:58Z",
       "side": 1,
       "message": "remove gmock if we aren\u0027t using it",
+      "revId": "d34f27b7c6c51813eefc645d1ccfaa18f4d6748a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "099890b5_7366f541",
+        "filename": "tests/request/request_processor_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-03T06:39:24Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "76b1b617_0748555b",
       "revId": "d34f27b7c6c51813eefc645d1ccfaa18f4d6748a",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
