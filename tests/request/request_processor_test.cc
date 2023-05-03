@@ -119,5 +119,4 @@ TEST(RequestProcessorTest, RouteRequest) {
   EXPECT_EQ(res.status_code, OK);
   EXPECT_EQ(res.headers.size(), 2);
   EXPECT_EQ(res.data, req);
-  Response res_empty;
 }
