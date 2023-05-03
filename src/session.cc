@@ -17,7 +17,7 @@
 
 using namespace std;
 #include "logger.h"
-session::session(boost::asio::io_service& io_service, boost::filesystem::path root) : socket_(io_service), root_(root) {}
+
 boost::asio::ip::tcp::socket& session::socket() { return socket_; }
 
 void session::start() {
@@ -30,32 +30,35 @@ void session::handle_read(const boost::system::error_code& error,
                           size_t bytes_transferred) {
   boost::system::error_code ec;
   boost::asio::ip::tcp::endpoint endpoint = socket_.remote_endpoint(ec);
+  std::string client_ip;
   if (ec == boost::system::errc::success) {
-    LOG(trace) << "Request from IP: " << endpoint.address().to_string();
+    client_ip = endpoint.address().to_string();
   } else {
+    client_ip = "Unknown IP";
     LOG(warning) << "Failed to obtain remote endpoint of socket: "
                  << format_error(ec);
   }
+
   if (error == boost::system::errc::success) {
     RequestProcessor req_processor;
-    Response res(&socket_); // Pass the socket to the response object
-    req_processor.RouteRequest(data_, root_, res);
+    Response res(&socket_);  // Pass the socket to the response object
+    req_processor.RouteRequest(data_, serving_config_, res, client_ip);
     const char* response_c_string = res.generate_http_response().c_str();
-    boost::asio::async_write(socket_, boost::asio::buffer(response_c_string, res.generate_http_response().length()),
-                              boost::bind(&session::handle_write, this, boost::asio::placeholders::error));
-  }
-  else {
-    log_error(error, "An error occurred");
+    boost::asio::async_write(
+        socket_,
+        boost::asio::buffer(response_c_string,
+                            res.generate_http_response().length()),
+        boost::bind(&session::handle_write, this,
+                    boost::asio::placeholders::error));
+  } else {
+    log_error(error, "An error occurred in handle_read");
     delete this;
   }
 }
 void session::handle_write(const boost::system::error_code& error) {
-  if (!error) {
-    delete this;
+  if (error != boost::system::errc::success) {
+    log_error(error, "An error occurred in handle_write");
   }
-}
-void session::handle_http_write(const boost::system::error_code& error) {
-  if (error) {
-    delete this;
-  }
+
+  delete this;
 }

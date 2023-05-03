@@ -1,102 +1,85 @@
 #include "request_processor.h"
 
+#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <sstream>
+#include <string>
 
+#include "config_parser.h"
 #include "logger.h"
 #include "request.h"
 
-std::string Request::extract_uri_base_path(const std::string &uri) {
-  if (uri.empty() || uri[0] != '/') {
-    LOG(warning) << "URI is invalid: " << uri;
-    return "";
+using namespace std;
+
+std::string RequestProcessor::extract_uri_base_path(const std::string &uri) {
+  std::string stripped_uri = uri;
+
+  // Strip any query string from the URI
+  std::size_t query_pos = stripped_uri.find('?');
+  if (query_pos != std::string::npos) {
+    stripped_uri = stripped_uri.substr(0, query_pos);
   }
-  size_t pos = uri.find('/', 1);
-  if (pos == std::string::npos) {
-    pos = uri.length();
+
+  // Strip any trailing slashes from the URI
+  boost::algorithm::trim_right_if(stripped_uri,
+                                  boost::algorithm::is_any_of("/"));
+
+  // Add back the final slash if the URI is empty or just "/"
+  if (stripped_uri.empty() || stripped_uri == "/") {
+    stripped_uri = "/";
   }
-  return uri.substr(1, pos - 1);
+
+  return stripped_uri;
 }
 
-Request Request::ParseHTTPRequest(const std::string &req) {
-  Request req_obj(req);
-  std::istringstream request_stream(req);
-  std::string line;
-  // Parse the first line (Request-Line)
-  if (std::getline(request_stream, line)) {
-    std::istringstream line_stream(line);
-    line_stream >> req_obj.method >> req_obj.uri;
-    std::string http_version_string;
-    line_stream >> http_version_string;
-    if (http_version_string == "HTTP/1.1") {
-      req_obj.http_version = 1;
-    } else {
-      // TODO: Handle other HTTP versions or default to 1.0
-      LOG(trace) << "Unsupported HTTP version string: " << http_version_string;
-      req_obj.http_version = 0;
-    }
-  }
-
-  // Parse the header fields
-  while (std::getline(request_stream, line) && !line.empty() && line != "\r") {
-    HTTPHeader header;
-    std::size_t colon_pos = line.find(':');
-    if (colon_pos != std::string::npos) {
-      header.name = line.substr(0, colon_pos);
-      colon_pos++;  // Move past the colon
-
-      // Allow whitespace after the colon
-      while (std::isspace(line[colon_pos]) && colon_pos < line.length()) {
-        colon_pos++;
-      }
-
-      header.value = line.substr(colon_pos);
-
-      // Check if line ends with "\r\n"
-      // RFC7230, § 3.5 recomends allowing just a \n to terminate while parsing
-      // We still want to log if this is occurs as it is technically not a valid
-      // HTTP message
-      if (line.back() != '\n' || line[line.length() - 2] != '\r') {
-        LOG(trace) << "Header line does not end with '\\r\\n': " << line;
-      }
-
-      // Trim any "\r" or "\n" characters from the header value
-      header.value.erase(
-          std::remove(header.value.begin(), header.value.end(), '\r'),
-          header.value.end());
-      header.value.erase(
-          std::remove(header.value.begin(), header.value.end(), '\n'),
-          header.value.end());
-
-      req_obj.headers.push_back(header);
-    }
-  }
-
-  req_obj.uri_base_path = Request::extract_uri_base_path(req_obj.uri);
-  return req_obj;
-}
-void RequestProcessor::RouteRequest(string req, boost::filesystem::path root, Response &res) {
+void RequestProcessor::RouteRequest(string req, ServingConfig serving_config,
+                                    Response &res, std::string client_ip) {
   Request req_obj = Request::ParseHTTPRequest(req);
-  LOG(trace) << "URI is: " << req_obj.uri
-             << " with basepath: " << req_obj.uri_base_path;
-  if (req_obj.uri_base_path == "echo") {
-    RequestHandlerEcho handler;
-    handler.HandleRequest(req_obj, res);
-  } else if (req_obj.uri_base_path == "static") {
-    RequestHandlerStatic handler(root);
-    handler.HandleRequest(req_obj, res);
-  } else {
-    LOG(warning) << "Invalid URI Acessed: " << req_obj.uri;
-	// TODO - make constants files for all request types when we have more default responses
-	// in the future
-    res.data = "400 Bad Request\r\n\r\n";
+  auto uri_base_path = RequestProcessor::extract_uri_base_path(req_obj.uri);
+  LOG(info) << "Client with IP: " << client_ip
+            << " accessed URI: " << req_obj.uri;
+
+  // Check if the URI matches any of the echo paths
+  bool echo_path_matched = false;
+  for (const auto &echo_path : serving_config.echo_paths) {
+    if (uri_base_path == echo_path) {
+      LOG(info) << "Request matched to echo path: " << echo_path;
+      RequestHandlerEcho handler;
+      handler.HandleRequest(req_obj, res);
+      echo_path_matched = true;
+      return;
+    }
+  }
+
+  // Check if the URI matches any of the file paths
+  bool file_path_matched = false;
+  for (const auto &file_path : serving_config.static_file_paths) {
+    if (uri_base_path.find(file_path.first) == 0) {
+      LOG(info) << "Request matched to " << file_path.first
+                << " serving files from: " << file_path.second;
+      std::string absolute_file_path =
+          file_path.second + uri_base_path.substr(file_path.first.length());
+      LOG(info) << "Request matched to file" << absolute_file_path;
+      boost::filesystem::path final_file_path(absolute_file_path);
+      RequestHandlerStatic handler(final_file_path);
+      handler.HandleRequest(req_obj, res);
+      file_path_matched = true;
+      return;
+    }
+  }
+
+  // If neither echo path nor file path matches, return a 404 Not Found
+  // response
+  if (!echo_path_matched && !file_path_matched) {
+    LOG(warning) << "Client with IP: " << client_ip
+                 << " tried to access invalid URI: " << req_obj.uri;
     HTTPHeader contentType;
     contentType.name = "Content-Type";
     contentType.value = "text/HTML";
     HTTPHeader contentLength;
     contentLength.name = "Content-Length";
-    contentLength.value = res.data.length();
-    std::vector<HTTPHeader> headers;
+    contentLength.value = std::to_string(res.data.length());
+    vector<HTTPHeader> headers;
     headers.push_back(contentType);
     headers.push_back(contentLength);
     res.headers = headers;
