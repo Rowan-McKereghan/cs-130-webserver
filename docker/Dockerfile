@@ -3,21 +3,21 @@
 FROM ctrl-c-ctrl-v:base as builder
 
 # Share work directory
-COPY . /usr/src/project
-WORKDIR /usr/src/project/build
+COPY . /usr/src/projects/ctrl-c-ctrl-v
+WORKDIR /usr/src/projects/ctrl-c-ctrl-v/build
 
 # Build and test
 RUN cmake ..
 RUN make
-RUN ctest --output-on_failure
-
+RUN ctest --output-on_failure --verbose
 
 ### Deploy container ###
 # Define deploy stage
 FROM ubuntu:jammy as deploy
 
-COPY --from=builder /usr/src/project/build/bin/webserver .
-COPY --from=builder /usr/src/project/configs/simple_config .
+COPY --from=builder /usr/src/projects/ctrl-c-ctrl-v/build/bin/webserver .
+COPY --from=builder /usr/src/projects/ctrl-c-ctrl-v/configs/prod_config .
+COPY --from=builder /usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files static_test_files
 
 EXPOSE 80
 
@@ -25,4 +25,4 @@ EXPOSE 80
 ENTRYPOINT ["./webserver"]
 
 # Use CMD to specify arguments to ENTRYPOINT
-CMD ["simple_config"]
+CMD ["prod_config"]

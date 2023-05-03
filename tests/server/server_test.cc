@@ -5,15 +5,17 @@
 #include <iostream>
 
 #include "I_session.h"
+#include "config_parser.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "serving_config.h"
 
 class MockServer : public server {
  public:
   MockServer(
-      boost::asio::io_service& io_service, short port, boost::filesystem::path root,
-      std::function<I_session*(boost::asio::io_service&, boost::filesystem::path root)> session_constructor)
-      : server(io_service, port, root, session_constructor) {}
+      boost::asio::io_service& io_service, short port,
+      std::function<I_session*(boost::asio::io_service&)> session_constructor)
+      : server(io_service, port, session_constructor) {}
   MOCK_METHOD(void, start_accept, (), (override));
   MOCK_METHOD(void, handle_accept,
               (I_session * new_session, const boost::system::error_code& error),
@@ -22,13 +24,14 @@ class MockServer : public server {
 
 class MockSession : public I_session {
  public:
-  MockSession(boost::asio::io_service& io_service, boost::filesystem::path root) : socket_(io_service), root_(root) {}
+  MockSession(boost::asio::io_service& io_service, ServingConfig serving_config)
+      : socket_(io_service), serving_config_(serving_config) {}
   MOCK_METHOD(boost::asio::ip::tcp::socket&, socket, (), (override));
   MOCK_METHOD(void, start, (), (override));
 
  private:
   boost::asio::ip::tcp::socket socket_;
-  boost::filesystem::path root_;
+  ServingConfig serving_config_;
 };
 
 class ServerTest : public ::testing::Test {
@@ -40,11 +43,13 @@ class ServerTest : public ::testing::Test {
 
   void SetUp() override {
     port = 80;
-    boost::filesystem::path root{"/usr/src/projects/"}; //default root path (for now, testing purposes only)
-    server_ =
-        new server(io_service, port, root, [](boost::asio::io_service& io_service, boost::filesystem::path root) {
-          return new MockSession(io_service, root);
-        });
+    ServingConfig serving_config;
+    // Default root path (for now, testing purposes only)
+    serving_config.static_file_paths = {{"static1", "/usr/src/projects/"}};
+    server_ = new server(io_service, port,
+                         [serving_config](boost::asio::io_service& io_service) {
+                           return new MockSession(io_service, serving_config);
+                         });
   }
 
   void TearDown() override { delete server_; }

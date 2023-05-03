@@ -14,8 +14,8 @@
 class server {
  public:
   server(
-      boost::asio::io_service& io_service, short port, boost::filesystem::path root, 
-      std::function<I_session*(boost::asio::io_service&, boost::filesystem::path)> session_constructor);
+      boost::asio::io_service& io_service, short port,
+      std::function<I_session*(boost::asio::io_service&)> session_constructor);
   virtual void start_accept();
 
   virtual void handle_accept(I_session* new_session,
@@ -25,8 +25,7 @@ class server {
 
   boost::asio::io_service& io_service_;
   boost::asio::ip::tcp::acceptor acceptor_;
-  boost::filesystem::path root_;
-  std::function<I_session*(boost::asio::io_service&, boost::filesystem::path)> session_constructor_;
+  std::function<I_session*(boost::asio::io_service&)> session_constructor_;
   I_session* cur_session;
 };
 

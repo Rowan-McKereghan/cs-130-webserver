@@ -1,7 +1,13 @@
 #!/bin/bash
 
 #this script must be run in the tests folder bc of below path dependency
-../build/bin/webserver config_parser/GetPortNumber/success_serve_files &
+
+if [ -e "../build/bin/webserver" ]
+then
+    ../build/bin/webserver config_parser/GetPortNumber/success_serve_files &
+else
+    ../build_coverage/bin/webserver config_parser/GetPortNumber/success_serve_files &
+fi
 
 webserverPID=$!
 
@@ -13,10 +19,10 @@ fname=IntegrationDiffs/integration_result_curl_basic.txt
 
 # ----------------
 # BASIC CURL TEST
-
+# Should return nothing
 curl localhost:80 -s -S -o "$fname"
 
-diff -b "IntegrationDiffs/expected_curl_basic.txt" "$fname"
+diff -b  -I '^Date*' "IntegrationDiffs/expected_curl_basic.txt" "$fname"
 
 diffExit=$?
 
