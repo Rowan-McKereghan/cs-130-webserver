@@ -1,5 +1,6 @@
 #ifndef REQUEST_H
 #define REQUEST_H
+#include <boost/filesystem.hpp>
 #include <string>
 #include <vector>
 
@@ -9,6 +10,7 @@ class Request {
   std::string method;
   std::string uri;
   std::string uri_base_path;
+  boost::filesystem::path root_;
   int http_version;
   std::vector<HTTPHeader> headers;
   std::string body;

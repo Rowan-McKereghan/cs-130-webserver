@@ -1,0 +1,7 @@
+server {
+    listen 80;
+    file_paths {
+        static1 /usr/bin;
+        static2 /otherdir;
+    }
+}

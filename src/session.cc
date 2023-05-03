@@ -5,6 +5,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -13,7 +14,7 @@
 #include "response.h"
 using namespace std;
 #include "logger.h"
-session::session(boost::asio::io_service& io_service) : socket_(io_service) {}
+session::session(boost::asio::io_service& io_service, boost::filesystem::path root) : socket_(io_service), root_(root) {}
 boost::asio::ip::tcp::socket& session::socket() { return socket_; }
 
 void session::start() {
@@ -35,7 +36,7 @@ void session::handle_read(const boost::system::error_code& error,
   if (error == boost::system::errc::success) {
     RequestProcessor req_processor;
     Response res;
-    req_processor.RouteRequest(data_, res);
+    req_processor.RouteRequest(data_, root_, res);
     auto response = res.generate_http_response();
     response += res.data;
     const char* response_c_string = response.c_str();
