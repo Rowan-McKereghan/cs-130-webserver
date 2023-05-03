@@ -3,12 +3,14 @@
 #include <boost/filesystem.hpp>
 #include <string>
 
+#include "config_parser.h"
 #include "request.h"
 #include "request_handler_echo.h"
 #include "request_handler_static.h"
 #include "response.h"
+
 class RequestProcessor {
  public:
-  void RouteRequest(std::string req, boost::filesystem::path root, Response &res);
+  void RouteRequest(string req, ServingConfig serving_config, Response &res);
 };
 #endif

@@ -9,6 +9,9 @@
 
 #include "config_parser.h"
 
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/regex.hpp>
 #include <cstdio>
 #include <fstream>
 #include <iostream>
@@ -336,12 +339,62 @@ bool NginxConfigParser::GetPortNumber(NginxConfig* config, short* port) {
   return false;
 }
 
-std::string NginxConfigParser::GetRootPath(NginxConfig* config) {
+bool NginxConfigParser::IsValidURI(const std::string& uri) {
+  static const boost::regex uri_regex("^\\/[a-zA-Z0-9\\/\\._-]+$");
+  return boost::regex_match(uri, uri_regex);
+}
+
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
+
+bool NginxConfigParser::VerifyServerConfig(ServingConfig& serving_config) {
+  // Verify file paths and remove non-existing static file paths
+  std::vector<std::pair<std::string, std::string>> valid_file_paths;
+  for (const auto& file_path : serving_config.static_file_paths) {
+    std::string file_path_key = file_path.first;
+    std::string file_path_value = file_path.second;
+    if (IsValidURI(file_path_key) &&
+        boost::filesystem::exists(file_path_value)) {
+      valid_file_paths.push_back({file_path_key, file_path_value});
+    } else {
+      LOG(error) << file_path_value
+                 << " is an invalid file path with serving URI: "
+                 << file_path_key;
+    }
+  }
+  serving_config.static_file_paths = valid_file_paths;
+
+  // Verify echo paths
+  std::vector<std::string> valid_echo_paths;
+  for (const auto& echo_path : serving_config.echo_paths) {
+    if (IsValidURI(echo_path)) {
+      valid_echo_paths.push_back(echo_path);
+    } else {
+      LOG(error) << echo_path << " is an invalid echoing path";
+    }
+  }
+  serving_config.echo_paths = valid_echo_paths;
+
+  return (!serving_config.static_file_paths.empty() ||
+          !serving_config.echo_paths.empty());
+}
+
+bool NginxConfigParser::GetServingConfig(NginxConfig* config,
+                                         ServingConfig& serving_config) {
   if (config != nullptr) {  // handle empty config
     /* need to look for this structure:
     server {
       ...
-      root /path/to/dir
+      static_file_paths {
+        key1 value1;
+        key2 value2;
+        ...
+      }
+      echo_paths {
+        echo1;
+        echo2;
+      }
       ...
     }
     */
@@ -353,16 +406,38 @@ std::string NginxConfigParser::GetRootPath(NginxConfig* config) {
         if (child_block != nullptr) {
           for (auto block_statement : child_block->statements_) {
             std::vector<std::string> block_tokens = block_statement->tokens_;
-            // look for root /path/to/dir in child block
-            if (block_tokens.size() >= 2 && block_tokens[0] == "root") {
-              return block_tokens[1]; //handle case for invalid root path in server code
+            // look for static_file_paths or echo_paths block in child block
+            if (block_tokens.size() >= 1 &&
+                (block_tokens[0] == "static_file_paths" ||
+                 block_tokens[0] == "echo_paths")) {
+              NginxConfig* paths_block = block_statement->child_block_.get();
+              if (paths_block != nullptr) {
+                if (block_tokens[0] == "static_file_paths") {
+                  for (auto file_path_statement : paths_block->statements_) {
+                    std::vector<std::string> file_path_tokens =
+                        file_path_statement->tokens_;
+                    if (file_path_tokens.size() >= 2) {
+                      serving_config.static_file_paths.push_back(
+                          {file_path_tokens[0], file_path_tokens[1]});
+                    }
+                  }
+                } else if (block_tokens[0] == "echo_paths") {
+                  for (auto echo_path_statement : paths_block->statements_) {
+                    std::vector<std::string> echo_path_tokens =
+                        echo_path_statement->tokens_;
+                    if (echo_path_tokens.size() >= 1) {
+                      serving_config.echo_paths.push_back(echo_path_tokens[0]);
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     }
   }
-  return ""; //handle case for root path DNE in server code
+  return VerifyServerConfig(serving_config);
 }
 
 // helper function for converting escape sequences into the chars they represent

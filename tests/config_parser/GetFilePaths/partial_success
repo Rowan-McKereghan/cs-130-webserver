@@ -1,0 +1,11 @@
+server {
+    listen 80;
+    static_file_paths {
+        /static2 test_dir_1;
+        /static3 ../static_test_files;
+    }
+    echo_paths {
+        echoing;
+        /potato;
+    }
+}
