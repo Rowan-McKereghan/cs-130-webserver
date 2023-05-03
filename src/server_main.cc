@@ -17,6 +17,7 @@
 #include "config_parser.h"
 #include "logger.h"
 #include "server.h"
+#include "serving_config.h"
 #include "session.h"
 
 int main(int argc, char* argv[]) {
@@ -41,33 +42,35 @@ int main(int argc, char* argv[]) {
 
     NginxConfigParser parser;
     NginxConfig config;
-    short port;
+    ServingConfig serving_config;
+
     if (!parser.Parse(argv[1], &config)) {
       LOG(fatal) << "Failed to parse config file";
       return 1;
-    } else if (!parser.GetPortNumber(&config, &port)) {
+    }
+
+    if (!serving_config.SetPortNumber(&config)) {
       LOG(fatal) << "Failed to get port number";
+      return 1;
+    } else {
+      LOG(info) << "Config file parsed successfully. Port: "
+                << serving_config.port;
+    }
+
+    if (!serving_config.SetPaths(&config)) {
+      LOG(fatal)
+          << "The config file contains not valid static or echoing paths";
       return 1;
     }
 
-    LOG(info) << "Config file parsed successfully. Port: " << port;
+    // Capture serving_config by value to avoid having to store it in the server
+    // obj
+    auto session_constructor =
+        [serving_config](boost::asio::io_service& io_service) {
+          return new session(io_service, serving_config);
+        };
 
-    boost::filesystem::path root{parser.GetRootPath(&config)};
-    if (boost::filesystem::is_empty(root) || !boost::filesystem::exists(root)) {
-      LOG(error) << "Invalid root path in nginx configuration file";
-      root = {"Invalid Path"};  // this should fail later so we can serve 404 if
-                                // static files are requested
-    } else {
-      LOG(info) << "Existing root path " << root.string()
-                << " parsed successfully";
-    }
-
-    auto session_constructor = [](boost::asio::io_service& io_service,
-                                  boost::filesystem::path root) {
-      return new session(io_service, root);
-    };
-
-    server s(io_service, port, root, session_constructor);
+    server s(io_service, serving_config.port, session_constructor);
     s.start_accept();
     io_service.run();
   } catch (std::exception& e) {

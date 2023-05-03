@@ -9,16 +9,12 @@ class Request {
  public:
   std::string method;
   std::string uri;
-  std::string uri_base_path;
-  boost::filesystem::path root_;
+  boost::filesystem::path file_path_;
   int http_version;
   std::vector<HTTPHeader> headers;
   std::string body;
   const std::string& raw_request;
   static Request ParseHTTPRequest(const std::string& req);
   Request(const std::string& req) : raw_request(req) {}
-
- private:
-  static std::string extract_uri_base_path(const std::string& uri);
 };
 #endif

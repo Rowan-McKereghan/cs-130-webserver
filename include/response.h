@@ -1,33 +1,40 @@
 #ifndef RESPONSE_H
 #define RESPONSE_H
 
-#include "HTTPHeader.h"
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
-#include <vector>
 #include <string>
+#include <vector>
+
+#include "HTTPHeader.h"
 
 const int OK = 200;
 const int BAD_REQUEST = 400;
 const int NOT_FOUND = 404;
 const int INTERNAL_SERVER_ERROR = 500;
-const int MAX_FILE_SIZE = 10485760; //10 MB for now
+const int MAX_FILE_SIZE = 10485760;  // 10 MB for now
+
+static const std::unordered_map<int, std::string> status_code_map = {
+    {OK, "OK"},
+    {BAD_REQUEST, "Bad Request"},
+    {NOT_FOUND, "Not Found"},
+    {INTERNAL_SERVER_ERROR, "Internal Server Error"}};
 
 class Response {
-public:
-	// Add more status codes as needed
-	  // Add more status codes as needed
-  	int status_code;
-  	std::vector<HTTPHeader> headers;
-  	std::string data;
-  	boost::asio::ip::tcp::socket* socket_;
+ public:
+  // Add more status codes as needed
+  // Add more status codes as needed
+  int status_code;
+  std::vector<HTTPHeader> headers;
+  std::string data;
+  boost::asio::ip::tcp::socket* socket_;
 
-  	// New constructor that takes a socket object
-  	Response(boost::asio::ip::tcp::socket* socket) : socket_(socket) {}
+  // New constructor that takes a socket object
+  Response(boost::asio::ip::tcp::socket* socket) : socket_(socket) {}
 
-  	std::string generate_http_response();
-  	void write_to_socket(const std::string& message);
-	bool is_serving_file = false;
+  std::string generate_http_response();
+  void write_to_socket(const std::string& message);
+  bool is_serving_file = false;
 };
 
 #endif
