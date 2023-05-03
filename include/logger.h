@@ -4,10 +4,15 @@
 #include <boost/log/trivial.hpp>
 #include <boost/system/error_code.hpp>
 
-// This header file defines common logging functions including disk and console
-// logging
-void init_logging(const std::string& log_file_path = "logs/server_%Y_%m_%d_%H%M%S_%5N.log");
+// This file defines common logging functions including disk and console logging
+
+// Sets up logging to console and file
+void init_logging(
+    const std::string& log_file_path = "logs/server_%Y_%m_%d_%H%M%S_%5N.log");
+
 std::string format_error(const boost::system::error_code& error);
+
+// Convinience function for boost error codes
 void log_error(const boost::system::error_code& ec, const std::string& message);
 
 // Current valid values (from boost::log::trivial::severity_level) are trace,
