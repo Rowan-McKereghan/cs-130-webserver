@@ -1,3 +1,7 @@
+foo "bar";
+
 server {
-    listen 80;
+ listen 80;
+ server_name foo.com;
+ root /usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/;
 }

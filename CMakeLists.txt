@@ -23,9 +23,10 @@ add_subdirectory(/usr/src/googletest googletest)
 # Enable Boost
 # Use static libraries so binaries can be deployed without a full boost install
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost 1.50 REQUIRED COMPONENTS system log log_setup)
+find_package(Boost 1.50 REQUIRED COMPONENTS system filesystem log log_setup)
 message(STATUS "Boost version: ${Boost_VERSION}")
 include_directories(include)
+
 # Update name and srcs
 add_library(server_lib src/server.cc)
 add_library(session_lib src/session.cc)
@@ -35,16 +36,20 @@ add_library(request_handler_static_lib src/request_handler_static.cc)
 add_library(response_lib src/response.cc)
 add_library(config_parser_lib src/config_parser.cc)
 add_library(logger_lib src/logger.cc)
+
 # Update executable name, srcs, and deps
 add_executable(webserver src/server_main.cc)
-target_link_libraries(webserver Boost::system Boost::log Boost::log_setup)
-target_link_libraries(webserver server_lib)
-target_link_libraries(webserver session_lib)
-target_link_libraries(webserver config_parser_lib)
-target_link_libraries(webserver logger_lib)
-target_link_libraries(server_lib logger_lib Boost::log Boost::log_setup)
-target_link_libraries(session_lib logger_lib request_processor_lib response_lib Boost::log Boost::log_setup)
-target_link_libraries(request_processor_lib request_handler_echo_lib request_handler_static_lib)
+target_link_libraries(webserver ${Boost_LIBRARIES})
+target_link_libraries(webserver server_lib ${Boost_LIBRARIES})
+target_link_libraries(webserver session_lib ${Boost_LIBRARIES})
+target_link_libraries(webserver config_parser_lib ${Boost_LIBRARIES})
+target_link_libraries(webserver logger_lib ${Boost_LIBRARIES})
+target_link_libraries(server_lib logger_lib ${Boost_LIBRARIES})
+target_link_libraries(session_lib logger_lib request_processor_lib response_lib ${Boost_LIBRARIES})
+target_link_libraries(request_processor_lib request_handler_echo_lib request_handler_static_lib ${Boost_LIBRARIES})
+target_link_libraries(request_handler_static_lib logger_lib response_lib ${Boost_LIBRARIES})
+target_link_libraries(response_lib logger_lib request_handler_static_lib ${Boost_LIBRARIES})
+
 # Update test executable name, srcs, and deps
 add_executable(config_parser_test tests/config_parser/config_parser_test.cc)
 add_executable(webserver_test tests/server/server_test.cc)
