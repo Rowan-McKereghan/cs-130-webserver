@@ -1,0 +1,6 @@
+server {
+    listen 80;
+    static_file_paths {
+        /static3 ../static_test_files;
+    }
+}

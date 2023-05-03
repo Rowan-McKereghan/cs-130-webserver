@@ -12,14 +12,16 @@ class SessionTest : public ::testing::Test {
  protected:
   boost::asio::io_service io_service;
   short port;
-  boost::filesystem::path root;
+  ServingConfig serving_config;
   session* sesh;
   boost::system::error_code ec;
 
   void SetUp() override {
     port = 80;
-    root = {"/usr/src/projects/"}; //default root path (for now, testing purposes only)
-    sesh = new session(io_service, root);
+
+    // Default root path (for now, testing purposes only)
+    serving_config.static_file_paths = {{"static1", "/usr/src/projects/"}};
+    sesh = new session(io_service, serving_config);
   }
 
   void TearDown() override {}
@@ -28,12 +30,6 @@ class SessionTest : public ::testing::Test {
 // test write
 TEST_F(SessionTest, TestWrite) {
   sesh->handle_write(ec);
-  ASSERT_EQ(1, 1);
-}
-
-// test http write (trivial)
-TEST_F(SessionTest, TestHTTPWrite) {
-  sesh->handle_http_write(ec);
   ASSERT_EQ(1, 1);
 }
 

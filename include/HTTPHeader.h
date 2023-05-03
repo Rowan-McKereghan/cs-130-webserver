@@ -4,9 +4,9 @@
 #include <string>
 
 class HTTPHeader {
-public:
-	std::string name; // Case insensitive
-	std::string value;
+ public:
+  std::string name;  // Case insensitive
+  std::string value;
 };
 
 #endif
