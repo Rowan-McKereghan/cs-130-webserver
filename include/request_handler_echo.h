@@ -4,9 +4,9 @@
 #include "request_handler.h"
 
 class RequestHandlerEcho : public I_RequestHandler {
-public:
-	// No constructor needed since it is config invariant
-	void HandleRequest(const Request &req, Response &res) override;
+ public:
+  // No constructor needed since it is config invariant
+  void HandleRequest(const Request &req, Response &res) override;
 };
 
 #endif

@@ -1,16 +1,17 @@
 #ifndef REQUEST_HANDLER_H
 #define REQUEST_HANDLER_H
 
-#include "request.h"
-#include "response.h"
+#include <iostream>
 #include <string>
 
-#include <iostream>
+#include "request.h"
+#include "response.h"
+
 using namespace std;
 
 class I_RequestHandler {
-	public:
-		virtual void HandleRequest(const Request &req, Response &res) = 0;
+ public:
+  virtual void HandleRequest(const Request &req, Response &res) = 0;
 };
 
 #endif
