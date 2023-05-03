@@ -348,13 +348,13 @@ std::string NginxConfigParser::GetRootPath(NginxConfig* config) {
     for (auto statement : config->statements_) {
       std::vector<std::string> tokens = statement->tokens_;
       // find outer "server" declaration
-      if (tokens.size() == 2 && tokens[0] == "server") {
+      if (tokens.size() >= 1 && tokens[0] == "server") {
         NginxConfig* child_block = statement->child_block_.get();
         if (child_block != nullptr) {
           for (auto block_statement : child_block->statements_) {
             std::vector<std::string> block_tokens = block_statement->tokens_;
             // look for root /path/to/dir in child block
-            if (block_tokens.size() == 3 && block_tokens[0] == "root") {
+            if (block_tokens.size() >= 2 && block_tokens[0] == "root") {
               return block_tokens[1]; //handle case for invalid root path in server code
             }
           }

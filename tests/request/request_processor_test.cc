@@ -97,9 +97,9 @@ TEST(RequestParserTest, InvalidRequestType) {
   RequestProcessor req_processor;
   boost::filesystem::path root1{"/usr/src/projects/"};
   req_processor.RouteRequest(req, root1, res);
-  EXPECT_EQ(res.status_code, NOT_FOUND);
+  EXPECT_EQ(res.status_code, BAD_REQUEST);
   EXPECT_EQ(res.headers.size(), 2);
-  EXPECT_EQ(res.data, "404 Not Found\r\n\r\n");
+  EXPECT_EQ(res.data, "400 Bad Request\r\n\r\n");
 }
 
 TEST(RequestProcessorTest, RouteRequest) {
