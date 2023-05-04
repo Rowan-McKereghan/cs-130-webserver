@@ -1,7 +1,7 @@
 #ifndef REQUEST_HANDLER_ECHO_H
 #define REQUEST_HANDLER_ECHO_H
 
-#include "request_handler.h"
+#include "I_request_handler.h"
 
 class RequestHandlerEcho : public I_RequestHandler {
  public:

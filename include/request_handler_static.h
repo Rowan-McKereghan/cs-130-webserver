@@ -3,7 +3,7 @@
 
 #include <boost/filesystem.hpp>
 
-#include "request_handler.h"
+#include "I_request_handler.h"
 
 class RequestHandlerStatic : public I_RequestHandler {
  public:
