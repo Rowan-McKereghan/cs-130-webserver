@@ -33,6 +33,24 @@
       "message": "a bit of a strange design to have the response object take a socket, probably refactor a handlers to write to the socket instead",
       "revId": "7c7a72740b5c2c6e238e031d2463b17dd5040089",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b12810d_b5d5eacd",
+        "filename": "include/response.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-04T06:32:52Z",
+      "side": 1,
+      "message": "Ack, TODO for next week.",
+      "parentUuid": "d42635c5_50d9bcd0",
+      "revId": "7c7a72740b5c2c6e238e031d2463b17dd5040089",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
