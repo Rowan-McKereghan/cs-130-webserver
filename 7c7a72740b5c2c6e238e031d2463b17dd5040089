@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f5a0f5f_169463fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-04T06:19:26Z",
+      "side": 1,
+      "message": "Still need to delete the unnecessary flags in request_processor.cc, looks good otherwise",
+      "revId": "7c7a72740b5c2c6e238e031d2463b17dd5040089",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d42635c5_50d9bcd0",
+        "filename": "include/response.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-04T06:19:26Z",
+      "side": 1,
+      "message": "a bit of a strange design to have the response object take a socket, probably refactor a handlers to write to the socket instead",
+      "revId": "7c7a72740b5c2c6e238e031d2463b17dd5040089",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
