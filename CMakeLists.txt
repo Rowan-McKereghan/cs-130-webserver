@@ -59,6 +59,7 @@ add_executable(request_processor_test tests/request/request_processor_test.cc)
 add_executable(request_handler_echo_test tests/request/request_handler_echo_test.cc)
 add_executable(request_handler_static_test tests/request/request_handler_static_test.cc)
 add_executable(serving_config_test tests/serving_config/serving_config_test.cc)
+add_executable(response_test tests/response/response_test.cc)
 
 target_link_libraries(webserver_test server_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(session_test session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
@@ -69,6 +70,7 @@ target_link_libraries(config_parser_test config_parser_lib gtest_main ${Boost_LI
 target_link_libraries(logger_test logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(request_handler_echo_test request_handler_echo_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(serving_config_test serving_config_lib gtest_main ${Boost_LIBRARIES})
+target_link_libraries(response_test response_lib logger_lib gtest_main ${Boost_LIBRARIES})
 
 add_test(NAME integration_test
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration_test.sh
@@ -83,6 +85,7 @@ gtest_discover_tests(request_processor_test WORKING_DIRECTORY ${CMAKE_CURRENT_SO
 gtest_discover_tests(request_handler_echo_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(request_handler_static_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(serving_config_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+gtest_discover_tests(response_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 include(cmake/CodeCoverageReportConfig.cmake)
-generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_test request_processor_test request_handler_echo_test request_handler_static_test serving_config_test)
+generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_test request_processor_test request_handler_echo_test request_handler_static_test serving_config_test response_test)

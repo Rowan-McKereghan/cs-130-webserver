@@ -3,6 +3,7 @@
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 
+#include <request.h>
 #include "gtest/gtest.h"
 #include "request_handler_echo.h"
 
@@ -27,7 +28,7 @@ TEST(RequestProcessorTest, RouteRequest) {
       {"/echo2"}                             // echo_paths
   };
   req_processor.RouteRequest(req, serving_config, res, "127.0.0.1");
-  EXPECT_EQ(res.status_code, OK);
-  EXPECT_EQ(res.headers.size(), 2);
-  EXPECT_EQ(res.data, req);
+  EXPECT_EQ(res.get_status_code(), OK);
+  EXPECT_EQ(res.get_headers().size(), 2);
+  EXPECT_EQ(res.get_data(), req);
 }

@@ -16,8 +16,6 @@
 #include "request_processor.h"
 #include "response.h"
 
-using namespace std;
-
 boost::asio::ip::tcp::socket& session::socket() { return socket_; }
 
 void session::start() {
@@ -43,22 +41,9 @@ void session::handle_read(const boost::system::error_code& error,
     RequestProcessor req_processor;
     Response res(&socket_);  // Pass the socket to the response object
     req_processor.RouteRequest(data_, serving_config_, res, client_ip);
-    const char* response_c_string = res.generate_http_response().c_str();
-    boost::asio::async_write(
-        socket_,
-        boost::asio::buffer(response_c_string,
-                            res.generate_http_response().length()),
-        boost::bind(&session::handle_write, this,
-                    boost::asio::placeholders::error));
+    res.write_http_response();
   } else {
     log_error(error, "An error occurred in handle_read");
-    delete this;
   }
-}
-void session::handle_write(const boost::system::error_code& error) {
-  if (error != boost::system::errc::success) {
-    log_error(error, "An error occurred in handle_write");
-  }
-
   delete this;
 }
