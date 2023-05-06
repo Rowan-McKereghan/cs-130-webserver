@@ -67,15 +67,6 @@ void RequestProcessor::RouteRequest(string req, ServingConfig serving_config,
   // response
   LOG(warning) << "Client with IP: " << client_ip
                << " tried to access invalid URI: " << req_obj.uri;
-  HTTPHeader contentType;
-  contentType.name = "Content-Type";
-  contentType.value = "text/HTML";
-  HTTPHeader contentLength;
-  contentLength.name = "Content-Length";
-  contentLength.value = std::to_string(res.data.length());
-  vector<HTTPHeader> headers;
-  headers.push_back(contentType);
-  headers.push_back(contentLength);
-  res.headers = headers;
-  res.status_code = BAD_REQUEST;
+
+  res.set_error_response(BAD_REQUEST);
 }

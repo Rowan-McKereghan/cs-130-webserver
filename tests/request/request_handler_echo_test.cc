@@ -1,5 +1,5 @@
 #include "request_handler_echo.h"
-
+#include "response.h"
 #include "gtest/gtest.h"
 
 TEST(RequestHandlerEcho, EchoTest) {
@@ -13,7 +13,8 @@ TEST(RequestHandlerEcho, EchoTest) {
   Response res(socket);
   RequestHandlerEcho handler;
   handler.HandleRequest(req, res);
-  EXPECT_EQ(res.data, req.raw_request);
-  EXPECT_EQ(res.headers.size(), 2);
-  EXPECT_EQ(res.status_code, OK);
+  
+  EXPECT_EQ(res.get_data(), req.raw_request);
+  EXPECT_EQ(res.get_headers().size(), 2);
+  EXPECT_EQ(res.get_status_code(), OK);
 }

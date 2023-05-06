@@ -27,11 +27,5 @@ class SessionTest : public ::testing::Test {
   void TearDown() override {}
 };
 
-// test write
-TEST_F(SessionTest, TestWrite) {
-  sesh->handle_write(ec);
-  ASSERT_EQ(1, 1);
-}
-
 // test returning socket
 TEST_F(SessionTest, TestSocket) { ASSERT_FALSE(sesh->socket().is_open()); }

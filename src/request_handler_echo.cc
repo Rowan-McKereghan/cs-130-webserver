@@ -1,19 +1,11 @@
 #include "request_handler_echo.h"
+
+#include "logger.h"
+#include "response.h"
+
 void RequestHandlerEcho::HandleRequest(const Request &req, Response &res) {
-  res.is_serving_file = false;
-  // Set the response status code
-  res.status_code = 200;
-  // Set the response content type
-  HTTPHeader content_type_header;
-  content_type_header.name = "Content-Type";
-  content_type_header.value = "text/plain";
-  res.headers.push_back(content_type_header);
-  // Set the response data to the original request string
-  res.data = req.raw_request;
-  // Set the Content-Length header based on the response data size
-  // TODO: Verify implementation
-  HTTPHeader content_length_header;
-  content_length_header.name = "Content-Length";
-  content_length_header.value = std::to_string(res.data.length());
-  res.headers.push_back(content_length_header);
+  res.set_status_code(OK);
+  res.set_body(req.raw_request);
+  res.add_header("Content-Type", "text/plain");
+  res.add_header("Content-Length", std::to_string(req.raw_request.length()));
 }

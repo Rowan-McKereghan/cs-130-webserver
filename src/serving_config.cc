@@ -136,7 +136,8 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
     } else {
       LOG(error) << file_path_value
                  << " is an invalid file path with serving URI: "
-                 << file_path_key;
+                 << file_path_key << ". The current working directory is: "
+                 << boost::filesystem::current_path();
       itr = static_file_paths.erase(
           itr);  // remove invalid path and move iterator forward
     }

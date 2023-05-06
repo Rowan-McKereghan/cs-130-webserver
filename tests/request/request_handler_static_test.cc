@@ -1,6 +1,7 @@
 #include "request_handler_static.h"
 
 #include "gtest/gtest.h"
+#include "response.h"
 
 TEST(RequestHandlerStatic, StaticTest404) {
   boost::asio::ip::tcp::socket* socket;
@@ -15,8 +16,8 @@ TEST(RequestHandlerStatic, StaticTest404) {
   boost::filesystem::path complete_path;
   RequestHandlerStatic handler(root);
   handler.HandleRequestHelper(req, res);
-  EXPECT_EQ(res.headers.size(), 2);
-  EXPECT_EQ(res.status_code, NOT_FOUND);
+  EXPECT_EQ(res.get_headers().size(), 2);
+  EXPECT_EQ(res.get_status_code(), NOT_FOUND);
 }
 
 TEST(RequestHandlerStatic, StaticTestTxtFile) {
@@ -32,9 +33,9 @@ TEST(RequestHandlerStatic, StaticTestTxtFile) {
       "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.txt"};
   RequestHandlerStatic handler(root);
   handler.HandleRequestHelper(req, res);
-  EXPECT_EQ(res.headers.size(), 2);
-  EXPECT_EQ(res.status_code, OK);
-  EXPECT_EQ(res.headers[0].value, "text/plain");
+  EXPECT_EQ(res.get_headers().size(), 2);
+  EXPECT_EQ(res.get_status_code(), OK);
+  EXPECT_EQ(res.get_headers()[0].value, "text/plain");
 }
 
 TEST(RequestHandlerStatic, StaticTestPngFile) {
@@ -50,7 +51,7 @@ TEST(RequestHandlerStatic, StaticTestPngFile) {
       "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.png"};
   RequestHandlerStatic handler(root);
   handler.HandleRequestHelper(req, res);
-  EXPECT_EQ(res.headers.size(), 2);
-  EXPECT_EQ(res.status_code, OK);
-  EXPECT_EQ(res.headers[0].value, "image/png");
+  EXPECT_EQ(res.get_headers().size(), 2);
+  EXPECT_EQ(res.get_status_code(), OK);
+  EXPECT_EQ(res.get_headers()[0].value, "image/png");
 }
