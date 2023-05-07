@@ -35,6 +35,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34e7d398_a6951ab1",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-07T21:55:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "51083d3d_806be235",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "073d4e7a_c5451d9d",
@@ -48,6 +72,24 @@
       "writtenOn": "2023-05-07T02:23:01Z",
       "side": 1,
       "message": "please add body to 404 and 400 response messages so users can easily see error messages in browser ( recommended by RFC 7321 - https://www.rfc-editor.org/rfc/rfc7231#section-6.5 )",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc97628d_be233843",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-07T21:55:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "073d4e7a_c5451d9d",
       "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -69,6 +111,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8641d0e1_456361a1",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-07T21:55:56Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "d322ed4f_8348e6f4",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b945e94a_566f0a8f",
@@ -82,6 +148,30 @@
       "writtenOn": "2023-05-07T02:23:01Z",
       "side": 1,
       "message": "Could you add comments here to indicate the numerical status codes to go along with each HTTP response?",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7502b8a_f64917d4",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-07T21:55:56Z",
+      "side": 1,
+      "message": "Not necessary. This can be obtained from the header file. I\u0027ll move this def to the header file to put them side-by-side.",
+      "parentUuid": "b945e94a_566f0a8f",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
       "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -103,6 +193,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e44d1d4_e454d244",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-07T21:55:56Z",
+      "side": 1,
+      "message": "I did this to ensure it was only called once in case a caller forgot. However, I do think it is better for response to be lighter-weight and let the caller have more control Thus, I kept has_written_http_response() so the caller can check if desired but removed the logic from the method.",
+      "parentUuid": "b5f3985a_db76786b",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d81fd7a_ed4ed38f",
@@ -116,6 +230,24 @@
       "writtenOn": "2023-05-07T02:23:01Z",
       "side": 1,
       "message": "Fix typo here",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d24d9297_12c4aab3",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-07T21:55:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d81fd7a_ed4ed38f",
       "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
