@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be0c17d6_6d065d35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-07T02:23:01Z",
+      "side": 1,
+      "message": "Responded with comments! Mostly good just a few changes.",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51083d3d_806be235",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-07T02:23:01Z",
+      "side": 1,
+      "message": "refactor commonly reoccuring status codes (right now only 404, more if needed) into a function to avoid code redundancy",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "073d4e7a_c5451d9d",
+        "filename": "src/request_handler_static.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-07T02:23:01Z",
+      "side": 1,
+      "message": "please add body to 404 and 400 response messages so users can easily see error messages in browser ( recommended by RFC 7321 - https://www.rfc-editor.org/rfc/rfc7231#section-6.5 )",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d322ed4f_8348e6f4",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-07T02:23:01Z",
+      "side": 1,
+      "message": "Log the changes you made both in this patchset and in response to comments in our assignment tracker so there are no conflicts and/or redundancy on what people are working on (add and cross off items on list of things to do, and rearrange assignments i.e. you rewrote echo_handler so evan might not need to do that anymore)",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b945e94a_566f0a8f",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-07T02:23:01Z",
+      "side": 1,
+      "message": "Could you add comments here to indicate the numerical status codes to go along with each HTTP response?",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5f3985a_db76786b",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-07T02:23:01Z",
+      "side": 1,
+      "message": "why did you make this design choice? just curious why this sanity check is inside the function, and not in the place where the function is called. please elaborate in a comment.",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d81fd7a_ed4ed38f",
+        "filename": "src/response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-07T02:23:01Z",
+      "side": 1,
+      "message": "Fix typo here",
+      "revId": "7d812ea2ab337c2671dcc4db679330b8407c04f4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
