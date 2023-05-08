@@ -136,12 +136,25 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
     } else {
       LOG(error) << file_path_value
                  << " is an invalid file path with serving URI: "
-                 << file_path_key << ". The current working directory is: "
-                 << boost::filesystem::current_path();
+                 << file_path_key;
       itr = static_file_paths.erase(
           itr);  // remove invalid path and move iterator forward
     }
   }
+
+  // sort files in descending order of most '/', then ascending order
+  // alphabetically, allows for longest prefix matching
+  std::sort(static_file_paths.begin(), static_file_paths.end(),
+            [](std::pair<std::string, std::string> p1,
+               std::pair<std::string, std::string> p2) {
+              int c1 = std::count(p1.first.begin(), p1.first.end(), '/');
+              int c2 = std::count(p2.first.begin(), p2.first.end(), '/');
+              if (c1 != c2) {
+                return c1 > c2;
+              } else {
+                return p1.first < p2.first;
+              }
+            });
 
   // Verify echo paths
   auto it = echo_paths.begin();
