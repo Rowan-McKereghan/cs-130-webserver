@@ -15,7 +15,7 @@ TEST(RequestHandlerStatic, StaticTest404) {
   boost::filesystem::path root{"/usr/src/projects/"};
   boost::filesystem::path complete_path;
   RequestHandlerStatic handler(root);
-  handler.HandleRequestHelper(req, res);
+  handler.SetHeaders(req, res);
   EXPECT_EQ(res.get_headers().size(), 2);
   EXPECT_EQ(res.get_status_code(), NOT_FOUND);
 }
@@ -32,7 +32,7 @@ TEST(RequestHandlerStatic, StaticTestTxtFile) {
   boost::filesystem::path root{
       "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.txt"};
   RequestHandlerStatic handler(root);
-  handler.HandleRequestHelper(req, res);
+  handler.SetHeaders(req, res);
   EXPECT_EQ(res.get_headers().size(), 2);
   EXPECT_EQ(res.get_status_code(), OK);
   EXPECT_EQ(res.get_headers()[0].value, "text/plain");
@@ -50,7 +50,7 @@ TEST(RequestHandlerStatic, StaticTestPngFile) {
   boost::filesystem::path root{
       "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.png"};
   RequestHandlerStatic handler(root);
-  handler.HandleRequestHelper(req, res);
+  handler.SetHeaders(req, res);
   EXPECT_EQ(res.get_headers().size(), 2);
   EXPECT_EQ(res.get_status_code(), OK);
   EXPECT_EQ(res.get_headers()[0].value, "image/png");

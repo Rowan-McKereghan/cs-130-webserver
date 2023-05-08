@@ -7,6 +7,8 @@
 #include "HTTPHeader.h"
 class Request {
  public:
+  // TODO: add support for request with body
+  Request(const std::string& req_str);
   std::string method;
   std::string uri;
   boost::filesystem::path file_path_;
@@ -15,6 +17,5 @@ class Request {
   std::string body;
   const std::string& raw_request;
   static Request ParseHTTPRequest(const std::string& req);
-  Request(const std::string& req) : raw_request(req) {}
 };
 #endif

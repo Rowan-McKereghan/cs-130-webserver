@@ -9,7 +9,7 @@ class RequestHandlerStatic : public I_RequestHandler {
  public:
   RequestHandlerStatic(boost::filesystem::path root);
   void HandleRequest(const Request &req, Response &res);
-  int HandleRequestHelper(const Request &req, Response &res);
+  int SetHeaders(const Request &req, Response &res);
 
  private:
   boost::filesystem::path file_path_;

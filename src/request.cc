@@ -10,22 +10,21 @@
 
 using namespace std;
 
-Request Request::ParseHTTPRequest(const string &req) {
-  Request req_obj(req);
-  istringstream request_stream(req);
+Request::Request(const string& req_str) : raw_request(req_str) {
+  istringstream request_stream(req_str);
   string line;
   // Parse the first line (Request-Line)
   if (getline(request_stream, line)) {
     istringstream line_stream(line);
-    line_stream >> req_obj.method >> req_obj.uri;
+    line_stream >> this->method >> this->uri;
     string http_version_string;
     line_stream >> http_version_string;
     if (http_version_string == "HTTP/1.1") {
-      req_obj.http_version = 1;
+      this->http_version = 1;
     } else {
       // TODO: Handle other HTTP versions or default to 1.0
       LOG(trace) << "Unsupported HTTP version string: " << http_version_string;
-      req_obj.http_version = 0;
+      this->http_version = 0;
     }
   }
 
@@ -38,7 +37,7 @@ Request Request::ParseHTTPRequest(const string &req) {
       colon_pos++;  // Move past the colon
 
       // Allow whitespace after the colon
-      while (isspace(line[colon_pos]) && colon_pos < line.length()) {
+      while (colon_pos < line.length() && isspace(line[colon_pos])) {
         colon_pos++;
       }
 
@@ -48,7 +47,8 @@ Request Request::ParseHTTPRequest(const string &req) {
       // RFC7230, § 3.5 recomends allowing just a \n to terminate while parsing
       // We still want to log if this is occurs as it is technically not a valid
       // HTTP message
-      if (line.back() != '\n' || line[line.length() - 2] != '\r') {
+      if (line.back() != '\n' ||
+          line.length() >= 2 && line[line.length() - 2] != '\r') {
         LOG(trace) << "Header line does not end with '\\r\\n': " << line;
       }
 
@@ -58,9 +58,7 @@ Request Request::ParseHTTPRequest(const string &req) {
       header.value.erase(remove(header.value.begin(), header.value.end(), '\n'),
                          header.value.end());
 
-      req_obj.headers.push_back(header);
+      this->headers.push_back(header);
     }
   }
-
-  return req_obj;
 }

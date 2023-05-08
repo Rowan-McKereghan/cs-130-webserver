@@ -1,6 +1,7 @@
 #include "request_handler_echo.h"
 
 #include "logger.h"
+#include "request.h"
 #include "response.h"
 
 void RequestHandlerEcho::HandleRequest(const Request &req, Response &res) {
