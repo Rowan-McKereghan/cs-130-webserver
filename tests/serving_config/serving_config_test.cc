@@ -108,3 +108,10 @@ TEST_F(ServingConfigTest, PathLengthsSorted) {
   ASSERT_EQ(serving_config.static_file_paths[4].first, "/static3");
   ASSERT_EQ(serving_config.static_file_paths[5].first, "/static4");
 }
+
+TEST_F(ServingConfigTest, PrivilegedPaths) {
+  parser.Parse("GetFilePaths/privileged_paths", &out_config);
+  serving_config.SetPaths(&out_config);
+  ASSERT_EQ(serving_config.static_file_paths.size(), 1);
+  ASSERT_EQ(serving_config.static_file_paths[0].first, "/static3");
+}

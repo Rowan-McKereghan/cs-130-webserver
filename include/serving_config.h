@@ -21,9 +21,6 @@ struct ServingConfig {
   int port;
   bool SetPortNumber(NginxConfig* config);
   bool SetPaths(NginxConfig* config);
-
- private:
-  bool IsValidURI(const std::string& uri);
 };
 
 #endif
