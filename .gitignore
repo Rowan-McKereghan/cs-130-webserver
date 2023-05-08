@@ -6,3 +6,4 @@ mirror
 integration_result*
 tests/logs
 .idea
+cmake-build*
