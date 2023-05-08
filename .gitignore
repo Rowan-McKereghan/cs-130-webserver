@@ -7,3 +7,4 @@ integration_result*
 tests/logs
 .idea
 logs
+cmake-build*
