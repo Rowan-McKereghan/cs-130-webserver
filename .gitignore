@@ -5,3 +5,4 @@ build_*
 mirror
 integration_result*
 tests/logs
+.idea

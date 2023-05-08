@@ -13,6 +13,7 @@
 #include <string>
 
 #include "logger.h"
+#include "request.h"
 #include "request_processor.h"
 #include "response.h"
 
@@ -39,8 +40,9 @@ void session::handle_read(const boost::system::error_code& error,
 
   if (error == boost::system::errc::success) {
     RequestProcessor req_processor;
+    Request req(data_);
     Response res(&socket_);  // Pass the socket to the response object
-    req_processor.RouteRequest(data_, serving_config_, res, client_ip);
+    req_processor.RouteRequest(req, res, serving_config_, client_ip);
     if (!res.has_written_http_response()) {
       res.write_http_response();
     }

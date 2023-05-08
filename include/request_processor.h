@@ -12,8 +12,8 @@
 
 class RequestProcessor {
  public:
-  void RouteRequest(std::string req, ServingConfig serving_config,
-                    Response& res, std::string client_ip);
+  void RouteRequest(Request& req, Response& res, ServingConfig serving_config,
+                     std::string client_ip);
 
  private:
   std::string extract_uri_base_path(const std::string& uri);

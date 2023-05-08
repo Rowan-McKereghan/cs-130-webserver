@@ -4,10 +4,9 @@
 #include "request_handler_echo.h"
 #include "request_processor.h"
 
-
 // Test the Request::ParseHTTPRequest() method
 TEST(RequestParserTest, ValidEchoRequest) {
-  std::string req =
+  std::string req_str =
       "GET /echo HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) "
@@ -19,11 +18,11 @@ TEST(RequestParserTest, ValidEchoRequest) {
       "Accept-Encoding: gzip, deflate\r\n"
       "Connection: keep-alive\r\n"
       "\r\n";
-  Request req_obj = Request::ParseHTTPRequest(req);
-  EXPECT_EQ(req_obj.method, "GET");
-  EXPECT_EQ(req_obj.uri, "/echo");
-  EXPECT_EQ(req_obj.http_version, 1);
-  EXPECT_EQ(req_obj.headers.size(), 6);
+  Request req(req_str);
+  EXPECT_EQ(req.method, "GET");
+  EXPECT_EQ(req.uri, "/echo");
+  EXPECT_EQ(req.http_version, 1);
+  EXPECT_EQ(req.headers.size(), 6);
 }
 
 // Test Response class with different status codes
@@ -58,7 +57,7 @@ TEST(ResponseTest, ResponseWithStatusCodes) {
 TEST(RequestParserTest, InvalidRequestType) {
   boost::asio::io_context io_context;
   boost::asio::ip::tcp::socket socket(io_context);
-  std::string req =
+  std::string req_str =
       "GET /invalid_uri HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) "
@@ -70,7 +69,7 @@ TEST(RequestParserTest, InvalidRequestType) {
       "Accept-Encoding: gzip, deflate\n"
       "Connection: keep-alive\r\n"
       "\r\n";
-  Request req_obj = Request::ParseHTTPRequest(req);
+  Request req(req_str);
   Response res(&socket);
   RequestProcessor req_processor;
   ServingConfig serving_config{
@@ -78,7 +77,7 @@ TEST(RequestParserTest, InvalidRequestType) {
       {"/echo2"}                             // echo_paths
   };
   std::string client_ip = "127.0.0.1";
-  req_processor.RouteRequest(req, serving_config, res, client_ip);
+  req_processor.RouteRequest(req, res, serving_config, client_ip);
   EXPECT_EQ(res.get_status_code(), BAD_REQUEST);
   EXPECT_EQ(res.get_headers().size(), 2);
 }

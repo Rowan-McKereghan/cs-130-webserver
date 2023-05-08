@@ -2,6 +2,8 @@
 #define REQUEST_HANDLER_ECHO_H
 
 #include "I_request_handler.h"
+#include "request.h"
+#include "response.h"
 
 class RequestHandlerEcho : public I_RequestHandler {
  public:

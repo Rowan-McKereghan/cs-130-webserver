@@ -15,8 +15,7 @@ const int MAX_FILE_SIZE = 10485760;
 RequestHandlerStatic::RequestHandlerStatic(boost::filesystem::path file_path)
     : file_path_(file_path) {}
 
-int RequestHandlerStatic::HandleRequestHelper(const Request &req,
-                                              Response &res) {
+int RequestHandlerStatic::SetHeaders(const Request &req, Response &res) {
   if (!boost::filesystem::is_regular_file(
           file_path_)) {  // im not sure about the case when we serve
                           // symlinks... does it work the same?
@@ -36,19 +35,18 @@ int RequestHandlerStatic::HandleRequestHelper(const Request &req,
   // set MIME type
   std::string content_type;
   res.set_status_code(OK);
-  if (!file_path_.extension().string().compare(".txt")) {
+  std::string file_path_str = file_path_.extension().string();
+  if (file_path_str == ".txt") {
     content_type = "text/plain";
-  } else if (!file_path_.extension().string().compare(".jpg") ||
-             !file_path_.extension().string().compare(".jpeg")) {
+  } else if (file_path_str == ".jpg" || file_path_str == ".jpeg") {
     content_type = "image/jpeg";
-  } else if (!file_path_.extension().string().compare(".png")) {
+  } else if (file_path_str == ".png") {
     content_type = "image/png";
-  } else if (!file_path_.extension().string().compare(".pdf")) {
+  } else if (file_path_str == ".pdf") {
     content_type = "application/pdf";
-  } else if (!file_path_.extension().string().compare(".html") ||
-             !file_path_.extension().string().compare(".htm")) {
+  } else if (file_path_str == ".html" || file_path_str == ".htm") {
     content_type = "text/html";
-  } else if (!file_path_.extension().string().compare(".zip")) {
+  } else if (file_path_str == ".zip") {
     content_type = "application/zip";
   } else {
     content_type =
@@ -63,7 +61,7 @@ int RequestHandlerStatic::HandleRequestHelper(const Request &req,
 }
 
 void RequestHandlerStatic::HandleRequest(const Request &req, Response &res) {
-  if (HandleRequestHelper(req, res) == -1) {
+  if (SetHeaders(req, res) == -1) {
     return;
   }
 
