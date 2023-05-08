@@ -54,9 +54,62 @@ bool ServingConfig::SetPortNumber(NginxConfig* config) {
   return false;
 }
 
-bool ServingConfig::IsValidURI(const std::string& uri) {
+static bool IsValidURI(const std::string& uri) {
   static const boost::regex uri_regex("^\\/[a-zA-Z0-9\\/\\._-]+$");
   return boost::regex_match(uri, uri_regex);
+}
+
+// surprising not a library function for this in boost::filesystem
+// please replace if someone can find one
+static bool IsParentDir(const boost::filesystem::path& parent_path,
+                        const boost::filesystem::path& child_path) {
+  int p_depth = std::distance(parent_path.begin(), parent_path.end());
+  int c_depth = std::distance(child_path.begin(), child_path.end());
+
+  // return false when parent has more directory levels than child
+  if (p_depth > c_depth) {
+    return false;
+  }
+
+  auto parent_end = parent_path.end();
+  auto child_end = child_path.end();
+
+  // loop to compare parent and child paths at each level
+  for (auto parent_it = parent_path.begin(), child_it = child_path.begin();
+       parent_it != parent_end; ++parent_it, ++child_it) {
+    // found a part of the parent path that doesn't match child path
+    // before exhausting all of parent path, so return false
+    if (*parent_it != *child_it) {
+      return false;
+    }
+  }
+
+  // exhausted parent path, so return true
+  return true;
+}
+
+static bool IsInPrivilegedDirectory(const std::string& file_path) {
+  const std::vector<std::string> privileged_dirs = {
+      "/etc", "/usr/bin"};  // TODO: extract into separate file, or allow this
+                            // to be configurable
+
+  boost::filesystem::path path(file_path);
+  path = boost::filesystem::absolute(path);
+
+  for (const auto& privileged_dir : privileged_dirs) {
+    boost::filesystem::path privileged_path(privileged_dir);
+    privileged_path = boost::filesystem::absolute(privileged_path);
+
+    // both path and privileged_path will be absolute to allow for
+    // straighforward comparison without factoring in . and ..
+    if (IsParentDir(privileged_path, path)) {
+      // the requested file is located in a privileged directory
+      return true;
+    }
+  }
+
+  // the requested file is not located in a privileged directory
+  return false;
 }
 
 bool ServingConfig::SetPaths(NginxConfig* config) {
@@ -130,13 +183,27 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
     const auto& file_path = *itr;
     std::string file_path_key = file_path.first;
     std::string file_path_value = file_path.second;
-    if (IsValidURI(file_path_key) &&
-        boost::filesystem::exists(file_path_value)) {
-      ++itr;  // move iterator forward
+    if (IsValidURI(file_path_key)) {
+      if (!boost::filesystem::exists(file_path_value)) {
+        LOG(error) << file_path_value
+                   << " is an invalid file path with serving URI: "
+                   << file_path_key << ". The current working directory is: "
+                   << boost::filesystem::current_path();
+        itr = static_file_paths.erase(
+            itr);  // remove invalid path and move iterator forward
+      } else if (IsInPrivilegedDirectory(file_path_value)) {
+        LOG(error) << file_path_value
+                   << " is an in a privileged directory. The current working "
+                      "directory is: "
+                   << boost::filesystem::current_path();
+        itr = static_file_paths.erase(
+            itr);  // remove invalid path and move iterator forward
+      } else {
+        ++itr;  // move iterator forward
+      }
     } else {
-      LOG(error) << file_path_value
-                 << " is an invalid file path with serving URI: "
-                 << file_path_key << ". The current working directory is: "
+      LOG(error) << file_path_key
+                 << "is an invalid URI. The current working directory is: "
                  << boost::filesystem::current_path();
       itr = static_file_paths.erase(
           itr);  // remove invalid path and move iterator forward
