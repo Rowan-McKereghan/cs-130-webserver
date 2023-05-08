@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b9db6a4_615824a8",
+        "filename": "include/request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-08T05:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e722cb8a_6c80d600",
+      "revId": "12bd04ae95c25bef5cc17fcbd42984d38fff785f",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4210a881_0cc76a2b",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-08T05:31:31Z",
       "side": 1,
       "message": "This code seems redundant given a large portion of it is already in ParseHTTPRequest(). Is there a reason you put this code in the constructor? If the differences are minor, please change this class to either put ParseHTTPRequest in the constructor, or delete it if it not needed anymore.",
+      "revId": "12bd04ae95c25bef5cc17fcbd42984d38fff785f",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "125f4c77_1ea01b16",
+        "filename": "src/request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-08T05:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4210a881_0cc76a2b",
       "revId": "12bd04ae95c25bef5cc17fcbd42984d38fff785f",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
