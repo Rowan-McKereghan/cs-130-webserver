@@ -143,6 +143,20 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
     }
   }
 
+  // sort files in descending order of most '/', then ascending order
+  // alphabetically, allows for longest prefix matching
+  std::sort(static_file_paths.begin(), static_file_paths.end(),
+            [](std::pair<std::string, std::string> p1,
+               std::pair<std::string, std::string> p2) {
+              int c1 = std::count(p1.first.begin(), p1.first.end(), '/');
+              int c2 = std::count(p2.first.begin(), p2.first.end(), '/');
+              if (c1 != c2) {
+                return c1 > c2;
+              } else {
+                return p1.first < p2.first;
+              }
+            });
+
   // Verify echo paths
   auto it = echo_paths.begin();
   while (it != echo_paths.end()) {

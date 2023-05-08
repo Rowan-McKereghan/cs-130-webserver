@@ -96,3 +96,15 @@ TEST_F(ServingConfigTest, PartialSuccessServingConfig) {
   ASSERT_EQ(serving_config.static_file_paths[0].first, "/static3");
   ASSERT_EQ(serving_config.static_file_paths[0].second, "../static_test_files");
 }
+
+TEST_F(ServingConfigTest, PathLengthsSorted) {
+  parser.Parse("GetFilePaths/many_paths", &out_config);
+  serving_config.SetPaths(&out_config);
+  ASSERT_EQ(serving_config.static_file_paths.size(), 6);
+  ASSERT_EQ(serving_config.static_file_paths[0].first, "/static4/sub1/sub2");
+  ASSERT_EQ(serving_config.static_file_paths[1].first, "/static1/static2");
+  ASSERT_EQ(serving_config.static_file_paths[2].first, "/static3/sub");
+  ASSERT_EQ(serving_config.static_file_paths[3].first, "/static4/sub1");
+  ASSERT_EQ(serving_config.static_file_paths[4].first, "/static3");
+  ASSERT_EQ(serving_config.static_file_paths[5].first, "/static4");
+}
