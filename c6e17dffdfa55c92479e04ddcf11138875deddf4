@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25568ac5_970852fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-08T01:10:19Z",
+      "side": 1,
+      "message": "LGTM! Ready to merge.",
+      "revId": "c6e17dffdfa55c92479e04ddcf11138875deddf4",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
