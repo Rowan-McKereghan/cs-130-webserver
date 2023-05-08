@@ -33,6 +33,24 @@
       "message": "Since you are using \u0027..\u0027 in your filepaths, can you add a check in setPaths() in order to ensure files cannot be served from directories we don\u0027t want to allow the clients into? for example serving files from the /usr/bin/ would be bad. You can also ask Alex about this because I remember he was working on this last week too.",
       "revId": "f8510c54ec29f57acc3375622eca1b28fe63bf70",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "285ac2b4_a6df139f",
+        "filename": "tests/config_parser/GetFilePaths/many_paths",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-08T23:12:00Z",
+      "side": 1,
+      "message": "addressed in https://code.cs130.org/c/ctrl-c-ctrl-v/+/13945, created separate change since this issue isn\u0027t entirely related",
+      "parentUuid": "914c180c_74a83ecc",
+      "revId": "f8510c54ec29f57acc3375622eca1b28fe63bf70",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
