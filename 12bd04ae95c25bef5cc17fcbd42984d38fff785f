@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d73c7f96_0c89be74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-08T05:31:31Z",
+      "side": 1,
+      "message": "Not much to comment on this! Some quick changes and then you\u0027re good to go.",
+      "revId": "12bd04ae95c25bef5cc17fcbd42984d38fff785f",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e722cb8a_6c80d600",
+        "filename": "include/request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-08T05:31:31Z",
+      "side": 1,
+      "message": "Add a TODO here in the future for when we need to serve requests with a body (i.e. POST)",
+      "revId": "12bd04ae95c25bef5cc17fcbd42984d38fff785f",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4210a881_0cc76a2b",
+        "filename": "src/request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-08T05:31:31Z",
+      "side": 1,
+      "message": "This code seems redundant given a large portion of it is already in ParseHTTPRequest(). Is there a reason you put this code in the constructor? If the differences are minor, please change this class to either put ParseHTTPRequest in the constructor, or delete it if it not needed anymore.",
+      "revId": "12bd04ae95c25bef5cc17fcbd42984d38fff785f",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
