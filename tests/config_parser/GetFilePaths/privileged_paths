@@ -1,0 +1,8 @@
+server {
+    listen 80;
+    static_file_paths {
+        /static2 /usr/bin;
+        /static2 /usr/bin/make;
+        /static3 ../static_test_files;
+    }
+}
