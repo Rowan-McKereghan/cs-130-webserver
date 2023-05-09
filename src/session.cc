@@ -24,7 +24,7 @@ boost::asio::ip::tcp::socket& Session::get_socket() { return socket_; }
 
 void Session::Start() {
   socket_.async_read_some(
-      boost::asio::buffer(data_, max_length),
+      boost::asio::buffer(data_, kMaxLength),
       boost::bind(&Session::HandleRead, this, boost::asio::placeholders::error,
                   boost::asio::placeholders::bytes_transferred));
 }
@@ -50,7 +50,7 @@ void Session::HandleRead(const boost::system::error_code& error,
       res.WriteHTTPResponse();
     }
   } else {
-    LogError(error, "An error occurred in handle_read");
+    LogError(error, "An error occurred in HandleRead");
   }
   delete this;
 }

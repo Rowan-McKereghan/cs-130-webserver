@@ -16,6 +16,8 @@
 
 // session for handling async reads and writes through a socket
 
+const int kMaxLength = 1024;
+
 class Session : public I_session {
  public:
   Session(boost::asio::io_service& io_service, ServingConfig serving_config);
@@ -29,11 +31,7 @@ class Session : public I_session {
 
 
   boost::asio::ip::tcp::socket socket_;
-  enum { max_length = 1024 };
-  char data_[max_length];
-  char date_[100];
-  time_t t_;
-  struct tm* myTime_;
+  char data_[kMaxLength];
   std::string HTTPResponse_;
   ServingConfig serving_config_;
 };
