@@ -12,6 +12,8 @@
 
 #include "logger.h"
 
+Response::Response(boost::asio::ip::tcp::socket* socket) : socket_(socket) {}
+
 // See StatusCode definitions in response.h
 const std::unordered_map<StatusCode, std::string> Response::status_code_map_ = {
     {OK, "OK"},

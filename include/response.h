@@ -19,7 +19,7 @@ enum StatusCode {
 class Response {
  public:
   const std::string CRLF = "\r\n";
-  Response(boost::asio::ip::tcp::socket* socket) : socket_(socket) {}
+  Response(boost::asio::ip::tcp::socket* socket);
 
   void set_status_code(StatusCode code) { status_code_ = code; }
   void set_body(const std::string& data) { data_ = data; }

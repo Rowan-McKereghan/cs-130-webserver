@@ -16,6 +16,5 @@ class Request {
   std::vector<HTTPHeader> headers;
   std::string body;
   const std::string& raw_request;
-  static Request ParseHTTPRequest(const std::string& req);
 };
 #endif
