@@ -32,9 +32,10 @@ int RequestHandlerStatic::SetHeaders(const Request &req, Response &res) {
 
   LOG(info) << "Serving file " << file_path_.string();
 
+  res.set_status_code(OK);
+
   // set MIME type
   std::string content_type;
-  res.set_status_code(OK);
   std::string file_path_str = file_path_.extension().string();
   if (file_path_str == ".txt") {
     content_type = "text/plain";

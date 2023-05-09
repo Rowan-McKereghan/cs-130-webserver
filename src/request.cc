@@ -29,7 +29,7 @@ Request::Request(const string& req_str) : raw_request(req_str) {
   }
 
   // Parse the header fields
-  while (getline(request_stream, line) && !line.empty() && line != "\r") {
+  while (getline(request_stream, line) && !line.empty()) {
     HTTPHeader header;
     size_t colon_pos = line.find(':');
     if (colon_pos != string::npos) {
@@ -37,25 +37,24 @@ Request::Request(const string& req_str) : raw_request(req_str) {
       colon_pos++;  // Move past the colon
 
       // Allow whitespace after the colon
-      while (colon_pos < line.length() && isspace(line[colon_pos])) {
-        colon_pos++;
-      }
+      size_t start = line.find_first_not_of(
+          " ", colon_pos);  // Find the first non-whitespace character
 
-      header.value = line.substr(colon_pos);
+      // Remove leading whitespace by getting a substring from the first
+      // non-whitespace character to the end of the string
+      header.value = line.substr(start);
 
       // Check if line ends with "\r\n"
       // RFC7230, § 3.5 recomends allowing just a \n to terminate while parsing
       // We still want to log if this is occurs as it is technically not a valid
       // HTTP message
-      if (line.back() != '\n' ||
-          line.length() >= 2 && line[line.length() - 2] != '\r') {
+      // note that getline strips away last \n character
+      if (line[line.length() - 1] != '\r') {
         LOG(trace) << "Header line does not end with '\\r\\n': " << line;
       }
 
-      // Trim any "\r" or "\n" characters from the header value
+      // Trim any \r characters from the header value
       header.value.erase(remove(header.value.begin(), header.value.end(), '\r'),
-                         header.value.end());
-      header.value.erase(remove(header.value.begin(), header.value.end(), '\n'),
                          header.value.end());
 
       this->headers.push_back(header);

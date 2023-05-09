@@ -41,7 +41,7 @@ std::string Response::generate_http_response() {
 
   res << generate_status_line();
   res << generate_date_header();
-  res << "Server: webserver\r\n";
+  res << "Server: webserver" << CRLF;
 
   // Set Headers
   std::ostringstream headers_stream;
