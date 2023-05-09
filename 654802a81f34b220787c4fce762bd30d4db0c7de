@@ -50,6 +50,24 @@
       "message": "Add todos in these files and config parsing cc files on how to update for next assignment based on votes from Mondays class",
       "revId": "654802a81f34b220787c4fce762bd30d4db0c7de",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69b034b9_764ae871",
+        "filename": "configs/dev_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-09T22:18:47Z",
+      "side": 1,
+      "message": "They haven\u0027t completely decided on what the interface is meant to be so I\u0027ll just add a high level TODO that explains we need to change the interface to our new interface.",
+      "parentUuid": "ac163e41_755338e9",
+      "revId": "654802a81f34b220787c4fce762bd30d4db0c7de",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
