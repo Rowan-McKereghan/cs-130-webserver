@@ -1,3 +1,0 @@
-2023-05-08 22:44:44.867797 [0x0000004001f06200] <info> Starting server...
-2023-05-08 22:44:44.886410 [0x0000004001f06200] <info> Config file parsed successfully. Port: 80
-2023-05-08 22:44:50.650546 [0x0000004001f06200] <info> Received SIGINT: 2, Exiting
