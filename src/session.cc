@@ -17,6 +17,9 @@
 #include "request_processor.h"
 #include "response.h"
 
+session::session(boost::asio::io_service& io_service, ServingConfig serving_config)
+      : socket_(io_service), serving_config_(serving_config) {}
+
 boost::asio::ip::tcp::socket& session::socket() { return socket_; }
 
 void session::start() {

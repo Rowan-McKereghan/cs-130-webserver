@@ -18,8 +18,7 @@
 
 class session : public I_session {
  public:
-  session(boost::asio::io_service& io_service, ServingConfig serving_config)
-      : socket_(io_service), serving_config_(serving_config) {}
+  session(boost::asio::io_service& io_service, ServingConfig serving_config);
 
   boost::asio::ip::tcp::socket& socket() override;
 

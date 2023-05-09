@@ -24,8 +24,8 @@ std::string RequestProcessor::extract_uri_base_path(const std::string& uri) {
   boost::algorithm::trim_right_if(stripped_uri,
                                   boost::algorithm::is_any_of("/"));
 
-  // Add back the final slash if the URI is empty or just "/"
-  if (stripped_uri.empty() || stripped_uri == "/") {
+  // Add back the final slash if the URI is now empty
+  if (stripped_uri.empty()) {
     stripped_uri = "/";
   }
 
@@ -36,8 +36,7 @@ void RequestProcessor::RouteRequest(Request& req, Response& res,
                                     ServingConfig serving_config,
                                     std::string client_ip) {
   auto uri_base_path = RequestProcessor::extract_uri_base_path(req.uri);
-  LOG(info) << "Client with IP: " << client_ip
-            << " accessed URI: " << req.uri;
+  LOG(info) << "Client with IP: " << client_ip << " accessed URI: " << req.uri;
 
   // Check if the URI matches any of the echo paths
   for (const auto& echo_path : serving_config.echo_paths) {
@@ -63,7 +62,7 @@ void RequestProcessor::RouteRequest(Request& req, Response& res,
     }
   }
 
-  // If neither echo path nor file path matches, return a 404 Not Found
+  // If neither echo path nor file path matches, return a 400 Bad Request
   // response
   LOG(warning) << "Client with IP: " << client_ip
                << " tried to access invalid URI: " << req.uri;

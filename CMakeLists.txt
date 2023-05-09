@@ -68,7 +68,7 @@ target_link_libraries(request_processor_test request_processor_lib logger_lib gt
 target_link_libraries(request_handler_static_test request_handler_static_lib request_lib response_lib logger_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(config_parser_test config_parser_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(logger_test logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
-target_link_libraries(request_handler_echo_test request_handler_echo_lib request_lib response_lib gtest_main ${Boost_LIBRARIES})
+target_link_libraries(request_handler_echo_test request_handler_echo_lib request_lib response_lib logger_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(serving_config_test serving_config_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(response_test response_lib logger_lib gtest_main ${Boost_LIBRARIES})
 
