@@ -13,19 +13,19 @@ class SessionTest : public ::testing::Test {
   boost::asio::io_service io_service;
   short port;
   ServingConfig serving_config;
-  session* sesh;
+  Session* sesh;
   boost::system::error_code ec;
 
   void SetUp() override {
     port = 80;
 
     // Default root path (for now, testing purposes only)
-    serving_config.static_file_paths = {{"static1", "/usr/src/projects/"}};
-    sesh = new session(io_service, serving_config);
+    serving_config.static_file_paths_ = {{"static1", "/usr/src/projects/"}};
+    sesh = new Session(io_service, serving_config);
   }
 
   void TearDown() override {}
 };
 
 // test returning socket
-TEST_F(SessionTest, TestSocket) { ASSERT_FALSE(sesh->socket().is_open()); }
+TEST_F(SessionTest, TestSocket) { ASSERT_FALSE(sesh->get_socket().is_open()); }

@@ -13,14 +13,14 @@ struct ServingConfig {
  public:
   // Contains the path we are serving on (e.g., "/static") and the local
   // filesystem path (e.g., "/root/dir") in a pair
-  std::vector<std::pair<std::string, std::string>> static_file_paths;
+  std::vector<std::pair<std::string, std::string>> static_file_paths_;
 
   // Contains path to perform echoing (e.g., "/echo")
-  std::vector<std::string> echo_paths;
+  std::vector<std::string> echo_paths_;
 
-  int port;
-  bool SetPortNumber(NginxConfig* config);
-  bool SetPaths(NginxConfig* config);
+  int port_;
+  bool set_port_number(NginxConfig* config);
+  bool set_paths(NginxConfig* config);
 };
 
 #endif

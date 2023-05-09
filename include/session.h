@@ -16,25 +16,25 @@
 
 // session for handling async reads and writes through a socket
 
-class session : public I_session {
+class Session : public I_session {
  public:
-  session(boost::asio::io_service& io_service, ServingConfig serving_config);
+  Session(boost::asio::io_service& io_service, ServingConfig serving_config);
 
-  boost::asio::ip::tcp::socket& socket() override;
+  boost::asio::ip::tcp::socket& get_socket() override;
 
-  void start() override;
+  void Start() override;
 
-  void handle_read(const boost::system::error_code& error,
+  void HandleRead(const boost::system::error_code& error,
                    size_t bytes_transferred);
 
 
   boost::asio::ip::tcp::socket socket_;
   enum { max_length = 1024 };
   char data_[max_length];
-  char date[100];
-  time_t t;
-  struct tm* myTime;
-  std::string HTTPResponse;
+  char date_[100];
+  time_t t_;
+  struct tm* myTime_;
+  std::string HTTPResponse_;
   ServingConfig serving_config_;
 };
 

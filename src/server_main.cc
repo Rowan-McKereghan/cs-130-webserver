@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     });
 
     // Configure Boost logging
-    init_logging();
+    InitLogging();
 
     LOG(info) << "Starting server...";
 
@@ -49,15 +49,15 @@ int main(int argc, char* argv[]) {
       return 1;
     }
 
-    if (!serving_config.SetPortNumber(&config)) {
+    if (!serving_config.set_port_number(&config)) {
       LOG(fatal) << "Failed to get port number";
       return 1;
     } else {
       LOG(info) << "Config file parsed successfully. Port: "
-                << serving_config.port;
+                << serving_config.port_;
     }
 
-    if (!serving_config.SetPaths(&config)) {
+    if (!serving_config.set_paths(&config)) {
       LOG(fatal)
           << "The config file contains not valid static or echoing paths";
       return 1;
@@ -67,11 +67,11 @@ int main(int argc, char* argv[]) {
     // obj
     auto session_constructor =
         [serving_config](boost::asio::io_service& io_service) {
-          return new session(io_service, serving_config);
+          return new Session(io_service, serving_config);
         };
 
-    server s(io_service, serving_config.port, session_constructor);
-    s.start_accept();
+    Server s(io_service, serving_config.port_, session_constructor);
+    s.StartAccept();
     io_service.run();
   } catch (std::exception& e) {
     LOG(fatal) << "Encountered exception: " << e.what() << ", Exiting";

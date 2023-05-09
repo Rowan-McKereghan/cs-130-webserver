@@ -9,12 +9,12 @@ class Request {
  public:
   // TODO: add support for request with body
   Request(const std::string& req_str);
-  std::string method;
-  std::string uri;
+  std::string method_;
+  std::string uri_;
   boost::filesystem::path file_path_;
-  int http_version;
-  std::vector<HTTPHeader> headers;
-  std::string body;
-  const std::string& raw_request;
+  int http_version_;
+  std::vector<HTTPHeader> headers_;
+  std::string body_;
+  const std::string& raw_request_;
 };
 #endif

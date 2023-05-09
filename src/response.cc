@@ -26,23 +26,23 @@ void Response::set_error_response(StatusCode code) {
   data_.clear();
 
   set_status_code(code);
-  std::string body = generate_status_line();
+  std::string body = GenerateStatusLine();
   add_header("Content-Type", "text/HTML");
   add_header("Content-Length", std::to_string(body.length()));
   set_body(body);
 }
 
-void Response::write_http_response() {
-  std::string response = generate_http_response();
-  write_to_socket(boost::asio::const_buffer(response.data(), response.size()));
-  has_written_http_response_ = true;
+void Response::WriteHTTPResponse() {
+  std::string response = GenerateHTTPResponse();
+  WriteToSocket(boost::asio::const_buffer(response.data(), response.size()));
+  wrote_http_response_ = true;
 }
 
-std::string Response::generate_http_response() {
+std::string Response::GenerateHTTPResponse() {
   std::ostringstream res;
 
-  res << generate_status_line();
-  res << generate_date_header();
+  res << GenerateStatusLine();
+  res << GenerateDateHeader();
   res << "Server: webserver" << CRLF;
 
   // Set Headers
@@ -59,7 +59,7 @@ std::string Response::generate_http_response() {
   return res.str();
 }
 
-std::string Response::generate_status_line() {
+std::string Response::GenerateStatusLine() {
   std::ostringstream status_stream;
 
   status_stream << "HTTP/1.1 " << std::to_string(status_code_) << " ";
@@ -77,7 +77,7 @@ std::string Response::generate_status_line() {
   return status_stream.str();
 }
 
-std::string Response::generate_date_header() {
+std::string Response::GenerateDateHeader() {
   time_t t;
   struct tm* myTime;
   char date[100];
@@ -88,14 +88,14 @@ std::string Response::generate_date_header() {
   return std::string(date) + CRLF;
 }
 
-void Response::write_to_socket(boost::asio::const_buffer buffer) {
+void Response::WriteToSocket(boost::asio::const_buffer buffer) {
   boost::asio::async_write(*socket_, buffer,
-                           boost::bind(&Response::handle_write, this,
+                           boost::bind(&Response::HandleWrite, this,
                                        boost::asio::placeholders::error));
 }
 
-void Response::handle_write(const boost::system::error_code& error) {
+void Response::HandleWrite(const boost::system::error_code& error) {
   if (error != boost::system::errc::success) {
-    log_error(error, "An error occurred in handle_write");
+    LogError(error, "An error occurred in handle_write");
   }
 }

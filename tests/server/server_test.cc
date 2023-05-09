@@ -10,14 +10,14 @@
 #include "gtest/gtest.h"
 #include "serving_config.h"
 
-class MockServer : public server {
+class MockServer : public Server {
  public:
   MockServer(
       boost::asio::io_service& io_service, short port,
       std::function<I_session*(boost::asio::io_service&)> session_constructor)
-      : server(io_service, port, session_constructor) {}
-  MOCK_METHOD(void, start_accept, (), (override));
-  MOCK_METHOD(void, handle_accept,
+      : Server(io_service, port, session_constructor) {}
+  MOCK_METHOD(void, StartAccept, (), (override));
+  MOCK_METHOD(void, HandleAccept,
               (I_session * new_session, const boost::system::error_code& error),
               (override));
 };
@@ -26,8 +26,8 @@ class MockSession : public I_session {
  public:
   MockSession(boost::asio::io_service& io_service, ServingConfig serving_config)
       : socket_(io_service), serving_config_(serving_config) {}
-  MOCK_METHOD(boost::asio::ip::tcp::socket&, socket, (), (override));
-  MOCK_METHOD(void, start, (), (override));
+  MOCK_METHOD(boost::asio::ip::tcp::socket&, get_socket, (), (override));
+  MOCK_METHOD(void, Start, (), (override));
 
  private:
   boost::asio::ip::tcp::socket socket_;
@@ -38,15 +38,15 @@ class ServerTest : public ::testing::Test {
  protected:
   boost::asio::io_service io_service;
   short port;
-  server* server_;
+  Server* server_;
   boost::system::error_code ec;
 
   void SetUp() override {
     port = 80;
     ServingConfig serving_config;
     // Default root path (for now, testing purposes only)
-    serving_config.static_file_paths = {{"static1", "/usr/src/projects/"}};
-    server_ = new server(io_service, port,
+    serving_config.static_file_paths_ = {{"static1", "/usr/src/projects/"}};
+    server_ = new Server(io_service, port,
                          [serving_config](boost::asio::io_service& io_service) {
                            return new MockSession(io_service, serving_config);
                          });
@@ -60,17 +60,17 @@ TEST_F(ServerTest, ServerSetup) {
   testing::DefaultValue<boost::asio::ip::tcp::socket&>::Set(sock);
 
   // set default value fo MockSession->socket() on initial run
-  server_->start_accept();
+  server_->StartAccept();
   MockSession* session1 =
       dynamic_cast<MockSession*>(server_->get_cur_session());
 
-  // becuase second call has error, start() should only be called once
-  EXPECT_CALL(*session1, start()).Times(1);
-  server_->handle_accept(session1, ec);
+  // becuase second call has error, Start() should only be called once
+  EXPECT_CALL(*session1, Start()).Times(1);
+  server_->HandleAccept(session1, ec);
   ec.assign(123, boost::system::generic_category());
-  server_->handle_accept(session1, ec);
+  server_->HandleAccept(session1, ec);
 
-  server_->start_accept();
+  server_->StartAccept();
   MockSession* session2 =
       dynamic_cast<MockSession*>(server_->get_cur_session());
   // accepting new session should have changed active session

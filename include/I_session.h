@@ -7,8 +7,8 @@
 
 class I_session {
  public:
-  virtual boost::asio::ip::tcp::socket& socket() = 0;
-  virtual void start() = 0;
+  virtual boost::asio::ip::tcp::socket& get_socket() = 0;
+  virtual void Start() = 0;
 };
 
 #endif

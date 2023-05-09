@@ -10,21 +10,21 @@
 
 using namespace std;
 
-Request::Request(const string& req_str) : raw_request(req_str) {
+Request::Request(const string& req_str) : raw_request_(req_str) {
   istringstream request_stream(req_str);
   string line;
   // Parse the first line (Request-Line)
   if (getline(request_stream, line)) {
     istringstream line_stream(line);
-    line_stream >> this->method >> this->uri;
+    line_stream >> this->method_ >> this->uri_;
     string http_version_string;
     line_stream >> http_version_string;
     if (http_version_string == "HTTP/1.1") {
-      this->http_version = 1;
+      this->http_version_ = 1;
     } else {
       // TODO: Handle other HTTP versions or default to 1.0
       LOG(trace) << "Unsupported HTTP version string: " << http_version_string;
-      this->http_version = 0;
+      this->http_version_ = 0;
     }
   }
 
@@ -57,7 +57,7 @@ Request::Request(const string& req_str) : raw_request(req_str) {
       header.value.erase(remove(header.value.begin(), header.value.end(), '\r'),
                          header.value.end());
 
-      this->headers.push_back(header);
+      this->headers_.push_back(header);
     }
   }
 }

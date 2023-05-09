@@ -25,7 +25,7 @@ TEST(ResponseTest, GenerateHttpResponse) {
       "\r\n"
       "Hello world";
 
-  std::string actual_response = res.generate_http_response();
+  std::string actual_response = res.GenerateHTTPResponse();
 
   // Use a regular expression to match the generated date
   std::regex expected_response_regex(expected_response, std::regex::extended);

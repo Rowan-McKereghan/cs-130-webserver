@@ -7,9 +7,9 @@ TEST(RequestHandlerStatic, StaticTest404) {
   boost::asio::ip::tcp::socket* socket;
   string req_data = "Irrelevant stuff in request body";
   Request req(req_data);
-  req.method = "GET";
-  req.uri = "/static/file_does_not_exist.fake-extension";
-  req.http_version = 1;
+  req.method_ = "GET";
+  req.uri_ = "/static/file_does_not_exist.fake-extension";
+  req.http_version_ = 1;
 
   Response res(socket);
   boost::filesystem::path root{"/usr/src/projects/"};
@@ -24,9 +24,9 @@ TEST(RequestHandlerStatic, StaticTestTxtFile) {
   boost::asio::ip::tcp::socket* socket;
   string req_data = "Irrelevant stuff in request body";
   Request req(req_data);
-  req.method = "GET";
-  req.uri = "/static/sample.txt";
-  req.http_version = 1;
+  req.method_ = "GET";
+  req.uri_ = "/static/sample.txt";
+  req.http_version_ = 1;
 
   Response res(socket);
   boost::filesystem::path root{
@@ -42,9 +42,9 @@ TEST(RequestHandlerStatic, StaticTestPngFile) {
   boost::asio::ip::tcp::socket* socket;
   string req_data = "Irrelevant stuff in request body";
   Request req(req_data);
-  req.method = "GET";
-  req.uri = "/static/sample.png";
-  req.http_version = 1;
+  req.method_ = "GET";
+  req.uri_ = "/static/sample.png";
+  req.http_version_ = 1;
 
   Response res(socket);
   boost::filesystem::path root{

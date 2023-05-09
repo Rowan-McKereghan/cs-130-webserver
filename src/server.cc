@@ -11,31 +11,31 @@
 
 using boost::asio::ip::tcp;
 
-server::server(
+Server::Server(
     boost::asio::io_service& io_service, short port,
     std::function<I_session*(boost::asio::io_service&)> session_constructor)
     : io_service_(io_service),
       acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
       session_constructor_(session_constructor) {}
 
-void server::start_accept() {
-  cur_session = session_constructor_(io_service_);
-  acceptor_.async_accept(cur_session->socket(),
-                         boost::bind(&server::handle_accept, this, cur_session,
+void Server::StartAccept() {
+  cur_session_ = session_constructor_(io_service_);
+  acceptor_.async_accept(cur_session_->get_socket(),
+                         boost::bind(&Server::HandleAccept, this, cur_session_,
                                      boost::asio::placeholders::error));
 }
 
-void server::handle_accept(I_session* new_session,
+void Server::HandleAccept(I_session* new_session,
                            const boost::system::error_code& ec) {
   if (ec == boost::system::errc::success) {
     LOG(trace) << "Handling Request.";
-    new_session->start();
+    new_session->Start();
   } else {
-    log_error(ec, "Failed to handle request");
+    LogError(ec, "Failed to handle request");
   }
 
   LOG(trace) << "Finished handling request, accepting new requests.";
-  start_accept();
+  StartAccept();
 }
 
-I_session* server::get_cur_session() { return cur_session; }
+I_session* Server::get_cur_session() { return cur_session_; }

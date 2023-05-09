@@ -38,24 +38,24 @@ class NginxConfigParser {
 
  private:
   enum TokenType {
-    TOKEN_TYPE_START = 0,
-    TOKEN_TYPE_NORMAL = 1,
-    TOKEN_TYPE_START_BLOCK = 2,
-    TOKEN_TYPE_END_BLOCK = 3,
-    TOKEN_TYPE_COMMENT = 4,
-    TOKEN_TYPE_STATEMENT_END = 5,
-    TOKEN_TYPE_EOF = 6,
-    TOKEN_TYPE_ERROR = 7,
-    TOKEN_TYPE_QUOTED_STRING = 8
+    kTokenTypeStart = 0,
+    kTokenTypeNormal = 1,
+    kTokenTypeStartBlock = 2,
+    kTokenTypeEndBlock = 3,
+    kTokenTypeComment = 4,
+    kTokenTypeStatementEnd = 5,
+    kTokenTypeEOF = 6,
+    kTokenTypeError = 7,
+    kTokenTypeQuotedString = 8
   };
   const char* TokenTypeAsString(TokenType type);
 
   enum TokenParserState {
-    TOKEN_STATE_INITIAL_WHITESPACE = 0,
-    TOKEN_STATE_SINGLE_QUOTE = 1,
-    TOKEN_STATE_DOUBLE_QUOTE = 2,
-    TOKEN_STATE_TOKEN_TYPE_COMMENT = 3,
-    TOKEN_STATE_TOKEN_TYPE_NORMAL = 4
+    kTokenStateInitialWhitespace = 0,
+    kTokenStateSingleQuote = 1,
+    kTokenStateDoubleQuote = 2,
+    kTokenStateTokenTypeComment = 3,
+    kTokenStateTokenTypeNormal = 4
   };
 
   TokenType ParseToken(std::istream* input, std::string* value,

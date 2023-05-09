@@ -66,8 +66,8 @@ void RequestHandlerStatic::HandleRequest(const Request &req, Response &res) {
     return;
   }
 
-  if (!res.has_written_http_response()) {
-    res.write_http_response();
+  if (!res.get_wrote_http_response()) {
+    res.WriteHTTPResponse();
   }
 
   std::ifstream file_stream(file_path_.string(),
@@ -80,6 +80,6 @@ void RequestHandlerStatic::HandleRequest(const Request &req, Response &res) {
   char buffer_arr[8192];
   while (file_stream) {
     file_stream.read(buffer_arr, sizeof(buffer_arr));
-    res.write_to_socket(boost::asio::buffer(buffer_arr, 8192));
+    res.WriteToSocket(boost::asio::buffer(buffer_arr, 8192));
   }
 }

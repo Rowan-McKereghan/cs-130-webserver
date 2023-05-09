@@ -11,7 +11,7 @@
 // Sets up logging identical to production
 class TimestampedLoggerTest : public ::testing::Test {
  protected:
-  static void SetUpTestCase() { init_logging(); }
+  static void SetUpTestCase() { InitLogging(); }
 
   static void TearDownTestCase() {}
 };
@@ -21,7 +21,7 @@ auto fixed_log_file_path = "logs/server.log";
 // Fixes log filepath for testing
 class FixedPathLoggerTest : public ::testing::Test {
  protected:
-  static void SetUpTestCase() { init_logging(fixed_log_file_path); }
+  static void SetUpTestCase() { InitLogging(fixed_log_file_path); }
 
   static void TearDownTestCase() {}
 };

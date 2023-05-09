@@ -16,6 +16,6 @@ class RequestProcessor {
                      std::string client_ip);
 
  private:
-  std::string extract_uri_base_path(const std::string& uri);
+  std::string ExtractUriBasePath(const std::string& uri);
 };
 #endif

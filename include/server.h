@@ -11,14 +11,14 @@
 
 // server that accepts http connections over a specified port
 
-class server {
+class Server {
  public:
-  server(
+  Server(
       boost::asio::io_service& io_service, short port,
       std::function<I_session*(boost::asio::io_service&)> session_constructor);
-  virtual void start_accept();
+  virtual void StartAccept();
 
-  virtual void handle_accept(I_session* new_session,
+  virtual void HandleAccept(I_session* new_session,
                              const boost::system::error_code& error);
 
   I_session* get_cur_session();
@@ -26,7 +26,7 @@ class server {
   boost::asio::io_service& io_service_;
   boost::asio::ip::tcp::acceptor acceptor_;
   std::function<I_session*(boost::asio::io_service&)> session_constructor_;
-  I_session* cur_session;
+  I_session* cur_session_;
 };
 
 #endif

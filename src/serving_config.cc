@@ -19,12 +19,12 @@
 #include "logger.h"
 #include "privileged_dirs.h"
 
-bool isOnlyDigits(const std::string& str) {
+bool IsOnlyDigits(const std::string& str) {
   return std::all_of(str.begin(), str.end(),
                      [](char c) { return std::isdigit(c); });
 }
 
-bool ServingConfig::SetPortNumber(NginxConfig* config) {
+bool ServingConfig::set_port_number(NginxConfig* config) {
   if (config != nullptr) {  // handle empty config
     /* need to look for this structure:
     server {
@@ -43,8 +43,8 @@ bool ServingConfig::SetPortNumber(NginxConfig* config) {
             std::vector<std::string> block_tokens = block_statement->tokens_;
             // look for listen <port #> in child block
             if (block_tokens.size() >= 2 && block_tokens[0] == "listen" &&
-                isOnlyDigits(block_tokens[1])) {
-              port = stoi(block_tokens[1]);
+                IsOnlyDigits(block_tokens[1])) {
+              port_ = stoi(block_tokens[1]);
               return true;
             }
           }
@@ -110,7 +110,7 @@ static bool IsInPrivilegedDirectory(const std::string& file_path) {
   return false;
 }
 
-bool ServingConfig::SetPaths(NginxConfig* config) {
+bool ServingConfig::set_paths(NginxConfig* config) {
   if (config != nullptr) {  // handle empty config
     /* need to look for this structure:
     server {
@@ -154,7 +154,7 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
                     }
 
                     if (file_path_tokens.size() >= 2) {
-                      static_file_paths.push_back(
+                      static_file_paths_.push_back(
                           {file_path_tokens[0], file_path_tokens[1]});
                     }
                   }
@@ -163,7 +163,7 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
                     std::vector<std::string> echo_path_tokens =
                         echo_path_statement->tokens_;
                     if (echo_path_tokens.size() >= 1) {
-                      echo_paths.push_back(echo_path_tokens[0]);
+                      echo_paths_.push_back(echo_path_tokens[0]);
                     }
                   }
                 }
@@ -176,8 +176,8 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
   }
 
   // Verify file paths and remove non-existing static file paths
-  auto itr = static_file_paths.begin();
-  while (itr != static_file_paths.end()) {
+  auto itr = static_file_paths_.begin();
+  while (itr != static_file_paths_.end()) {
     const auto& file_path = *itr;
     std::string file_path_key = file_path.first;
     std::string file_path_value = file_path.second;
@@ -187,14 +187,14 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
                    << " is an invalid file path with serving URI: "
                    << file_path_key << ". The current working directory is: "
                    << boost::filesystem::current_path();
-        itr = static_file_paths.erase(
+        itr = static_file_paths_.erase(
             itr);  // remove invalid path and move iterator forward
       } else if (IsInPrivilegedDirectory(file_path_value)) {
         LOG(error) << file_path_value
                    << " is an in a privileged directory. The current working "
                       "directory is: "
                    << boost::filesystem::current_path();
-        itr = static_file_paths.erase(
+        itr = static_file_paths_.erase(
             itr);  // remove invalid path and move iterator forward
       } else {
         ++itr;  // move iterator forward
@@ -203,14 +203,14 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
       LOG(error) << file_path_key
                  << "is an invalid URI. The current working directory is: "
                  << boost::filesystem::current_path();
-      itr = static_file_paths.erase(
+      itr = static_file_paths_.erase(
           itr);  // remove invalid path and move iterator forward
     }
   }
 
   // sort files in descending order of most '/', then ascending order
   // alphabetically, allows for longest prefix matching
-  std::sort(static_file_paths.begin(), static_file_paths.end(),
+  std::sort(static_file_paths_.begin(), static_file_paths_.end(),
             [](std::pair<std::string, std::string> p1,
                std::pair<std::string, std::string> p2) {
               int c1 = std::count(p1.first.begin(), p1.first.end(), '/');
@@ -223,16 +223,16 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
             });
 
   // Verify echo paths
-  auto it = echo_paths.begin();
-  while (it != echo_paths.end()) {
+  auto it = echo_paths_.begin();
+  while (it != echo_paths_.end()) {
     const auto& echo_path = *it;
     if (IsValidURI(echo_path)) {
       ++it;
     } else {
       LOG(error) << echo_path << " is an invalid echoing path";
-      it = echo_paths.erase(it);
+      it = echo_paths_.erase(it);
     }
   }
 
-  return (!static_file_paths.empty() || !echo_paths.empty());
+  return (!static_file_paths_.empty() || !echo_paths_.empty());
 }

@@ -19,10 +19,10 @@ TEST(RequestParserTest, ValidEchoRequest) {
       "Connection: keep-alive\r\n"
       "\r\n";
   Request req(req_str);
-  EXPECT_EQ(req.method, "GET");
-  EXPECT_EQ(req.uri, "/echo");
-  EXPECT_EQ(req.http_version, 1);
-  EXPECT_EQ(req.headers.size(), 6);
+  EXPECT_EQ(req.method_, "GET");
+  EXPECT_EQ(req.uri_, "/echo");
+  EXPECT_EQ(req.http_version_, 1);
+  EXPECT_EQ(req.headers_.size(), 6);
 }
 
 // Test Response class with different status codes
@@ -33,23 +33,23 @@ TEST(ResponseTest, ResponseWithStatusCodes) {
   // Test with status code OK (200)
   Response res(&socket);
   res.set_status_code(OK);
-  std::string response_str = res.generate_http_response();
+  std::string response_str = res.GenerateHTTPResponse();
   EXPECT_TRUE(response_str.find("HTTP/1.1 200 OK") != std::string::npos);
 
   // Test with status code BAD_REQUEST (400)
   res.set_status_code(BAD_REQUEST);
-  response_str = res.generate_http_response();
+  response_str = res.GenerateHTTPResponse();
   EXPECT_TRUE(response_str.find("HTTP/1.1 400 Bad Request") !=
               std::string::npos);
 
   // Test with status code NOT_FOUND (404)
   res.set_status_code(NOT_FOUND);
-  response_str = res.generate_http_response();
+  response_str = res.GenerateHTTPResponse();
   EXPECT_TRUE(response_str.find("HTTP/1.1 404 Not Found") != std::string::npos);
 
   // Test with status code INTERNAL_SERVER_ERROR (500)
   res.set_status_code(INTERNAL_SERVER_ERROR);
-  response_str = res.generate_http_response();
+  response_str = res.GenerateHTTPResponse();
   EXPECT_TRUE(response_str.find("HTTP/1.1 500 Internal Server Error") !=
               std::string::npos);
 }
