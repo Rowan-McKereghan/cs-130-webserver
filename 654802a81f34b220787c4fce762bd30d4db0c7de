@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "674fb7f9_aa33c004",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-09T02:14:34Z",
+      "side": 1,
+      "message": "small update to read me + also add todos on how to change server config parsing and config files for next assignment",
+      "revId": "654802a81f34b220787c4fce762bd30d4db0c7de",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5283c21_82be7745",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-09T02:14:34Z",
+      "side": 1,
+      "message": "Add section on how to build gcloud/docker container and on how to generate code coverage report",
+      "revId": "654802a81f34b220787c4fce762bd30d4db0c7de",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac163e41_755338e9",
+        "filename": "configs/dev_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-09T02:14:34Z",
+      "side": 1,
+      "message": "Add todos in these files and config parsing cc files on how to update for next assignment based on votes from Mondays class",
+      "revId": "654802a81f34b220787c4fce762bd30d4db0c7de",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
