@@ -86,6 +86,24 @@
       "parentUuid": "ac163e41_755338e9",
       "revId": "654802a81f34b220787c4fce762bd30d4db0c7de",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5f82735_e8d267f3",
+        "filename": "configs/dev_config",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-09T22:23:55Z",
+      "side": 1,
+      "message": "reI\u0027m marking this as resolved since we haven\u0027t been provided with a standardized API yet so I can\u0027t include those details in the current patchset.",
+      "parentUuid": "69b034b9_764ae871",
+      "revId": "654802a81f34b220787c4fce762bd30d4db0c7de",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
