@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d99a7ba4_9bcfda9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-09T22:55:55Z",
+      "side": 1,
+      "message": "Thanks for styling. LGTM.",
+      "revId": "dcd7fa5c4e5b1f0ca0b8c7acd51639b83e3f166d",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
