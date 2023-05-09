@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5372e388_6fdb8534",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-09T01:24:32Z",
+      "side": 1,
+      "message": "Small nit otherwise good.",
+      "revId": "8ae6bb189727f8fd6bbf443bb5032f8bb9a4724e",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daf2f378_85cf1b9b",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-09T01:24:32Z",
+      "side": 1,
+      "message": "Make this a const class obj initialized to its current state for now just so we can access it elsewhere, keep the todo next to it.",
+      "revId": "8ae6bb189727f8fd6bbf443bb5032f8bb9a4724e",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
