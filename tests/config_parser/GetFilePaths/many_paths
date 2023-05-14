@@ -1,11 +1,27 @@
 server {
   listen 80;
-  static_file_paths {
-    /static1/static2 ../static_test_files;
-    /static3 ../static_test_files;
-    /static3/sub ../static_test_files;
-    /static4 ../static_test_files;
-    /static4/sub1 ../static_test_files;
-    /static4/sub1/sub2 ../static_test_files;
+
+  location /static1/static2 StaticHandler {
+    root ../static_test_files;
+  }
+
+  location /static3 StaticHandler {
+    root ../static_test_files;
+  }
+
+  location /static3/sub StaticHandler {
+    root ../static_test_files;
+  }
+
+  location /static4 StaticHandler {
+    root ../static_test_files;
+  }
+
+  location /static4/sub1 StaticHandler {
+    root ../static_test_files;
+  }
+
+  location /static4/sub1/sub2 StaticHandler {
+    root ../static_test_files;
   }
 }

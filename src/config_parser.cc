@@ -262,6 +262,7 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
     } else if (token_type == kTokenTypeEndBlock) {
       bracket_balance--;
       if (last_token_type != kTokenTypeStatementEnd &&
+          last_token_type != kTokenTypeStartBlock && 
           last_token_type != kTokenTypeEndBlock) {
         // Error.
         break;

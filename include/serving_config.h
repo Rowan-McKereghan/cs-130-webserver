@@ -19,8 +19,11 @@ struct ServingConfig {
   std::vector<std::string> echo_paths_;
 
   int port_;
-  bool set_port_number(NginxConfig* config);
-  bool set_paths(NginxConfig* config);
+  bool SetPortNumber(NginxConfig* config);
+  bool SetPaths(NginxConfig* config);
+
+ private:
+  bool ValidatePaths();
 };
 
 #endif

@@ -1,8 +1,15 @@
 server {
     listen 80;
-    static_file_paths {
-        /static2 /usr/bin;
-        /static2 /usr/bin/make;
-        /static3 ../static_test_files;
+
+    location /static2 StaticHandler {
+        root /usr/bin;
+    }
+
+    location /static3 StaticHandler {
+        root /usr/bin/make;
+    }
+
+    location /static4 StaticHandler {
+        root ../static_test_files;
     }
 }

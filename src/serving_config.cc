@@ -24,7 +24,7 @@ bool IsOnlyDigits(const std::string& str) {
                      [](char c) { return std::isdigit(c); });
 }
 
-bool ServingConfig::set_port_number(NginxConfig* config) {
+bool ServingConfig::SetPortNumber(NginxConfig* config) {
   if (config != nullptr) {  // handle empty config
     /* need to look for this structure:
     server {
@@ -110,19 +110,17 @@ static bool IsInPrivilegedDirectory(const std::string& file_path) {
   return false;
 }
 
-bool ServingConfig::set_paths(NginxConfig* config) {
+bool ServingConfig::SetPaths(NginxConfig* config) {
   if (config != nullptr) {  // handle empty config
     /* need to look for this structure:
     server {
       ...
-      static_file_paths {
-        key1 value1;
-        key2 value2;
-        ...
+      location /echo EchoHandler {
+
       }
-      echo_paths {
-        echo1;
-        echo2;
+      ...
+      location /static StaticHandler {
+        root ./files;
       }
       ...
     }
@@ -136,36 +134,30 @@ bool ServingConfig::set_paths(NginxConfig* config) {
           for (auto block_statement : child_block->statements_) {
             std::vector<std::string> block_tokens = block_statement->tokens_;
             // look for static_file_paths or echo_paths block in child block
-            if (block_tokens.size() >= 1 &&
-                (block_tokens[0] == "static_file_paths" ||
-                 block_tokens[0] == "echo_paths")) {
+            if (block_tokens.size() >= 3 && block_tokens[0] == "location") {
+              std::string serving_path = block_tokens[1];
+              std::string handler_name = block_tokens[2];
               NginxConfig* paths_block = block_statement->child_block_.get();
               if (paths_block != nullptr) {
-                if (block_tokens[0] == "static_file_paths") {
-                  for (auto file_path_statement : paths_block->statements_) {
-                    std::vector<std::string> file_path_tokens =
-                        file_path_statement->tokens_;
+                if (handler_name == "StaticHandler") {
+                  auto statements = paths_block->statements_;
+                  std::vector<std::string> file_path_tokens =
+                      statements[0]->tokens_;
 
-                    // Remove trailing slash if it exists
-                    for (auto& path : file_path_tokens) {
-                      if (!path.empty() && path[path.size() - 1] == '/') {
-                        path.erase(path.size() - 1);
-                      }
-                    }
-
-                    if (file_path_tokens.size() >= 2) {
-                      static_file_paths_.push_back(
-                          {file_path_tokens[0], file_path_tokens[1]});
+                  // Remove trailing slash if it exists
+                  for (auto& path : file_path_tokens) {
+                    if (!path.empty() && path[path.size() - 1] == '/') {
+                      path.erase(path.size() - 1);
                     }
                   }
-                } else if (block_tokens[0] == "echo_paths") {
-                  for (auto echo_path_statement : paths_block->statements_) {
-                    std::vector<std::string> echo_path_tokens =
-                        echo_path_statement->tokens_;
-                    if (echo_path_tokens.size() >= 1) {
-                      echo_paths_.push_back(echo_path_tokens[0]);
-                    }
+
+                  if (file_path_tokens.size() >= 2 &&
+                      file_path_tokens[0] == "root") {
+                    static_file_paths_.push_back(
+                        {serving_path, file_path_tokens[1]});
                   }
+                } else if (handler_name == "EchoHandler") {
+                  echo_paths_.push_back(serving_path);
                 }
               }
             }
@@ -175,6 +167,24 @@ bool ServingConfig::set_paths(NginxConfig* config) {
     }
   }
 
+  // sort files in descending order of most '/', then ascending order
+  // alphabetically, allows for longest prefix matching
+  std::sort(static_file_paths_.begin(), static_file_paths_.end(),
+            [](std::pair<std::string, std::string> p1,
+               std::pair<std::string, std::string> p2) {
+              int c1 = std::count(p1.first.begin(), p1.first.end(), '/');
+              int c2 = std::count(p2.first.begin(), p2.first.end(), '/');
+              if (c1 != c2) {
+                return c1 > c2;
+              } else {
+                return p1.first < p2.first;
+              }
+            });
+
+  return ValidatePaths();
+}
+
+bool ServingConfig::ValidatePaths() {
   // Verify file paths and remove non-existing static file paths
   auto itr = static_file_paths_.begin();
   while (itr != static_file_paths_.end()) {
@@ -196,6 +206,11 @@ bool ServingConfig::set_paths(NginxConfig* config) {
                    << boost::filesystem::current_path();
         itr = static_file_paths_.erase(
             itr);  // remove invalid path and move iterator forward
+      } else if (itr != static_file_paths_.begin() &&
+                 std::prev(itr)->first == file_path_key) {
+        LOG(error) << "Multiple root directories specified for"
+                   << file_path_value << ". The current working directory is: "
+                   << boost::filesystem::current_path();
       } else {
         ++itr;  // move iterator forward
       }
@@ -207,20 +222,6 @@ bool ServingConfig::set_paths(NginxConfig* config) {
           itr);  // remove invalid path and move iterator forward
     }
   }
-
-  // sort files in descending order of most '/', then ascending order
-  // alphabetically, allows for longest prefix matching
-  std::sort(static_file_paths_.begin(), static_file_paths_.end(),
-            [](std::pair<std::string, std::string> p1,
-               std::pair<std::string, std::string> p2) {
-              int c1 = std::count(p1.first.begin(), p1.first.end(), '/');
-              int c2 = std::count(p2.first.begin(), p2.first.end(), '/');
-              if (c1 != c2) {
-                return c1 > c2;
-              } else {
-                return p1.first < p2.first;
-              }
-            });
 
   // Verify echo paths
   auto it = echo_paths_.begin();

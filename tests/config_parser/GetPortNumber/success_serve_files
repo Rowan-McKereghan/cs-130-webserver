@@ -3,7 +3,7 @@ foo "bar";
 server {
   listen   80;
   server_name foo.com;
-  static_file_paths {
-    /static static_test_files;
+  location /static StaticHandler {
+    root static_test_files;
   }
 }

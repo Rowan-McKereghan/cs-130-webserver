@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
       return 1;
     }
 
-    if (!serving_config.set_port_number(&config)) {
+    if (!serving_config.SetPortNumber(&config)) {
       LOG(fatal) << "Failed to get port number";
       return 1;
     } else {
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
                 << serving_config.port_;
     }
 
-    if (!serving_config.set_paths(&config)) {
+    if (!serving_config.SetPaths(&config)) {
       LOG(fatal)
           << "The config file contains not valid static or echoing paths";
       return 1;

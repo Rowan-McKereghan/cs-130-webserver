@@ -1,6 +1,6 @@
 server {
     listen 80;
-    echo_paths {
-        /echoing;
+    location /echoing EchoHandler {
+        
     }
 }
