@@ -2,6 +2,6 @@
 
 #include "echo_handler.h"
 
-EchoHandler* EchoHandlerFactory::CreateHandler(std::string& uri, NginxConfig& config) {
+EchoHandler* EchoHandlerFactory::CreateHandler(std::string& file_path) {
   return new EchoHandler();
 }

@@ -18,6 +18,7 @@ Response::Response(boost::asio::ip::tcp::socket* socket) : socket_(socket) {}
 const std::unordered_map<StatusCode, std::string> Response::status_code_map_ = {
     {OK, "OK"},
     {BAD_REQUEST, "Bad Request"},
+    {FORBIDDEN, "Forbidden"},
     {NOT_FOUND, "Not Found"},
     {INTERNAL_SERVER_ERROR, "Internal Server Error"}};
 

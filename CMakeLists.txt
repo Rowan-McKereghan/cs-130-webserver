@@ -50,7 +50,7 @@ target_link_libraries(request_dispatcher_lib echo_handler_lib static_handler_lib
 target_link_libraries(static_handler_lib logger_lib response_lib ${Boost_LIBRARIES})
 target_link_libraries(request_lib logger_lib ${Boost_LIBRARIES})
 target_link_libraries(response_lib logger_lib static_handler_lib ${Boost_LIBRARIES})
-target_link_libraries(serving_config_lib logger_lib config_parser_lib ${Boost_LIBRARIES})
+target_link_libraries(serving_config_lib logger_lib config_parser_lib echo_handler_factory_lib static_handler_factory_lib ${Boost_LIBRARIES})
 target_link_libraries(static_handler_factory_lib logger_lib config_parser_lib static_handler_lib ${Boost_LIBRARIES})
 target_link_libraries(echo_handler_factory_lib logger_lib config_parser_lib echo_handler_lib ${Boost_LIBRARIES})
 
@@ -64,6 +64,7 @@ add_executable(echo_handler_test tests/request/echo_handler_test.cc)
 add_executable(static_handler_test tests/request/static_handler_test.cc)
 add_executable(serving_config_test tests/serving_config/serving_config_test.cc)
 add_executable(response_test tests/response/response_test.cc)
+add_executable(static_handler_factory_test tests/factories/static_handler_factory_test.cc)
 
 target_link_libraries(webserver_test server_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(session_test session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
@@ -73,8 +74,9 @@ target_link_libraries(static_handler_test static_handler_lib request_lib respons
 target_link_libraries(config_parser_test config_parser_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(logger_test logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(echo_handler_test echo_handler_lib request_lib response_lib logger_lib gtest_main ${Boost_LIBRARIES})
-target_link_libraries(serving_config_test serving_config_lib gtest_main ${Boost_LIBRARIES})
+target_link_libraries(serving_config_test serving_config_lib logger_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(response_test response_lib logger_lib gtest_main ${Boost_LIBRARIES})
+target_link_libraries(static_handler_factory_test static_handler_factory_lib logger_lib gtest_main ${Boost_LIBRARIES})
 
 add_test(NAME integration_test
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration_test.sh
@@ -90,6 +92,7 @@ gtest_discover_tests(echo_handler_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_
 gtest_discover_tests(static_handler_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(serving_config_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(response_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+gtest_discover_tests(static_handler_factory_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 include(cmake/CodeCoverageReportConfig.cmake)
 generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_test request_dispatcher_test echo_handler_test static_handler_test serving_config_test response_test)

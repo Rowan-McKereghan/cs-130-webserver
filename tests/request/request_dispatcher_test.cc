@@ -3,9 +3,10 @@
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 
+#include "echo_handler.h"
+#include "echo_handler_factory.h"
 #include "gtest/gtest.h"
 #include "request.h"
-#include "echo_handler.h"
 #include "response.h"
 
 TEST(RequestDispatcherTest, RouteRequest) {
@@ -25,10 +26,10 @@ TEST(RequestDispatcherTest, RouteRequest) {
   Request req(req_str);
   Response res(socket);
   RequestDispatcher req_dispatcher;
-  ServingConfig serving_config{
-      {{"/static1", "/usr/src/projects/"}},  // static_file_paths
-      {"/echo2"}                             // echo_paths
-  };
+  EchoHandlerFactory* echo_handler_factory = new EchoHandlerFactory();
+  ServingConfig serving_config{             // echo_paths
+      {{"/echo2", echo_handler_factory}}};   // handler_factories
+  // serving_config.handler_factories["/echo2"] = new EchoHandlerFactory();
   req_dispatcher.RouteRequest(req, res, serving_config, "127.0.0.1");
   EXPECT_EQ(res.get_status_code(), OK);
   EXPECT_EQ(res.get_headers().size(), 2);
