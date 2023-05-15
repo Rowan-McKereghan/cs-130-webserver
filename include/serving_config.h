@@ -9,6 +9,12 @@
 
 #include "config_parser.h"
 
+const int INVALID_PATH = 1;
+const int PRIVILEGED_DIR = 2;
+const int MULTIPLE_ROOTS = 3;
+const int INVALID_STATIC_URI = 4;
+const int INVALID_ECHO_URI = 5;
+
 struct ServingConfig {
  public:
   // Contains the path we are serving on (e.g., "/static") and the local
@@ -20,10 +26,10 @@ struct ServingConfig {
 
   int port_;
   bool SetPortNumber(NginxConfig* config);
-  bool SetPaths(NginxConfig* config);
+  int SetPaths(NginxConfig* config);
 
  private:
-  bool ValidatePaths();
+  int ValidatePaths();
 };
 
 #endif

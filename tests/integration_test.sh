@@ -1,12 +1,13 @@
 #!/bin/bash
 
-#this script must be run in the tests folder bc of below path dependency
+#running in root directory to match relative paths for config file in production
+cd ..
 
-if [ -e "../build/bin/webserver" ]
+if [ -e "./build/bin/webserver" ]
 then
-    ../build/bin/webserver config_parser/GetPortNumber/success_serve_files &
+    ./build/bin/webserver configs/dev_config &
 else
-    ../build_coverage/bin/webserver config_parser/GetPortNumber/success_serve_files &
+    ./build_coverage/bin/webserver configs/dev_config &
 fi
 
 webserverPID=$!
@@ -15,14 +16,14 @@ number=0
 numberOfTests=0
 numberOfSucceededTests=0
 finalExit=0
-fname=IntegrationDiffs/integration_result_curl_basic.txt
+fname=tests/IntegrationDiffs/integration_result_curl_basic.txt
 
 # ----------------
 # BASIC CURL TEST
 # Should return nothing
 curl localhost:80 -s -S -o "$fname"
 
-diff -b  -I '^Date*' "IntegrationDiffs/expected_curl_basic.txt" "$fname"
+diff -b  -I '^Date*' "tests/IntegrationDiffs/expected_curl_basic.txt" "$fname"
 
 diffExit=$?
 
@@ -41,12 +42,12 @@ fi
 # ----------------
 # NC INCORRECT TEST
 
-fname=IntegrationDiffs/integration_result_nc_incorrect_result.txt
+fname=tests/IntegrationDiffs/integration_result_nc_incorrect_result.txt
 
 echo -e "Nonsense Input" | \
     nc localhost 80 > "$fname"
 
-diff -b -I '^Date*' "IntegrationDiffs/expected_nc_incorrect.txt" "$fname"
+diff -b -I '^Date*' "tests/IntegrationDiffs/expected_nc_incorrect.txt" "$fname"
 
 diffExit=$?
 
@@ -66,11 +67,11 @@ fi
 # ----------------
 # TXT FILE TRANSFER TEST
 
-fname=IntegrationDiffs/integration_result_txt_file_transfer.txt
+fname=tests/IntegrationDiffs/integration_result_txt_file_transfer.txt
 
 curl localhost:80/static/sample.txt -s -S -o "$fname"
 
-diff -b "IntegrationDiffs/expected_txt_file_transfer.txt" "$fname"
+diff -b "tests/IntegrationDiffs/expected_txt_file_transfer.txt" "$fname"
 
 diffExit=$?
 
@@ -90,11 +91,11 @@ fi
 # ----------------
 # JPEG FILE TRANSFER TEST
 
-fname=IntegrationDiffs/integration_result_jpeg_file_transfer.jpeg
+fname=tests/IntegrationDiffs/integration_result_jpeg_file_transfer.jpeg
 
 curl localhost:80/static/sample.jpeg -s -S -o "$fname"
 
-diff -b "IntegrationDiffs/expected_jpeg_file_transfer.jpeg" "$fname"
+diff -b "tests/IntegrationDiffs/expected_jpeg_file_transfer.jpeg" "$fname"
 
 diffExit=$?
 
@@ -114,11 +115,11 @@ fi
 # ----------------
 # PDF FILE TRANSFER TEST
 
-fname=IntegrationDiffs/integration_result_pdf_file_transfer.pdf
+fname=tests/IntegrationDiffs/integration_result_pdf_file_transfer.pdf
 
 curl localhost:80/static/sample.pdf -s -S -o "$fname"
 
-diff -b "IntegrationDiffs/expected_pdf_file_transfer.pdf" "$fname"
+diff -b "tests/IntegrationDiffs/expected_pdf_file_transfer.pdf" "$fname"
 
 diffExit=$?
 
@@ -138,11 +139,11 @@ fi
 # ----------------
 # ZIP FILE TRANSFER TEST
 
-fname=IntegrationDiffs/integration_result_zip_file_transfer.zip
+fname=tests/IntegrationDiffs/integration_result_zip_file_transfer.zip
 
 curl localhost:80/static/sample.zip -s -S -o "$fname"
 
-diff -b "IntegrationDiffs/expected_zip_file_transfer.zip" "$fname"
+diff -b "tests/IntegrationDiffs/expected_zip_file_transfer.zip" "$fname"
 
 diffExit=$?
 
@@ -171,7 +172,7 @@ exit $finalExit
 
 
 
-#diff btwn expected curl and curl result (IntegrationDiffs/expected_curl_basic.txt)
+#diff btwn expected curl and curl result (tests/IntegrationDiffs/expected_curl_basic.txt)
 
 
 

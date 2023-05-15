@@ -57,9 +57,9 @@ int main(int argc, char* argv[]) {
                 << serving_config.port_;
     }
 
-    if (!serving_config.SetPaths(&config)) {
+    if (serving_config.SetPaths(&config)) {
       LOG(fatal)
-          << "The config file contains not valid static or echoing paths";
+          << "The config file contains invalid static or echoing paths";
       return 1;
     }
 
