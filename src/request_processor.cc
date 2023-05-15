@@ -56,6 +56,8 @@ void RequestProcessor::RouteRequest(Request& req, Response& res,
       LOG(info) << "Request matched to " << file_path.first
                 << ", attempting to server file: " << absolute_file_path;
       boost::filesystem::path final_file_path(absolute_file_path);
+      std::cout << boost::filesystem::absolute(absolute_file_path).string()
+                << std::endl;
       RequestHandlerStatic handler(final_file_path);
       handler.HandleRequest(req, res);
       return;

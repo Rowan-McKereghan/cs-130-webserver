@@ -1,0 +1,6 @@
+server {
+    listen 80;
+    location static StaticHandler {
+        root ../static_test_files;
+    }
+}

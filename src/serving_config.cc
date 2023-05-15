@@ -110,7 +110,7 @@ static bool IsInPrivilegedDirectory(const std::string& file_path) {
   return false;
 }
 
-bool ServingConfig::SetPaths(NginxConfig* config) {
+int ServingConfig::SetPaths(NginxConfig* config) {
   if (config != nullptr) {  // handle empty config
     /* need to look for this structure:
     server {
@@ -184,10 +184,10 @@ bool ServingConfig::SetPaths(NginxConfig* config) {
   return ValidatePaths();
 }
 
-bool ServingConfig::ValidatePaths() {
+int ServingConfig::ValidatePaths() {
   // Verify file paths and remove non-existing static file paths
-  auto itr = static_file_paths_.begin();
-  while (itr != static_file_paths_.end()) {
+  for (auto itr = static_file_paths_.begin(); itr != static_file_paths_.end();
+       itr++) {
     const auto& file_path = *itr;
     std::string file_path_key = file_path.first;
     std::string file_path_value = file_path.second;
@@ -197,43 +197,35 @@ bool ServingConfig::ValidatePaths() {
                    << " is an invalid file path with serving URI: "
                    << file_path_key << ". The current working directory is: "
                    << boost::filesystem::current_path();
-        itr = static_file_paths_.erase(
-            itr);  // remove invalid path and move iterator forward
+        return INVALID_PATH;
       } else if (IsInPrivilegedDirectory(file_path_value)) {
         LOG(error) << file_path_value
                    << " is an in a privileged directory. The current working "
                       "directory is: "
                    << boost::filesystem::current_path();
-        itr = static_file_paths_.erase(
-            itr);  // remove invalid path and move iterator forward
+        return PRIVILEGED_DIR;
       } else if (itr != static_file_paths_.begin() &&
                  std::prev(itr)->first == file_path_key) {
-        LOG(error) << "Multiple root directories specified for"
+        LOG(error) << "Multiple root directories specified for "
                    << file_path_value << ". The current working directory is: "
                    << boost::filesystem::current_path();
-      } else {
-        ++itr;  // move iterator forward
+        return MULTIPLE_ROOTS;
       }
     } else {
       LOG(error) << file_path_key
                  << "is an invalid URI. The current working directory is: "
                  << boost::filesystem::current_path();
-      itr = static_file_paths_.erase(
-          itr);  // remove invalid path and move iterator forward
+      return INVALID_STATIC_URI;
     }
   }
 
   // Verify echo paths
-  auto it = echo_paths_.begin();
-  while (it != echo_paths_.end()) {
-    const auto& echo_path = *it;
-    if (IsValidURI(echo_path)) {
-      ++it;
-    } else {
+  for (auto echo_path : echo_paths_) {
+    if (!IsValidURI(echo_path)) {
       LOG(error) << echo_path << " is an invalid echoing path";
-      it = echo_paths_.erase(it);
+      return INVALID_ECHO_URI;
     }
   }
 
-  return (!static_file_paths_.empty() || !echo_paths_.empty());
+  return 0;
 }

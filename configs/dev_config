@@ -1,9 +1,10 @@
 server {
     listen 80;
-    static_file_paths {
-        /static tests/static_test_files;
+    location /static StaticHandler {
+        root tests/static_test_files;
     }
-    echo_paths {
-        /echo;
+
+    location /echo EchoHandler {
+
     }
 }
