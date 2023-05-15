@@ -1,7 +1,8 @@
 #include "request.h"
 
-#include "gtest/gtest.h"
 #include "echo_handler.h"
+#include "echo_handler_factory.h"
+#include "gtest/gtest.h"
 #include "request_dispatcher.h"
 
 // Test the Request::ParseHTTPRequest() method
@@ -72,12 +73,12 @@ TEST(RequestParserTest, InvalidRequestType) {
   Request req(req_str);
   Response res(&socket);
   RequestDispatcher req_dispatcher;
+  EchoHandlerFactory* echo_handler_factory = new EchoHandlerFactory();
   ServingConfig serving_config{
-      {{"/static1", "/usr/src/projects/"}},  // static_file_paths
-      {"/echo2"}                             // echo_paths
-  };
+      {{"/echo2", echo_handler_factory}}};  // handler_factories
   std::string client_ip = "127.0.0.1";
   req_dispatcher.RouteRequest(req, res, serving_config, client_ip);
   EXPECT_EQ(res.get_status_code(), BAD_REQUEST);
   EXPECT_EQ(res.get_headers().size(), 2);
+  delete echo_handler_factory;
 }

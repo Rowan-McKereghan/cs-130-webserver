@@ -3,6 +3,22 @@
 #include "gtest/gtest.h"
 #include "response.h"
 
+TEST(StaticHandler, StaticTest403) {
+  boost::asio::ip::tcp::socket* socket;
+  string req_data = "Irrelevant stuff in request body";
+  Request req(req_data);
+  req.method_ = "GET";
+  req.uri_ = "/static/sample.txt";
+  req.http_version_ = 1;
+
+  Response res(socket);
+  std::string root = "/usr/bin";
+  StaticHandler handler(root);
+  handler.SetHeaders(req, res);
+  EXPECT_EQ(res.get_headers().size(), 2);
+  EXPECT_EQ(res.get_status_code(), FORBIDDEN);
+}
+
 TEST(StaticHandler, StaticTest404) {
   boost::asio::ip::tcp::socket* socket;
   string req_data = "Irrelevant stuff in request body";

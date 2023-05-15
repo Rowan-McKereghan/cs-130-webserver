@@ -13,9 +13,7 @@ using namespace std;
 
 class I_RequestHandlerFactory {
  public:
-  // NginxConfig argument is intended, just has't been implemented yet
-  virtual I_RequestHandler* CreateHandler(std::string& uri,
-                                          NginxConfig& config) = 0;
+  virtual I_RequestHandler* CreateHandler(std::string& file_path) = 0;
 };
 
 #endif

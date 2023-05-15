@@ -43,9 +43,9 @@ class ServerTest : public ::testing::Test {
 
   void SetUp() override {
     port = 80;
+
     ServingConfig serving_config;
     // Default root path (for now, testing purposes only)
-    serving_config.static_file_paths_ = {{"static1", "/usr/src/projects/"}};
     server_ = new Server(io_service, port,
                          [serving_config](boost::asio::io_service& io_service) {
                            return new MockSession(io_service, serving_config);

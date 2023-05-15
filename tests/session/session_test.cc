@@ -19,8 +19,6 @@ class SessionTest : public ::testing::Test {
   void SetUp() override {
     port = 80;
 
-    // Default root path (for now, testing purposes only)
-    serving_config.static_file_paths_ = {{"static1", "/usr/src/projects/"}};
     sesh = new Session(io_service, serving_config);
   }
 

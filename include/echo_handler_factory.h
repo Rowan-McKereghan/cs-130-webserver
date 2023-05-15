@@ -8,7 +8,6 @@
 
 class EchoHandlerFactory : public I_RequestHandlerFactory {
  public:
-  // NginxConfig argument is intended, just has't been implemented yet
-  EchoHandler* CreateHandler(std::string& uri, NginxConfig& config);
+  EchoHandler* CreateHandler(std::string& file_path);
 };
 #endif
