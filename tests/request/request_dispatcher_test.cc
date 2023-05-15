@@ -1,14 +1,14 @@
-#include "request_processor.h"
+#include "request_dispatcher.h"
 
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 
 #include "gtest/gtest.h"
 #include "request.h"
-#include "request_handler_echo.h"
+#include "echo_handler.h"
 #include "response.h"
 
-TEST(RequestProcessorTest, RouteRequest) {
+TEST(RequestDispatcherTest, RouteRequest) {
   boost::asio::ip::tcp::socket* socket;
   std::string req_str =
       "GET /echo2 HTTP/1.1\r\n"
@@ -24,12 +24,12 @@ TEST(RequestProcessorTest, RouteRequest) {
       "\r\n";
   Request req(req_str);
   Response res(socket);
-  RequestProcessor req_processor;
+  RequestDispatcher req_dispatcher;
   ServingConfig serving_config{
       {{"/static1", "/usr/src/projects/"}},  // static_file_paths
       {"/echo2"}                             // echo_paths
   };
-  req_processor.RouteRequest(req, res, serving_config, "127.0.0.1");
+  req_dispatcher.RouteRequest(req, res, serving_config, "127.0.0.1");
   EXPECT_EQ(res.get_status_code(), OK);
   EXPECT_EQ(res.get_headers().size(), 2);
   EXPECT_EQ(res.get_data(), req_str);

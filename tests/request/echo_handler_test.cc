@@ -1,10 +1,10 @@
-#include "request_handler_echo.h"
+#include "echo_handler.h"
 
 #include "gtest/gtest.h"
 #include "request.h"
 #include "response.h"
 
-TEST(RequestHandlerEcho, EchoTest) {
+TEST(EchoHandler, EchoTest) {
   boost::asio::ip::tcp::socket* socket;
   std::string req_data = "Sample data to be echoed";
   Request req(req_data);
@@ -13,7 +13,7 @@ TEST(RequestHandlerEcho, EchoTest) {
   req.http_version_ = 1;
 
   Response res(socket);
-  RequestHandlerEcho handler;
+  EchoHandler handler;
   handler.HandleRequest(req, res);
 
   EXPECT_EQ(res.get_data(), req.raw_request_);

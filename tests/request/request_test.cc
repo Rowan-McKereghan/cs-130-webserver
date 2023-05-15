@@ -1,8 +1,8 @@
 #include "request.h"
 
 #include "gtest/gtest.h"
-#include "request_handler_echo.h"
-#include "request_processor.h"
+#include "echo_handler.h"
+#include "request_dispatcher.h"
 
 // Test the Request::ParseHTTPRequest() method
 TEST(RequestParserTest, ValidEchoRequest) {
@@ -71,13 +71,13 @@ TEST(RequestParserTest, InvalidRequestType) {
       "\r\n";
   Request req(req_str);
   Response res(&socket);
-  RequestProcessor req_processor;
+  RequestDispatcher req_dispatcher;
   ServingConfig serving_config{
       {{"/static1", "/usr/src/projects/"}},  // static_file_paths
       {"/echo2"}                             // echo_paths
   };
   std::string client_ip = "127.0.0.1";
-  req_processor.RouteRequest(req, res, serving_config, client_ip);
+  req_dispatcher.RouteRequest(req, res, serving_config, client_ip);
   EXPECT_EQ(res.get_status_code(), BAD_REQUEST);
   EXPECT_EQ(res.get_headers().size(), 2);
 }

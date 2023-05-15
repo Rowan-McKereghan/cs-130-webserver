@@ -1,4 +1,4 @@
-#include "request_handler_static.h"
+#include "static_handler.h"
 
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
@@ -12,10 +12,10 @@
 
 const int MAX_FILE_SIZE = 10485760;
 
-RequestHandlerStatic::RequestHandlerStatic(boost::filesystem::path file_path)
-    : file_path_(file_path) {}
+StaticHandler::StaticHandler(std::string file_path)
+    : file_path_(boost::filesystem::path(file_path)) {}
 
-int RequestHandlerStatic::SetHeaders(const Request &req, Response &res) {
+int StaticHandler::SetHeaders(const Request &req, Response &res) {
   if (!boost::filesystem::is_regular_file(
           file_path_)) {  // im not sure about the case when we serve
                           // symlinks... does it work the same?
@@ -61,7 +61,7 @@ int RequestHandlerStatic::SetHeaders(const Request &req, Response &res) {
   return 0;
 }
 
-void RequestHandlerStatic::HandleRequest(const Request &req, Response &res) {
+void StaticHandler::HandleRequest(const Request &req, Response &res) {
   if (SetHeaders(req, res) == -1) {
     return;
   }
