@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3383e09a_c84e8065",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T06:07:05Z",
+      "side": 1,
+      "message": "Only one comment. Other than that LGTM.",
+      "revId": "da3af33a0f0385e6cca3bb1654d95272e5d6385e",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5527c1f_0b666453",
+        "filename": "src/echo_handler_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T06:07:05Z",
+      "side": 1,
+      "message": "Maybe add a file where we can add tests for echo_handler_factory in the future.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 27
+      },
+      "revId": "da3af33a0f0385e6cca3bb1654d95272e5d6385e",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
