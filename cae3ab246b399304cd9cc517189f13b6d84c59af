@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d18ddbec_4429da9c",
+        "filename": "src/server_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T04:39:39Z",
+      "side": 1,
+      "message": "Going back to my point about the appropriate behavior when we find an error: We seem to be exiting the program when there\u0027s an issue with the file in some places and not in others.",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 40
+      },
+      "revId": "cae3ab246b399304cd9cc517189f13b6d84c59af",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "25c7302b_0f1d266a",
         "filename": "src/serving_config.cc",
         "patchSetId": 1
