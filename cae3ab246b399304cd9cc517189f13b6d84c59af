@@ -41,6 +41,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa113b93_ff55766f",
+        "filename": "src/server_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-15T05:22:43Z",
+      "side": 1,
+      "message": "addressed in https://code.cs130.org/c/ctrl-c-ctrl-v/+/14378",
+      "parentUuid": "d18ddbec_4429da9c",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 40
+      },
+      "revId": "cae3ab246b399304cd9cc517189f13b6d84c59af",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25c7302b_0f1d266a",
@@ -64,6 +88,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef8581a6_693094ba",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-15T05:22:43Z",
+      "side": 1,
+      "message": "addressed in https://code.cs130.org/c/ctrl-c-ctrl-v/+/14378",
+      "parentUuid": "25c7302b_0f1d266a",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 38
+      },
+      "revId": "cae3ab246b399304cd9cc517189f13b6d84c59af",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a51eefa3_770a4b28",
@@ -77,6 +125,30 @@
       "writtenOn": "2023-05-15T02:02:51Z",
       "side": 1,
       "message": "Do you think it would be more appropriate to kill the program here since the configuration file specified is technically invalid?",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 56
+      },
+      "revId": "cae3ab246b399304cd9cc517189f13b6d84c59af",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77150396_f48f8d2f",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-15T05:22:43Z",
+      "side": 1,
+      "message": "addressed in https://code.cs130.org/c/ctrl-c-ctrl-v/+/14378",
+      "parentUuid": "a51eefa3_770a4b28",
       "range": {
         "startLine": 209,
         "startChar": 6,
