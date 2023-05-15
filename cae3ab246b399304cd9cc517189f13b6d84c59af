@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a45159e_b3ebca94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T02:02:51Z",
+      "side": 1,
+      "message": "Good job! I had a few questions about our choices on the behavior of the program when there are issues caused by the config passed in that I have left below. We can mark these decisions as TODOs if there are more pressing concerns to be dealt with right now.",
+      "revId": "cae3ab246b399304cd9cc517189f13b6d84c59af",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25c7302b_0f1d266a",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T02:02:51Z",
+      "side": 1,
+      "message": "Similarly to the other comment, should we let the program run with any invalid configuration options or crash it right away?",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 38
+      },
+      "revId": "cae3ab246b399304cd9cc517189f13b6d84c59af",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a51eefa3_770a4b28",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T02:02:51Z",
+      "side": 1,
+      "message": "Do you think it would be more appropriate to kill the program here since the configuration file specified is technically invalid?",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 213,
+        "endChar": 56
+      },
+      "revId": "cae3ab246b399304cd9cc517189f13b6d84c59af",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
