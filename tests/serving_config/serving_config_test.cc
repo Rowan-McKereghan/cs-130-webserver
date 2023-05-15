@@ -63,65 +63,40 @@ TEST_F(ServingConfigTest, SetPortNumber) {
 TEST_F(ServingConfigTest, CombinedServingConfig) {
   parser.Parse("GetFilePaths/success_combined", &out_config);
   serving_config.SetPaths(&out_config);
-  ASSERT_EQ(serving_config.echo_paths_.size(), 1);
-  ASSERT_EQ(serving_config.echo_paths_[0], "/echoing");
-  ASSERT_EQ(serving_config.static_file_paths_.size(), 1);
-  ASSERT_EQ(serving_config.static_file_paths_[0].first, "/static3");
-  ASSERT_EQ(serving_config.static_file_paths_[0].second,
-            "../static_test_files");
+  auto hf = serving_config.handler_factories_;
+  ASSERT_EQ(hf.size(), 2);
+  ASSERT_NE(hf.find("/echoing"), hf.end());
+  ASSERT_NE(hf.find("/static3"), hf.end());
 }
 
 TEST_F(ServingConfigTest, EchoServingConfig) {
   parser.Parse("GetFilePaths/success_echo_only", &out_config);
   serving_config.SetPaths(&out_config);
-  ASSERT_EQ(serving_config.echo_paths_.size(), 1);
-  ASSERT_EQ(serving_config.echo_paths_[0], "/echoing");
+  auto hf = serving_config.handler_factories_;
+  ASSERT_EQ(hf.size(), 1);
+  ASSERT_NE(hf.find("/echoing"), hf.end());
 }
 
 TEST_F(ServingConfigTest, StaticServingConfig) {
   parser.Parse("GetFilePaths/success_static_path_only", &out_config);
   serving_config.SetPaths(&out_config);
 
-  ASSERT_EQ(serving_config.echo_paths_.size(), 0);
-  ASSERT_EQ(serving_config.static_file_paths_.size(), 1);
-  ASSERT_EQ(serving_config.static_file_paths_[0].first, "/static3");
-  ASSERT_EQ(serving_config.static_file_paths_[0].second,
-            "../static_test_files");
+  auto hf = serving_config.handler_factories_;
+  ASSERT_EQ(hf.size(), 1);
+  ASSERT_NE(hf.find("/static3"), hf.end());
 }
 
-TEST_F(ServingConfigTest, PathLengthsSorted) {
-  parser.Parse("GetFilePaths/many_paths", &out_config);
-  serving_config.SetPaths(&out_config);
-  ASSERT_EQ(serving_config.static_file_paths_.size(), 6);
-  ASSERT_EQ(serving_config.static_file_paths_[0].first, "/static4/sub1/sub2");
-  ASSERT_EQ(serving_config.static_file_paths_[1].first, "/static1/static2");
-  ASSERT_EQ(serving_config.static_file_paths_[2].first, "/static3/sub");
-  ASSERT_EQ(serving_config.static_file_paths_[3].first, "/static4/sub1");
-  ASSERT_EQ(serving_config.static_file_paths_[4].first, "/static3");
-  ASSERT_EQ(serving_config.static_file_paths_[5].first, "/static4");
-}
-
-TEST_F(ServingConfigTest, InvalidFilepath) {
-  parser.Parse("GetFilePaths/invalid_filepath", &out_config);
+TEST_F(ServingConfigTest, MultipleUses) {
+  parser.Parse("GetFilePaths/multiple_uses", &out_config);
   ASSERT_EQ(serving_config.SetPaths(&out_config), 1);
-}
-
-TEST_F(ServingConfigTest, PrivilegedPaths) {
-  parser.Parse("GetFilePaths/privileged_paths", &out_config);
-  ASSERT_EQ(serving_config.SetPaths(&out_config), 2);
-}
-
-TEST_F(ServingConfigTest, MultipleDirs) {
-  parser.Parse("GetFilePaths/multiple_dirs", &out_config);
-  ASSERT_EQ(serving_config.SetPaths(&out_config), 3);
 }
 
 TEST_F(ServingConfigTest, InvalidStaticURI) {
   parser.Parse("GetFilePaths/invalid_static_uri", &out_config);
-  ASSERT_EQ(serving_config.SetPaths(&out_config), 4);
+  ASSERT_EQ(serving_config.SetPaths(&out_config), 2);
 }
 
 TEST_F(ServingConfigTest, InvalidEchoURI) {
   parser.Parse("GetFilePaths/invalid_echo_uri", &out_config);
-  ASSERT_EQ(serving_config.SetPaths(&out_config), 5);
+  ASSERT_EQ(serving_config.SetPaths(&out_config), 2);
 }

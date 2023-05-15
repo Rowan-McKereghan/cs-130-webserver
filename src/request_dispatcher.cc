@@ -15,11 +15,6 @@
 
 using namespace std;
 
-I_RequestHandlerFactory* CreateHandlerFactory(const string& name) {
-  if (name == "static") return new StaticHandlerFactory();
-  if (name == "echo") return new EchoHandlerFactory();
-}
-
 std::string RequestDispatcher::ExtractUriBasePath(const std::string& uri) {
   std::string stripped_uri = uri;
 
@@ -45,37 +40,43 @@ void RequestDispatcher::RouteRequest(Request& req, Response& res,
                                      ServingConfig serving_config,
                                      std::string client_ip) {
   std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req.uri_);
+  auto handler_factories_ = serving_config.handler_factories_;
   LOG(info) << "Client with IP: " << client_ip << " accessed URI: " << req.uri_;
   NginxConfig config;  // dummy config for now
   // Check if the URI matches any of the echo paths
-  for (const auto& echo_path : serving_config.echo_paths_) {
-    if (uri_base_path == echo_path) {
-      LOG(info) << "Request matched to echo path: " << echo_path;
-      EchoHandlerFactory* handler_factory = dynamic_cast<EchoHandlerFactory*>(CreateHandlerFactory("echo"));
-      EchoHandler* handler = handler_factory->CreateHandler(
-          uri_base_path, config);  // TODO: actually pass in config
-      handler->HandleRequest(req, res);
-      delete handler_factory;
-      delete handler;
-      return;
-    }
+  if (handler_factories_.find(uri_base_path) != handler_factories_.end()) {
+    LOG(info) << "Request matched to echo path: " << uri_base_path;
+    EchoHandlerFactory* factory =
+        dynamic_cast<EchoHandlerFactory*>(handler_factories_[uri_base_path]);
+    EchoHandler* handler = factory->CreateHandler(uri_base_path);
+    handler->HandleRequest(req, res);
+    delete handler;
+    return;
   }
 
-  // Check if the URI matches any of the file paths
-  for (const auto& file_path : serving_config.static_file_paths_) {
-    if (uri_base_path.find(file_path.first) == 0) {
-      std::string absolute_file_path =
-          file_path.second + uri_base_path.substr(file_path.first.length());
-      LOG(info) << "Request matched to " << file_path.first
-                << ", attempting to server file: " << absolute_file_path;
-      StaticHandlerFactory* handler_factory = dynamic_cast<StaticHandlerFactory*>(CreateHandlerFactory("static"));
-      StaticHandler* handler = handler_factory->CreateHandler(
-          absolute_file_path, config);  // TODO: actually pass in config
+  // strip away last path level to prevent matching filename as part of
+  // directory
+
+  // url_base_path will never have trailing slashes
+  std::string cur_path = uri_base_path.substr(0, uri_base_path.rfind('/'));
+
+  // longest prefix matching by iteratively stripping away levels until match is
+  // found, if one exists
+  while (cur_path.rfind('/') != std::string::npos) {
+    if (handler_factories_.find(cur_path) != handler_factories_.end()) {
+      LOG(info) << "Request matched to " << cur_path;
+      StaticHandlerFactory* factory =
+          dynamic_cast<StaticHandlerFactory*>(handler_factories_[cur_path]);
+      // cur_path.length() + 1 will never be out of bounds since we never
+      // have trailing slashes and we will not enter the loop body in the
+      // case of cur_path == "/"
+      std::string file_path = uri_base_path.substr(cur_path.length() + 1);
+      StaticHandler* handler = factory->CreateHandler(file_path);
       handler->HandleRequest(req, res);
-      delete handler_factory;
       delete handler;
       return;
     }
+    cur_path = cur_path.substr(0, cur_path.rfind('/'));
   }
 
   // If neither echo path nor file path matches, return a 400 Bad Request

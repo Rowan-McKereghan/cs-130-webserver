@@ -8,7 +8,13 @@
 
 class StaticHandlerFactory : public I_RequestHandlerFactory {
  public:
-  // NginxConfig argument is intended, just has't been implemented yet
-  StaticHandler* CreateHandler(std::string& uri, NginxConfig& config);
+  // possible TODO: move config parsing to handler constructor
+  StaticHandlerFactory(NginxConfig* config);
+  StaticHandler* CreateHandler(std::string& file_path);
+  std::string GetCompleteFilePath(std::string& file_path);
+  std::string GetRoot();
+  
+ private:
+  NginxConfig* config_;
 };
 #endif
