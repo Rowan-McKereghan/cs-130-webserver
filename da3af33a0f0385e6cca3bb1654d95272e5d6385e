@@ -39,6 +39,30 @@
       },
       "revId": "da3af33a0f0385e6cca3bb1654d95272e5d6385e",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0a8aeae_c065032d",
+        "filename": "src/echo_handler_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-15T06:11:29Z",
+      "side": 1,
+      "message": "tests will be added once the functionality of the factory is more fleshed out, will add placeholder files in next patchset.",
+      "parentUuid": "e5527c1f_0b666453",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 27
+      },
+      "revId": "da3af33a0f0385e6cca3bb1654d95272e5d6385e",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
