@@ -1,13 +1,13 @@
-#ifndef REQUEST_HANDLER_STATIC_H
-#define REQUEST_HANDLER_ECHO_H
+#ifndef STATIC_HANDLER_H
+#define STATIC_HANDLER_H
 
 #include <boost/filesystem.hpp>
 
 #include "I_request_handler.h"
 
-class RequestHandlerStatic : public I_RequestHandler {
+class StaticHandler : public I_RequestHandler {
  public:
-  RequestHandlerStatic(boost::filesystem::path root);
+  StaticHandler(std::string file_path);
   void HandleRequest(const Request &req, Response &res);
   int SetHeaders(const Request &req, Response &res);
 

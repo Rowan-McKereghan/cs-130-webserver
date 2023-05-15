@@ -1,9 +1,9 @@
-#include "request_handler_static.h"
+#include "static_handler.h"
 
 #include "gtest/gtest.h"
 #include "response.h"
 
-TEST(RequestHandlerStatic, StaticTest404) {
+TEST(StaticHandler, StaticTest404) {
   boost::asio::ip::tcp::socket* socket;
   string req_data = "Irrelevant stuff in request body";
   Request req(req_data);
@@ -12,15 +12,14 @@ TEST(RequestHandlerStatic, StaticTest404) {
   req.http_version_ = 1;
 
   Response res(socket);
-  boost::filesystem::path root{"/usr/src/projects/"};
-  boost::filesystem::path complete_path;
-  RequestHandlerStatic handler(root);
+  std::string root = "/usr/src/projects/";
+  StaticHandler handler(root);
   handler.SetHeaders(req, res);
   EXPECT_EQ(res.get_headers().size(), 2);
   EXPECT_EQ(res.get_status_code(), NOT_FOUND);
 }
 
-TEST(RequestHandlerStatic, StaticTestTxtFile) {
+TEST(StaticHandler, StaticTestTxtFile) {
   boost::asio::ip::tcp::socket* socket;
   string req_data = "Irrelevant stuff in request body";
   Request req(req_data);
@@ -29,16 +28,16 @@ TEST(RequestHandlerStatic, StaticTestTxtFile) {
   req.http_version_ = 1;
 
   Response res(socket);
-  boost::filesystem::path root{
-      "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.txt"};
-  RequestHandlerStatic handler(root);
+  std::string root =
+      "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.txt";
+  StaticHandler handler(root);
   handler.SetHeaders(req, res);
   EXPECT_EQ(res.get_headers().size(), 2);
   EXPECT_EQ(res.get_status_code(), OK);
   EXPECT_EQ(res.get_headers()[0].value, "text/plain");
 }
 
-TEST(RequestHandlerStatic, StaticTestPngFile) {
+TEST(StaticHandler, StaticTestPngFile) {
   boost::asio::ip::tcp::socket* socket;
   string req_data = "Irrelevant stuff in request body";
   Request req(req_data);
@@ -47,9 +46,9 @@ TEST(RequestHandlerStatic, StaticTestPngFile) {
   req.http_version_ = 1;
 
   Response res(socket);
-  boost::filesystem::path root{
-      "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.png"};
-  RequestHandlerStatic handler(root);
+  std::string root =
+      "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.png";
+  StaticHandler handler(root);
   handler.SetHeaders(req, res);
   EXPECT_EQ(res.get_headers().size(), 2);
   EXPECT_EQ(res.get_status_code(), OK);

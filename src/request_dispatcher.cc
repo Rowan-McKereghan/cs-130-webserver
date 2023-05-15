@@ -1,4 +1,4 @@
-#include "request_processor.h"
+#include "request_dispatcher.h"
 
 #include <boost/algorithm/string.hpp>
 #include <iostream>
@@ -6,12 +6,21 @@
 #include <string>
 
 #include "config_parser.h"
+#include "echo_handler.h"
+#include "echo_handler_factory.h"
 #include "logger.h"
 #include "request.h"
+#include "static_handler.h"
+#include "static_handler_factory.h"
 
 using namespace std;
 
-std::string RequestProcessor::ExtractUriBasePath(const std::string& uri) {
+I_RequestHandlerFactory* CreateHandlerFactory(const string& name) {
+  if (name == "static") return new StaticHandlerFactory();
+  if (name == "echo") return new EchoHandlerFactory();
+}
+
+std::string RequestDispatcher::ExtractUriBasePath(const std::string& uri) {
   std::string stripped_uri = uri;
 
   // Strip any query string from the URI
@@ -32,18 +41,22 @@ std::string RequestProcessor::ExtractUriBasePath(const std::string& uri) {
   return stripped_uri;
 }
 
-void RequestProcessor::RouteRequest(Request& req, Response& res,
-                                    ServingConfig serving_config,
-                                    std::string client_ip) {
-  auto uri_base_path = RequestProcessor::ExtractUriBasePath(req.uri_);
+void RequestDispatcher::RouteRequest(Request& req, Response& res,
+                                     ServingConfig serving_config,
+                                     std::string client_ip) {
+  std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req.uri_);
   LOG(info) << "Client with IP: " << client_ip << " accessed URI: " << req.uri_;
-
+  NginxConfig config;  // dummy config for now
   // Check if the URI matches any of the echo paths
   for (const auto& echo_path : serving_config.echo_paths_) {
     if (uri_base_path == echo_path) {
       LOG(info) << "Request matched to echo path: " << echo_path;
-      RequestHandlerEcho handler;
-      handler.HandleRequest(req, res);
+      EchoHandlerFactory* handler_factory = dynamic_cast<EchoHandlerFactory*>(CreateHandlerFactory("echo"));
+      EchoHandler* handler = handler_factory->CreateHandler(
+          uri_base_path, config);  // TODO: actually pass in config
+      handler->HandleRequest(req, res);
+      delete handler_factory;
+      delete handler;
       return;
     }
   }
@@ -55,11 +68,12 @@ void RequestProcessor::RouteRequest(Request& req, Response& res,
           file_path.second + uri_base_path.substr(file_path.first.length());
       LOG(info) << "Request matched to " << file_path.first
                 << ", attempting to server file: " << absolute_file_path;
-      boost::filesystem::path final_file_path(absolute_file_path);
-      std::cout << boost::filesystem::absolute(absolute_file_path).string()
-                << std::endl;
-      RequestHandlerStatic handler(final_file_path);
-      handler.HandleRequest(req, res);
+      StaticHandlerFactory* handler_factory = dynamic_cast<StaticHandlerFactory*>(CreateHandlerFactory("static"));
+      StaticHandler* handler = handler_factory->CreateHandler(
+          absolute_file_path, config);  // TODO: actually pass in config
+      handler->HandleRequest(req, res);
+      delete handler_factory;
+      delete handler;
       return;
     }
   }

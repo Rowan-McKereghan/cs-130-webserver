@@ -14,7 +14,7 @@
 
 #include "logger.h"
 #include "request.h"
-#include "request_processor.h"
+#include "request_dispatcher.h"
 #include "response.h"
 
 Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config)
@@ -42,10 +42,10 @@ void Session::HandleRead(const boost::system::error_code& error,
   }
 
   if (error == boost::system::errc::success) {
-    RequestProcessor req_processor;
+    RequestDispatcher req_dispatcher;
     Request req(data_);
     Response res(&socket_);  // Pass the socket to the response object
-    req_processor.RouteRequest(req, res, serving_config_, client_ip);
+    req_dispatcher.RouteRequest(req, res, serving_config_, client_ip);
     if (!res.get_wrote_http_response()) {
       res.WriteHTTPResponse();
     }
