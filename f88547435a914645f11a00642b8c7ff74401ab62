@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f59d1a44_1cd47d20",
+        "filename": "src/server_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T05:44:05Z",
+      "side": 1,
+      "message": "nit: invalid instead of not valid",
+      "revId": "f88547435a914645f11a00642b8c7ff74401ab62",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "388959af_12e54556",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-15T05:44:05Z",
+      "side": 1,
+      "message": "You still need to change the log severity.",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 11
+      },
+      "revId": "f88547435a914645f11a00642b8c7ff74401ab62",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
