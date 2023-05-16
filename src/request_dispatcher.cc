@@ -1,6 +1,8 @@
 #include "request_dispatcher.h"
 
 #include <boost/algorithm/string.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -9,7 +11,6 @@
 #include "echo_handler.h"
 #include "echo_handler_factory.h"
 #include "logger.h"
-#include "request.h"
 #include "static_handler.h"
 #include "static_handler_factory.h"
 
@@ -36,12 +37,16 @@ std::string RequestDispatcher::ExtractUriBasePath(const std::string& uri) {
   return stripped_uri;
 }
 
-void RequestDispatcher::RouteRequest(Request& req, Response& res,
+void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::http::string_body> req, 
+                                     boost::beast::http::response<boost::beast::http::dynamic_body>& res,
                                      ServingConfig serving_config,
                                      std::string client_ip) {
-  std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req.uri_);
+
+  std::string req_uri_ = req.target().to_string();
+  std::cout << req_uri_ << std::endl;
+  std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req_uri_);
   auto handler_factories_ = serving_config.handler_factories_;
-  LOG(info) << "Client with IP: " << client_ip << " accessed URI: " << req.uri_;
+  LOG(info) << "Client with IP: " << client_ip << " accessed URI: " << req_uri_;
   NginxConfig config;  // dummy config for now
   // Check if the URI matches any of the echo paths
   if (handler_factories_.find(uri_base_path) != handler_factories_.end()) {
@@ -82,7 +87,16 @@ void RequestDispatcher::RouteRequest(Request& req, Response& res,
   // If neither echo path nor file path matches, return a 400 Bad Request
   // response
   LOG(warning) << "Client with IP: " << client_ip
-               << " tried to access invalid URI: " << req.uri_;
+               << " tried to access invalid URI: " << req_uri_;
 
-  res.set_error_response(BAD_REQUEST);
+  //set res to 400 bad request
+  boost::beast::ostream(res.body()) << "400 Bad Request";
+
+  
+
+  res.version(req.version());
+  res.result(BAD_REQUEST);
+  res.set(boost::beast::http::field::content_type, "text/HTML");
+  res.prepare_payload();
+
 }
