@@ -1,7 +1,10 @@
 #include "static_handler.h"
 
 #include <boost/asio.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/iostreams/stream.hpp>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -9,7 +12,6 @@
 
 #include "logger.h"
 #include "privileged_dirs.h"
-#include "response.h"
 
 const int MAX_FILE_SIZE = 10485760;
 
@@ -65,30 +67,33 @@ static bool IsInPrivilegedDirectory(const boost::filesystem::path &file_path) {
   return false;
 }
 
-int StaticHandler::SetHeaders(const Request &req, Response &res) {
+StatusCode StaticHandler::SetHeaders(const boost::beast::http::request<boost::beast::http::string_body> req, 
+                                boost::beast::http::response<boost::beast::http::dynamic_body>& res) {
+  
+  res.version(req.version());
   if (IsInPrivilegedDirectory(file_path_)) {
     LOG(error) << file_path_ << " is an in a privileged directory";
-    res.set_error_response(FORBIDDEN);
-    return -1;
-  }
+    res.result(FORBIDDEN);
+    return FORBIDDEN;
+  } 
 
-  if (!boost::filesystem::is_regular_file(
-          file_path_)) {  // im not sure about the case when we serve
+  if (!boost::filesystem::is_regular_file(file_path_)) {  
+                          // im not sure about the case when we serve
                           // symlinks... does it work the same?
     LOG(error) << "File not found at: " << file_path_;
-    res.set_error_response(NOT_FOUND);
-    return -1;
-  }
+    res.result(NOT_FOUND);
+    return NOT_FOUND;
+  } 
 
   if (boost::filesystem::file_size(file_path_) > MAX_FILE_SIZE - 1) {
     LOG(error) << "File requested too large (more than 10MB)";
-    res.set_error_response(BAD_REQUEST);
-    return -1;
+    res.result(BAD_REQUEST);
+    return BAD_REQUEST;
   }
 
   LOG(info) << "Serving file " << file_path_.string();
 
-  res.set_status_code(OK);
+  res.result(boost::beast::http::status::ok);
 
   // set MIME type
   std::string content_type;
@@ -111,31 +116,56 @@ int StaticHandler::SetHeaders(const Request &req, Response &res) {
                                      // our server doesn't support its type
   }
 
-  res.add_header("Content-Type", content_type);
-  res.add_header("Content-Length",
-                 std::to_string(boost::filesystem::file_size(file_path_)));
-  return 0;
+  res.set(boost::beast::http::field::content_type, content_type);
+  res.set(boost::beast::http::field::server, "webserver");
+  return OK;
 }
 
-void StaticHandler::HandleRequest(const Request &req, Response &res) {
-  if (SetHeaders(req, res) == -1) {
-    return;
-  }
+StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req, 
+                                boost::beast::http::response<boost::beast::http::dynamic_body>& res) {
 
-  if (!res.get_wrote_http_response()) {
-    res.WriteHTTPResponse();
+                                
+  file_path_ = boost::filesystem::current_path() / file_path_;
+  StatusCode status_code_ = SetHeaders(req, res);
+
+
+  if (status_code_ != OK) {
+    boost::beast::http::dynamic_body::value_type err_body;
+    std::string status_string = std::to_string(status_code_) + " ";
+    auto it = status_code_map_.find(status_code_);
+    if (it != status_code_map_.end()) {
+      status_string += it->second.first;
+    } else {
+      status_string += "Unknown Status Code";
+      LOG(warning) << "Unknown Status Code Found: "
+                 << std::to_string(status_code_);
+    }
+
+    boost::beast::ostream(res.body()) << status_string;
+    res.prepare_payload();
+    res.set(boost::beast::http::field::content_type, "text/HTML");
+    return status_code_;
   }
 
   std::ifstream file_stream(file_path_.string(),
                             std::ios::in | std::ios::binary);
   file_stream.seekg(0, std::ios::beg);
 
-  // Write the file contents to the socket in chunks
-  // 8KB is a nice balance between file reading efficiency and socket writing
-  // (OS buffer automatically fragments into packets)
-  char buffer_arr[8192];
-  while (file_stream) {
-    file_stream.read(buffer_arr, sizeof(buffer_arr));
-    res.WriteToSocket(boost::asio::buffer(buffer_arr, 8192));
+  // Write the file contents to the response buffer in chunks
+  // 1024B is what boost recommends.
+  char buffer_arr[1024];
+
+  while (file_stream.read(buffer_arr, sizeof(buffer_arr))) {
+    boost::beast::ostream(res.body()) << boost::beast::string_view(buffer_arr, file_stream.gcount()) ;
+    if(!file_stream && !file_stream.eof()) {
+      LOG(error) << "I/O error reading file " << file_path_ << " into buffer";
+      return INTERNAL_SERVER_ERROR;
+    }
   }
+
+  res.prepare_payload();
+  res.erase(boost::beast::http::field::transfer_encoding);
+
+  return status_code_;
+  
 }

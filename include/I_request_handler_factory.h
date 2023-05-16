@@ -6,8 +6,6 @@
 
 #include "I_request_handler.h"
 #include "config_parser.h"
-#include "request.h"
-#include "response.h"
 
 using namespace std;
 

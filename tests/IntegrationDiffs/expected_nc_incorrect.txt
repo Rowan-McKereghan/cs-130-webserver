@@ -1,7 +1,5 @@
 HTTP/1.1 400 Bad Request
-Date: Wed, 03 May 2023 20:44:39 GMT
-Server: webserver
 Content-Type: text/HTML
-Content-Length: 26
+Content-Length: 15
 
-HTTP/1.1 400 Bad Request
+400 Bad Request

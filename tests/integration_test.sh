@@ -5,7 +5,7 @@ cd ..
 
 if [ -e "./build/bin/webserver" ]
 then
-    ./build/bin/webserver configs/dev_config &
+    ./build/bin/webserver ./configs/dev_config &
 else
     ./build_coverage/bin/webserver configs/dev_config &
 fi
@@ -71,7 +71,7 @@ fname=tests/IntegrationDiffs/integration_result_txt_file_transfer.txt
 
 curl localhost:80/static/sample.txt -s -S -o "$fname"
 
-diff -b "tests/IntegrationDiffs/expected_txt_file_transfer.txt" "$fname"
+diff -b "tests/IntegrationDiffs/test.txt" "$fname"
 
 diffExit=$?
 
@@ -95,7 +95,7 @@ fname=tests/IntegrationDiffs/integration_result_jpeg_file_transfer.jpeg
 
 curl localhost:80/static/sample.jpeg -s -S -o "$fname"
 
-diff -b "tests/IntegrationDiffs/expected_jpeg_file_transfer.jpeg" "$fname"
+diff -b "tests/IntegrationDiffs/test.jpeg" "$fname"
 
 diffExit=$?
 
@@ -119,7 +119,7 @@ fname=tests/IntegrationDiffs/integration_result_pdf_file_transfer.pdf
 
 curl localhost:80/static/sample.pdf -s -S -o "$fname"
 
-diff -b "tests/IntegrationDiffs/expected_pdf_file_transfer.pdf" "$fname"
+diff -b "tests/IntegrationDiffs/test.pdf" "$fname"
 
 diffExit=$?
 
@@ -143,7 +143,7 @@ fname=tests/IntegrationDiffs/integration_result_zip_file_transfer.zip
 
 curl localhost:80/static/sample.zip -s -S -o "$fname"
 
-diff -b "tests/IntegrationDiffs/expected_zip_file_transfer.zip" "$fname"
+diff -b "tests/IntegrationDiffs/test.zip" "$fname"
 
 diffExit=$?
 
