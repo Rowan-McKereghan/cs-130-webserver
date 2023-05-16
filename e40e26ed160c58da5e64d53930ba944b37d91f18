@@ -24,6 +24,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa2fa831_bb8483aa",
+        "filename": "include/echo_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-16T23:21:11Z",
+      "side": 1,
+      "message": "Changed interfaces to match spec args with example: status handle_request(const request req, response\u0026 res)",
+      "parentUuid": "2f01e7b4_514c2940",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 91
+      },
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e25f217_0f8c0b69",
@@ -64,6 +88,48 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "260222da_d94818b6",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-16T23:21:11Z",
+      "side": 1,
+      "message": "Changed it to be LOG(error) for consistency.",
+      "parentUuid": "7e25f217_0f8c0b69",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 12
+      },
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adadd771_62abbfe1",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-16T23:21:11Z",
+      "side": 1,
+      "message": "Changed it to info with additional branch for unexpected error case",
+      "parentUuid": "503dcd24_ac6de4b8",
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77cc8c72_3188589e",
@@ -77,6 +143,30 @@
       "writtenOn": "2023-05-16T20:32:09Z",
       "side": 1,
       "message": "We could probably use a more descriptive test name here.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 31
+      },
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eca46d1_a0286cfc",
+        "filename": "tests/request/echo_handler_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-16T23:21:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77cc8c72_3188589e",
       "range": {
         "startLine": 8,
         "startChar": 0,
