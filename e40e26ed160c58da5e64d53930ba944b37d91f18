@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f01e7b4_514c2940",
+        "filename": "include/echo_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-16T20:32:09Z",
+      "side": 1,
+      "message": "Would it be better to pass the request by constant reference instead of by value?",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 91
+      },
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e25f217_0f8c0b69",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-16T20:32:09Z",
+      "side": 1,
+      "message": "There seems to be an inconsistent use of the logger with some logs been written using log(severity) \u003c\u003c .. and some logs being written like this.",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 12
+      },
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "503dcd24_ac6de4b8",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-16T20:32:09Z",
+      "side": 1,
+      "message": "We were also told to only log at an info level for errors we expect to happen such as incorrect web server usage and only log at an error level for errors we don\u0027t expect to happen.",
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77cc8c72_3188589e",
+        "filename": "tests/request/echo_handler_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-16T20:32:09Z",
+      "side": 1,
+      "message": "We could probably use a more descriptive test name here.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 31
+      },
+      "revId": "e40e26ed160c58da5e64d53930ba944b37d91f18",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
