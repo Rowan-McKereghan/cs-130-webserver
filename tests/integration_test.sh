@@ -2,6 +2,8 @@
 
 #running in root directory to match relative paths for config file in production
 cd ..
+# clear output from previous tests
+rm tests/IntegrationDiffs/integration_result*
 
 if [ -e "./build/bin/webserver" ]
 then
