@@ -10,7 +10,7 @@ class StaticHandlerFactory : public I_RequestHandlerFactory {
  public:
   // possible TODO: move config parsing to handler constructor
   StaticHandlerFactory(NginxConfig* config);
-  StaticHandler* CreateHandler(std::string& file_path);
+  StaticHandler* CreateHandler(std::string& uri_path);
   std::string GetCompleteFilePath(std::string& file_path);
   std::string GetRoot();
 
