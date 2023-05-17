@@ -18,6 +18,7 @@
 #include "config_parser.h"
 #include "echo_handler_factory.h"
 #include "logger.h"
+#include "not_found_handler_factory.h"
 #include "privileged_dirs.h"
 #include "static_handler_factory.h"
 
@@ -116,7 +117,11 @@ int ServingConfig::SetPaths(NginxConfig* config) {
     }
   }
 
-  return ValidatePaths();
+  auto status = ValidatePaths();
+
+  handler_factories_["/"] = new NotFoundHandlerFactory();
+
+  return status;
 }
 
 int ServingConfig::ValidatePaths() {
@@ -125,7 +130,7 @@ int ServingConfig::ValidatePaths() {
     std::string file_path = pair.first;
     if (!IsValidURI(file_path)) {
       LOG(fatal) << file_path
-                 << "is an invalid URI. The current working directory is: "
+                 << " is an invalid URI. The current working directory is: "
                  << boost::filesystem::current_path();
       return INVALID_URI;
     }

@@ -37,23 +37,20 @@ std::string RequestDispatcher::ExtractUriBasePath(const std::string& uri) {
   return stripped_uri;
 }
 
-void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::http::string_body> req, 
-                                     boost::beast::http::response<boost::beast::http::dynamic_body>& res,
-                                     ServingConfig serving_config,
-                                     std::string client_ip) {
-
+void RequestDispatcher::RouteRequest(
+    boost::beast::http::request<boost::beast::http::string_body> req,
+    boost::beast::http::response<boost::beast::http::dynamic_body>& res,
+    ServingConfig serving_config, std::string client_ip) {
   std::string req_uri_ = req.target().to_string();
-  std::cout << req_uri_ << std::endl;
   std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req_uri_);
   auto handler_factories_ = serving_config.handler_factories_;
   LOG(info) << "Client with IP: " << client_ip << " accessed URI: " << req_uri_;
   NginxConfig config;  // dummy config for now
   // Check if the URI matches any of the echo paths
   if (handler_factories_.find(uri_base_path) != handler_factories_.end()) {
-    LOG(info) << "Request matched to echo path: " << uri_base_path;
-    EchoHandlerFactory* factory =
-        dynamic_cast<EchoHandlerFactory*>(handler_factories_[uri_base_path]);
-    EchoHandler* handler = factory->CreateHandler(uri_base_path);
+    LOG(info) << "Request matched to path: " << uri_base_path;
+    I_RequestHandler* handler =
+        handler_factories_[uri_base_path]->CreateHandler(uri_base_path);
     handler->HandleRequest(req, res);
     delete handler;
     return;
@@ -88,15 +85,11 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
   // response
   LOG(warning) << "Client with IP: " << client_ip
                << " tried to access invalid URI: " << req_uri_;
-
-  //set res to 400 bad request
+  // set res to 400 bad request
   boost::beast::ostream(res.body()) << "400 Bad Request";
-
-  
 
   res.version(req.version());
   res.result(BAD_REQUEST);
   res.set(boost::beast::http::field::content_type, "text/HTML");
   res.prepare_payload();
-
 }
