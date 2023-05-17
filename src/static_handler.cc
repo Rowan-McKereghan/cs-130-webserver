@@ -67,23 +67,23 @@ static bool IsInPrivilegedDirectory(const boost::filesystem::path &file_path) {
   return false;
 }
 
-StatusCode StaticHandler::SetHeaders(const boost::beast::http::request<boost::beast::http::string_body> req, 
-                                boost::beast::http::response<boost::beast::http::dynamic_body>& res) {
-  
+StatusCode StaticHandler::SetHeaders(
+    const boost::beast::http::request<boost::beast::http::string_body> req,
+    boost::beast::http::response<boost::beast::http::dynamic_body> &res) {
   res.version(req.version());
   if (IsInPrivilegedDirectory(file_path_)) {
     LOG(error) << file_path_ << " is an in a privileged directory";
     res.result(FORBIDDEN);
     return FORBIDDEN;
-  } 
+  }
 
-  if (!boost::filesystem::is_regular_file(file_path_)) {  
-                          // im not sure about the case when we serve
-                          // symlinks... does it work the same?
+  if (!boost::filesystem::is_regular_file(file_path_)) {
+    // im not sure about the case when we serve
+    // symlinks... does it work the same?
     LOG(error) << "File not found at: " << file_path_;
     res.result(NOT_FOUND);
     return NOT_FOUND;
-  } 
+  }
 
   if (boost::filesystem::file_size(file_path_) > MAX_FILE_SIZE - 1) {
     LOG(error) << "File requested too large (more than 10MB)";
@@ -121,13 +121,11 @@ StatusCode StaticHandler::SetHeaders(const boost::beast::http::request<boost::be
   return OK;
 }
 
-StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req, 
-                                boost::beast::http::response<boost::beast::http::dynamic_body>& res) {
-
-                                
+StatusCode StaticHandler::HandleRequest(
+    const boost::beast::http::request<boost::beast::http::string_body> req,
+    boost::beast::http::response<boost::beast::http::dynamic_body> &res) {
   file_path_ = boost::filesystem::current_path() / file_path_;
   StatusCode status_code_ = SetHeaders(req, res);
-
 
   if (status_code_ != OK) {
     boost::beast::http::dynamic_body::value_type err_body;
@@ -138,7 +136,7 @@ StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost:
     } else {
       status_string += "Unknown Status Code";
       LOG(warning) << "Unknown Status Code Found: "
-                 << std::to_string(status_code_);
+                   << std::to_string(status_code_);
     }
 
     boost::beast::ostream(res.body()) << status_string;
@@ -155,9 +153,12 @@ StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost:
   // 1024B is what boost recommends.
   char buffer_arr[1024];
 
-  while (file_stream.read(buffer_arr, sizeof(buffer_arr))) {
-    boost::beast::ostream(res.body()) << boost::beast::string_view(buffer_arr, file_stream.gcount()) ;
-    if(!file_stream && !file_stream.eof()) {
+  // check for eof to ensure last incomplete chunk written to ostream
+  while (!file_stream.eof() && file_stream.good()) {
+    file_stream.read(buffer_arr, sizeof(buffer_arr));
+    boost::beast::ostream(res.body())
+        << boost::beast::string_view(buffer_arr, file_stream.gcount());
+    if (file_stream.bad()) {
       LOG(error) << "I/O error reading file " << file_path_ << " into buffer";
       return INTERNAL_SERVER_ERROR;
     }
@@ -167,5 +168,4 @@ StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost:
   res.erase(boost::beast::http::field::transfer_encoding);
 
   return status_code_;
-  
 }

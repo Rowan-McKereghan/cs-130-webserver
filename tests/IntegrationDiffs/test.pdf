@@ -131,4 +131,68 @@ BT
 /F1 0010 Tf
 69.2500 676.6560 Td
 ( And more text. And more text. And more text. And more text. And more ) Tj
-ET
+ET
+BT
+/F1 0010 Tf
+69.2500 664.7040 Td
+( text. Oh, how boring typing this stuff. But not as boring as watching ) Tj
+ET
+BT
+/F1 0010 Tf
+69.2500 652.7520 Td
+( paint dry. And more text. And more text. And more text. And more text. ) Tj
+ET
+BT
+/F1 0010 Tf
+69.2500 640.8000 Td
+( Boring.  More, a little more text. The end, and just as well. ) Tj
+ET
+endstream
+endobj
+
+8 0 obj
+[/PDF /Text]
+endobj
+
+9 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/Name /F1
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+>>
+endobj
+
+10 0 obj
+<<
+/Creator (Rave \(http://www.nevrona.com/rave\))
+/Producer (Nevrona Designs)
+/CreationDate (D:20060301072826)
+>>
+endobj
+
+xref
+0 11
+0000000000 65535 f
+0000000019 00000 n
+0000000093 00000 n
+0000000147 00000 n
+0000000222 00000 n
+0000000390 00000 n
+0000001522 00000 n
+0000001690 00000 n
+0000002423 00000 n
+0000002456 00000 n
+0000002574 00000 n
+
+trailer
+<<
+/Size 11
+/Root 1 0 R
+/Info 10 0 R
+>>
+
+startxref
+2714
+%%EOF
