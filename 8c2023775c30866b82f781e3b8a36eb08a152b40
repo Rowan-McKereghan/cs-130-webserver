@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65722ced_310ee7bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-05-17T04:38:06Z",
+      "side": 1,
+      "message": "This is a pretty simple CL. Feel free to merge.",
+      "revId": "8c2023775c30866b82f781e3b8a36eb08a152b40",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
