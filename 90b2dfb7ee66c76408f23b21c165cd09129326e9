@@ -46,6 +46,30 @@
       },
       "revId": "90b2dfb7ee66c76408f23b21c165cd09129326e9",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca505170_9aed0d9e",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-17T03:54:24Z",
+      "side": 1,
+      "message": "Yeah I removed the HTML tags since I didn\u0027t think they were necessary.",
+      "parentUuid": "2289de66_cf02eea2",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 503
+      },
+      "revId": "90b2dfb7ee66c76408f23b21c165cd09129326e9",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
