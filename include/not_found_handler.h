@@ -8,10 +8,8 @@
 class NotFoundHandler : public I_RequestHandler {
  public:
   // No constructor needed since it is config invariant
-  StatusCode HandleRequest(
-      const boost::beast::http::request<boost::beast::http::string_body> req,
-      boost::beast::http::response<boost::beast::http::dynamic_body>& res)
-      override;
+  StatusCode HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req,
+                           boost::beast::http::response<boost::beast::http::dynamic_body>& res) override;
 };
 
 #endif

@@ -7,8 +7,7 @@
 // This file defines common logging functions including disk and console logging
 
 // Sets up logging to console and file
-void InitLogging(
-    const std::string& log_file_path = "logs/server_%Y_%m_%d_%H%M%S_%5N.log");
+void InitLogging(const std::string& log_file_path = "logs/server_%Y_%m_%d_%H%M%S_%5N.log");
 
 std::string FormatError(const boost::system::error_code& error);
 

@@ -11,9 +11,8 @@
 
 class RequestDispatcher {
  public:
-  void RouteRequest(boost::beast::http::request<boost::beast::http::string_body> req, 
-                    boost::beast::http::response<boost::beast::http::dynamic_body>& res, 
-                    ServingConfig serving_config,
+  void RouteRequest(boost::beast::http::request<boost::beast::http::string_body> req,
+                    boost::beast::http::response<boost::beast::http::dynamic_body>& res, ServingConfig serving_config,
                     std::string client_ip);
 
  private:

@@ -13,13 +13,11 @@
 
 class Server {
  public:
-  Server(
-      boost::asio::io_service& io_service, short port,
-      std::function<I_session*(boost::asio::io_service&)> session_constructor);
+  Server(boost::asio::io_service& io_service, short port,
+         std::function<I_session*(boost::asio::io_service&)> session_constructor);
   virtual void StartAccept();
 
-  virtual void HandleAccept(I_session* new_session,
-                             const boost::system::error_code& error);
+  virtual void HandleAccept(I_session* new_session, const boost::system::error_code& error);
 
   I_session* get_cur_session();
 

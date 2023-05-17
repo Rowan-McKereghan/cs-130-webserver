@@ -9,10 +9,10 @@
 class StaticHandler : public I_RequestHandler {
  public:
   StaticHandler(std::string file_path);
-  StatusCode HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req, 
-                     boost::beast::http::response<boost::beast::http::dynamic_body>& res);
-  StatusCode SetHeaders(const boost::beast::http::request<boost::beast::http::string_body> req, 
-                 boost::beast::http::response<boost::beast::http::dynamic_body>& res);
+  StatusCode HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req,
+                           boost::beast::http::response<boost::beast::http::dynamic_body>& res);
+  StatusCode SetHeaders(const boost::beast::http::request<boost::beast::http::string_body> req,
+                        boost::beast::http::response<boost::beast::http::dynamic_body>& res);
 
  private:
   boost::filesystem::path file_path_;

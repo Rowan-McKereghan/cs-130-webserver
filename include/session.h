@@ -1,6 +1,7 @@
 #ifndef SESSION_H
 #define SESSION_H
 
+#include <time.h>
 
 #include <boost/asio.hpp>
 #include <boost/beast/core.hpp>
@@ -10,8 +11,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include <time.h>
-
 
 #include "I_session.h"
 #include "config_parser.h"
@@ -29,9 +28,8 @@ class Session : public I_session {
 
   void Start() override;
 
-  void HandleRead(const boost::system::error_code& error,
-                   size_t bytes_transferred);
-  
+  void HandleRead(const boost::system::error_code& error, size_t bytes_transferred);
+
   void HandleWrite(const boost::system::error_code& error);
 
   boost::asio::ip::tcp::socket socket_;

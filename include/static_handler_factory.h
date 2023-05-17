@@ -13,7 +13,7 @@ class StaticHandlerFactory : public I_RequestHandlerFactory {
   StaticHandler* CreateHandler(std::string& file_path);
   std::string GetCompleteFilePath(std::string& file_path);
   std::string GetRoot();
-  
+
  private:
   NginxConfig* config_;
 };
