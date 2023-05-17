@@ -62,10 +62,7 @@ TEST_F(NginxConfigParserTest, EscapeSeqs) {
 // test that successive closing brackets are able to follow each other if
 // bracket balance is maintained
 TEST_F(NginxConfigParserTest, SuccessiveClosingBrackets) {
-  EXPECT_TRUE(
-      parser.Parse("SuccessiveClosingBrackets/success_brackets1", &out_config));
-  EXPECT_TRUE(
-      parser.Parse("SuccessiveClosingBrackets/success_brackets2", &out_config));
-  EXPECT_TRUE(
-      parser.Parse("SuccessiveClosingBrackets/success_brackets3", &out_config));
+  EXPECT_TRUE(parser.Parse("SuccessiveClosingBrackets/success_brackets1", &out_config));
+  EXPECT_TRUE(parser.Parse("SuccessiveClosingBrackets/success_brackets2", &out_config));
+  EXPECT_TRUE(parser.Parse("SuccessiveClosingBrackets/success_brackets3", &out_config));
 }

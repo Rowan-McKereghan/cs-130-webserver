@@ -12,14 +12,11 @@
 
 class MockServer : public Server {
  public:
-  MockServer(
-      boost::asio::io_service& io_service, short port,
-      std::function<I_session*(boost::asio::io_service&)> session_constructor)
+  MockServer(boost::asio::io_service& io_service, short port,
+             std::function<I_session*(boost::asio::io_service&)> session_constructor)
       : Server(io_service, port, session_constructor) {}
   MOCK_METHOD(void, StartAccept, (), (override));
-  MOCK_METHOD(void, HandleAccept,
-              (I_session * new_session, const boost::system::error_code& error),
-              (override));
+  MOCK_METHOD(void, HandleAccept, (I_session * new_session, const boost::system::error_code& error), (override));
 };
 
 class MockSession : public I_session {
@@ -46,10 +43,9 @@ class ServerTest : public ::testing::Test {
 
     ServingConfig serving_config;
     // Default root path (for now, testing purposes only)
-    server_ = new Server(io_service, port,
-                         [serving_config](boost::asio::io_service& io_service) {
-                           return new MockSession(io_service, serving_config);
-                         });
+    server_ = new Server(io_service, port, [serving_config](boost::asio::io_service& io_service) {
+      return new MockSession(io_service, serving_config);
+    });
   }
 
   void TearDown() override { delete server_; }
@@ -61,8 +57,7 @@ TEST_F(ServerTest, ServerSetup) {
 
   // set default value fo MockSession->socket() on initial run
   server_->StartAccept();
-  MockSession* session1 =
-      dynamic_cast<MockSession*>(server_->get_cur_session());
+  MockSession* session1 = dynamic_cast<MockSession*>(server_->get_cur_session());
 
   // becuase second call has error, Start() should only be called once
   EXPECT_CALL(*session1, Start()).Times(1);
@@ -71,8 +66,7 @@ TEST_F(ServerTest, ServerSetup) {
   server_->HandleAccept(session1, ec);
 
   server_->StartAccept();
-  MockSession* session2 =
-      dynamic_cast<MockSession*>(server_->get_cur_session());
+  MockSession* session2 = dynamic_cast<MockSession*>(server_->get_cur_session());
   // accepting new session should have changed active session
   ASSERT_NE(session1, session2);
 

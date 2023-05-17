@@ -6,8 +6,7 @@
 #include "logger.h"
 #include "static_handler.h"
 
-StaticHandlerFactory::StaticHandlerFactory(NginxConfig* config)
-    : config_(config) {}
+StaticHandlerFactory::StaticHandlerFactory(NginxConfig* config) : config_(config) {}
 
 std::string StaticHandlerFactory::GetRoot() {
   if (config_->statements_.size() == 1) {

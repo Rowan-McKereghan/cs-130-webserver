@@ -53,22 +53,19 @@ int main(int argc, char* argv[]) {
       LOG(fatal) << "Failed to get port number";
       return 1;
     } else {
-      LOG(info) << "Config file parsed successfully. Port: "
-                << serving_config.port_;
+      LOG(info) << "Config file parsed successfully. Port: " << serving_config.port_;
     }
 
     if (serving_config.SetPaths(&config)) {
-      LOG(fatal)
-          << "The config file contains invalid static or echoing paths";
+      LOG(fatal) << "The config file contains invalid static or echoing paths";
       return 1;
     }
 
     // Capture serving_config by value to avoid having to store it in the server
     // obj
-    auto session_constructor =
-        [serving_config](boost::asio::io_service& io_service) {
-          return new Session(io_service, serving_config);
-        };
+    auto session_constructor = [serving_config](boost::asio::io_service& io_service) {
+      return new Session(io_service, serving_config);
+    };
 
     Server s(io_service, serving_config.port_, session_constructor);
     s.StartAccept();

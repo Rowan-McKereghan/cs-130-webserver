@@ -8,9 +8,8 @@
 
 #include "logger.h"
 
-StatusCode NotFoundHandler::HandleRequest(
-    const boost::beast::http::request<boost::beast::http::string_body> req,
-    boost::beast::http::response<boost::beast::http::dynamic_body>& res) {
+StatusCode NotFoundHandler::HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req,
+                                          boost::beast::http::response<boost::beast::http::dynamic_body>& res) {
   res.result(NOT_FOUND);
   res.version(req.version());
   res.set(boost::beast::http::field::server, "webserver");

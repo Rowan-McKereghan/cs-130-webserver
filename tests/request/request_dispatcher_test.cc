@@ -22,10 +22,9 @@ TEST(RequestDispatcherTest, RouteRequest) {
   //     "Accept-Encoding: gzip, deflate\r\n"
   //     "Connection: keep-alive\r\n"
   //     "\r\n";
-  boost::beast::http::request<boost::beast::http::string_body> req {
-        boost::beast::http::verb::get, //GET
-        "/echo2", //URI
-        11}; //HTTP 1.1
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/echo2",                       // URI
+                                                                   11};                            // HTTP 1.1
   req.set(boost::beast::http::field::host, "localhost");
   req.set(boost::beast::http::field::user_agent,
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0");
@@ -38,8 +37,8 @@ TEST(RequestDispatcherTest, RouteRequest) {
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   RequestDispatcher req_dispatcher;
   EchoHandlerFactory* echo_handler_factory = new EchoHandlerFactory();
-  ServingConfig serving_config{             // echo_paths
-      {{"/echo2", echo_handler_factory}}};   // handler_factories
+  ServingConfig serving_config{                                      // echo_paths
+                               {{"/echo2", echo_handler_factory}}};  // handler_factories
   // serving_config.handler_factories["/echo2"] = new EchoHandlerFactory();
   req_dispatcher.RouteRequest(req, res, serving_config, "127.0.0.1");
   boost::beast::http::dynamic_body::value_type req_body;
@@ -62,10 +61,9 @@ TEST(RequestParserTest, InvalidRequestType) {
   //     "Accept-Encoding: gzip, deflate\n"
   //     "Connection: keep-alive\r\n"
   //     "\r\n";
-  boost::beast::http::request<boost::beast::http::string_body> req {
-        boost::beast::http::verb::get, //GET
-        "/invalid_uri", //URI
-        11}; //HTTP 1.1
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/invalid_uri",                 // URI
+                                                                   11};                            // HTTP 1.1
   req.set(boost::beast::http::field::host, "localhost");
   req.set(boost::beast::http::field::user_agent,
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0");
@@ -77,8 +75,7 @@ TEST(RequestParserTest, InvalidRequestType) {
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   RequestDispatcher req_dispatcher;
   EchoHandlerFactory* echo_handler_factory = new EchoHandlerFactory();
-  ServingConfig serving_config{
-      {{"/echo2", echo_handler_factory}}};  // handler_factories
+  ServingConfig serving_config{{{"/echo2", echo_handler_factory}}};  // handler_factories
   std::string client_ip = "127.0.0.1";
   req_dispatcher.RouteRequest(req, res, serving_config, client_ip);
   EXPECT_EQ(res.result_int(), BAD_REQUEST);

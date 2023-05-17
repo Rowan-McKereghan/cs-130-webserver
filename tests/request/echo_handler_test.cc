@@ -1,16 +1,15 @@
 #include "echo_handler.h"
 
-#include "gtest/gtest.h"
-
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 
+#include "gtest/gtest.h"
+
 TEST(BasicSuccessEchoTest, EchoTest) {
   std::string req_data = "Sample data to be echoed";
-  boost::beast::http::request<boost::beast::http::string_body> req {
-        boost::beast::http::verb::get, //GET
-        "/echo", //URI
-        11}; //HTTP 1.1
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/echo",                        // URI
+                                                                   11};                            // HTTP 1.1
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   EchoHandler handler;

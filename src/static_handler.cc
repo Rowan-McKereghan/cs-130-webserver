@@ -15,13 +15,11 @@
 
 const int MAX_FILE_SIZE = 10485760;
 
-StaticHandler::StaticHandler(std::string file_path)
-    : file_path_(boost::filesystem::path(file_path)) {}
+StaticHandler::StaticHandler(std::string file_path) : file_path_(boost::filesystem::path(file_path)) {}
 
 // surprising not a library function for this in boost::filesystem
 // please replace if someone can find one
-static bool IsParentDir(const boost::filesystem::path &parent_path,
-                        const boost::filesystem::path &child_path) {
+static bool IsParentDir(const boost::filesystem::path &parent_path, const boost::filesystem::path &child_path) {
   int p_depth = std::distance(parent_path.begin(), parent_path.end());
   int c_depth = std::distance(child_path.begin(), child_path.end());
 
@@ -34,8 +32,8 @@ static bool IsParentDir(const boost::filesystem::path &parent_path,
   auto child_end = child_path.end();
 
   // loop to compare parent and child paths at each level
-  for (auto parent_it = parent_path.begin(), child_it = child_path.begin();
-       parent_it != parent_end; ++parent_it, ++child_it) {
+  for (auto parent_it = parent_path.begin(), child_it = child_path.begin(); parent_it != parent_end;
+       ++parent_it, ++child_it) {
     // found a part of the parent path that doesn't match child path
     // before exhausting all of parent path, so return false
     if (*parent_it != *child_it) {
@@ -67,9 +65,8 @@ static bool IsInPrivilegedDirectory(const boost::filesystem::path &file_path) {
   return false;
 }
 
-StatusCode StaticHandler::SetHeaders(
-    const boost::beast::http::request<boost::beast::http::string_body> req,
-    boost::beast::http::response<boost::beast::http::dynamic_body> &res) {
+StatusCode StaticHandler::SetHeaders(const boost::beast::http::request<boost::beast::http::string_body> req,
+                                     boost::beast::http::response<boost::beast::http::dynamic_body> &res) {
   res.version(req.version());
   if (IsInPrivilegedDirectory(file_path_)) {
     LOG(error) << file_path_ << " is an in a privileged directory";
@@ -111,9 +108,8 @@ StatusCode StaticHandler::SetHeaders(
   } else if (file_path_str == ".zip") {
     content_type = "application/zip";
   } else {
-    content_type =
-        "application/octet-stream";  // download file as binary if it exists but
-                                     // our server doesn't support its type
+    content_type = "application/octet-stream";  // download file as binary if it exists but
+                                                // our server doesn't support its type
   }
 
   res.set(boost::beast::http::field::content_type, content_type);
@@ -121,9 +117,8 @@ StatusCode StaticHandler::SetHeaders(
   return OK;
 }
 
-StatusCode StaticHandler::HandleRequest(
-    const boost::beast::http::request<boost::beast::http::string_body> req,
-    boost::beast::http::response<boost::beast::http::dynamic_body> &res) {
+StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req,
+                                        boost::beast::http::response<boost::beast::http::dynamic_body> &res) {
   file_path_ = boost::filesystem::current_path() / file_path_;
   StatusCode status_code_ = SetHeaders(req, res);
 
@@ -135,8 +130,7 @@ StatusCode StaticHandler::HandleRequest(
       status_string += it->second.first;
     } else {
       status_string += "Unknown Status Code";
-      LOG(warning) << "Unknown Status Code Found: "
-                   << std::to_string(status_code_);
+      LOG(warning) << "Unknown Status Code Found: " << std::to_string(status_code_);
     }
 
     boost::beast::ostream(res.body()) << status_string;
@@ -145,8 +139,7 @@ StatusCode StaticHandler::HandleRequest(
     return status_code_;
   }
 
-  std::ifstream file_stream(file_path_.string(),
-                            std::ios::in | std::ios::binary);
+  std::ifstream file_stream(file_path_.string(), std::ios::in | std::ios::binary);
   file_stream.seekg(0, std::ios::beg);
 
   // Write the file contents to the response buffer in chunks
@@ -156,8 +149,7 @@ StatusCode StaticHandler::HandleRequest(
   // check for eof to ensure last incomplete chunk written to ostream
   while (!file_stream.eof() && file_stream.good()) {
     file_stream.read(buffer_arr, sizeof(buffer_arr));
-    boost::beast::ostream(res.body())
-        << boost::beast::string_view(buffer_arr, file_stream.gcount());
+    boost::beast::ostream(res.body()) << boost::beast::string_view(buffer_arr, file_stream.gcount());
     if (file_stream.bad()) {
       LOG(error) << "I/O error reading file " << file_path_ << " into buffer";
       return INTERNAL_SERVER_ERROR;

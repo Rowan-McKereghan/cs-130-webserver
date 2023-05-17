@@ -84,8 +84,8 @@ const char* NginxConfigParser::TokenTypeAsString(TokenType type) {
   }
 }
 
-NginxConfigParser::TokenType NginxConfigParser::ParseToken(
-    std::istream* input, std::string* value, bool& seenWhitespace) {
+NginxConfigParser::TokenType NginxConfigParser::ParseToken(std::istream* input, std::string* value,
+                                                           bool& seenWhitespace) {
   TokenParserState state = kTokenStateInitialWhitespace;
   bool inEscapeSeq = false;
   while (input->good()) {
@@ -125,9 +125,7 @@ NginxConfigParser::TokenType NginxConfigParser::ParseToken(
             continue;
           default:
             *value += c;
-            if (state != kTokenStateDoubleQuote &&
-                state != kTokenStateSingleQuote)
-              state = kTokenStateTokenTypeNormal;
+            if (state != kTokenStateDoubleQuote && state != kTokenStateSingleQuote) state = kTokenStateTokenTypeNormal;
             continue;
         }
       // logic for handling escape sequences
@@ -172,8 +170,8 @@ NginxConfigParser::TokenType NginxConfigParser::ParseToken(
         *value += c;
         continue;
       case kTokenStateTokenTypeNormal:
-        if (c == ' ' || c == '\t' || c == '\n' || c == '\t' || c == ';' ||
-            c == '{' || c == '}' || c == '\'' || c == '"') {
+        if (c == ' ' || c == '\t' || c == '\n' || c == '\t' || c == ';' || c == '{' || c == '}' || c == '\'' ||
+            c == '"') {
           input->unget();
           return kTokenTypeNormal;
         }
@@ -199,8 +197,7 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
   int bracket_balance = 0;
   while (true) {
     std::string token;
-    bool seenWhitespace =
-        false;  // flag set to true whenever whitespace encountered
+    bool seenWhitespace = false;  // flag set to true whenever whitespace encountered
     token_type = ParseToken(config_file, &token, seenWhitespace);
     if (token_type == kTokenTypeError) {
       break;
@@ -214,63 +211,47 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
     if (token_type == kTokenTypeStart) {
       // Error.
       break;
-    } else if (token_type == kTokenTypeNormal ||
-               token_type == kTokenTypeQuotedString) {
-      if (last_token_type == kTokenTypeStart ||
-          last_token_type == kTokenTypeStatementEnd ||
-          last_token_type == kTokenTypeStartBlock ||
-          last_token_type == kTokenTypeEndBlock ||
+    } else if (token_type == kTokenTypeNormal || token_type == kTokenTypeQuotedString) {
+      if (last_token_type == kTokenTypeStart || last_token_type == kTokenTypeStatementEnd ||
+          last_token_type == kTokenTypeStartBlock || last_token_type == kTokenTypeEndBlock ||
           // enforce space in case of normal before quote and quote before quote
-          seenWhitespace &&
-              (token_type == kTokenTypeNormal ||
-               token_type == kTokenTypeQuotedString) &&
-              (last_token_type == kTokenTypeNormal ||
-               last_token_type == kTokenTypeQuotedString)) {
-        if (last_token_type != kTokenTypeNormal &&
-            last_token_type != kTokenTypeQuotedString) {
-          config_stack.top()->statements_.emplace_back(
-              new NginxConfigStatement);
+          seenWhitespace && (token_type == kTokenTypeNormal || token_type == kTokenTypeQuotedString) &&
+              (last_token_type == kTokenTypeNormal || last_token_type == kTokenTypeQuotedString)) {
+        if (last_token_type != kTokenTypeNormal && last_token_type != kTokenTypeQuotedString) {
+          config_stack.top()->statements_.emplace_back(new NginxConfigStatement);
         }
         config_stack.top()->statements_.back().get()->tokens_.push_back(token);
       } else {
-        if (!seenWhitespace &&
-            (token_type == kTokenTypeNormal &&
-                 last_token_type == kTokenTypeQuotedString ||
-             token_type == kTokenTypeQuotedString &&
-                 last_token_type == kTokenTypeNormal))
+        if (!seenWhitespace && (token_type == kTokenTypeNormal && last_token_type == kTokenTypeQuotedString ||
+                                token_type == kTokenTypeQuotedString && last_token_type == kTokenTypeNormal))
           error = 1;
         // Error.
         break;
       }
     } else if (token_type == kTokenTypeStatementEnd) {
-      if (last_token_type != kTokenTypeNormal &&
-          last_token_type != kTokenTypeQuotedString) {
+      if (last_token_type != kTokenTypeNormal && last_token_type != kTokenTypeQuotedString) {
         // Error.
         break;
       }
     } else if (token_type == kTokenTypeStartBlock) {
       bracket_balance++;
-      if (last_token_type != kTokenTypeNormal &&
-          last_token_type != kTokenTypeQuotedString) {
+      if (last_token_type != kTokenTypeNormal && last_token_type != kTokenTypeQuotedString) {
         // Error.
         break;
       }
       NginxConfig* const new_config = new NginxConfig;
-      config_stack.top()->statements_.back().get()->child_block_.reset(
-          new_config);
+      config_stack.top()->statements_.back().get()->child_block_.reset(new_config);
       config_stack.push(new_config);
     } else if (token_type == kTokenTypeEndBlock) {
       bracket_balance--;
-      if (last_token_type != kTokenTypeStatementEnd &&
-          last_token_type != kTokenTypeStartBlock && 
+      if (last_token_type != kTokenTypeStatementEnd && last_token_type != kTokenTypeStartBlock &&
           last_token_type != kTokenTypeEndBlock) {
         // Error.
         break;
       }
       config_stack.pop();
     } else if (token_type == kTokenTypeEOF) {
-      if (last_token_type != kTokenTypeStatementEnd &&
-          last_token_type != kTokenTypeEndBlock &&
+      if (last_token_type != kTokenTypeStatementEnd && last_token_type != kTokenTypeEndBlock &&
           last_token_type != kTokenTypeStart) {
         // Error.
         break;
@@ -285,11 +266,11 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
     last_token_type = token_type;
   }
   if (error == 1) {
-    LOG(error) << "No whitespace between " << TokenTypeAsString(last_token_type)
-               << " and " << TokenTypeAsString(token_type);
+    LOG(error) << "No whitespace between " << TokenTypeAsString(last_token_type) << " and "
+               << TokenTypeAsString(token_type);
   } else {
-    LOG(error) << "Bad transition from " << TokenTypeAsString(last_token_type)
-               << " to " << TokenTypeAsString(token_type);
+    LOG(error) << "Bad transition from " << TokenTypeAsString(last_token_type) << " to "
+               << TokenTypeAsString(token_type);
   }
   return false;
 }
@@ -302,8 +283,7 @@ bool NginxConfigParser::Parse(const char* file_name, NginxConfig* config) {
     return false;
   }
 
-  const bool return_value =
-      Parse(dynamic_cast<std::istream*>(&config_file), config);
+  const bool return_value = Parse(dynamic_cast<std::istream*>(&config_file), config);
   config_file.close();
   return return_value;
 }

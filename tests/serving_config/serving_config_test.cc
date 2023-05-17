@@ -22,41 +22,34 @@ TEST_F(ServingConfigTest, SetPortNumber) {
   // config in pointer, even if getting port number fails
 
   out_config = NginxConfig();
-  EXPECT_TRUE(
-      parser.Parse("../config_parser/GetPortNumber/success_pn1", &out_config) &&
-      serving_config.SetPortNumber(&out_config));
+  EXPECT_TRUE(parser.Parse("../config_parser/GetPortNumber/success_pn1", &out_config) &&
+              serving_config.SetPortNumber(&out_config));
   EXPECT_EQ(serving_config.port_, 80);
 
   out_config = NginxConfig();
-  EXPECT_TRUE(
-      parser.Parse("../config_parser/GetPortNumber/success_pn2", &out_config) &&
-      serving_config.SetPortNumber(&out_config));
+  EXPECT_TRUE(parser.Parse("../config_parser/GetPortNumber/success_pn2", &out_config) &&
+              serving_config.SetPortNumber(&out_config));
   std::cout << serving_config.port_ << std::endl;
   EXPECT_EQ(serving_config.port_, 800);
 
   out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/no_port_number",
-                            &out_config) &&
+  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/no_port_number", &out_config) &&
                serving_config.SetPortNumber(&out_config));
 
   out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/no_server_label",
-                            &out_config) &&
+  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/no_server_label", &out_config) &&
                serving_config.SetPortNumber(&out_config));
 
   out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/nested_too_deep",
-                            &out_config) &&
+  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/nested_too_deep", &out_config) &&
                serving_config.SetPortNumber(&out_config));
 
   out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/port_not_number",
-                            &out_config) &&
+  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/port_not_number", &out_config) &&
                serving_config.SetPortNumber(&out_config));
 
   out_config = NginxConfig();
-  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/port_negative",
-                            &out_config) &&
+  EXPECT_FALSE(parser.Parse("../config_parser/GetPortNumber/port_negative", &out_config) &&
                serving_config.SetPortNumber(&out_config));
 }
 

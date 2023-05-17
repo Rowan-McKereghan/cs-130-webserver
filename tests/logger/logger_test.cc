@@ -37,8 +37,7 @@ TEST_F(TimestampedLoggerTest, ConsoleOutput) {
   std::clog.rdbuf(oldClogStreamBuf);
   std::string output = buffer.str();
 
-  std::regex log_regex(
-      R"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \[.+\] <info> Test console output\n)");
+  std::regex log_regex(R"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \[.+\] <info> Test console output\n)");
   EXPECT_TRUE(std::regex_search(output, log_regex));
 }
 
@@ -53,8 +52,7 @@ TEST_F(TimestampedLoggerTest, ConsoleErrorOutput) {
   std::clog.rdbuf(oldClogStreamBuf);
   std::string output = buffer.str();
 
-  std::regex log_regex(
-      R"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \[.+\] <error> Test console output\n)");
+  std::regex log_regex(R"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \[.+\] <error> Test console output\n)");
   EXPECT_TRUE(std::regex_search(output, log_regex));
 }
 
@@ -70,7 +68,6 @@ TEST_F(FixedPathLoggerTest, FileOutput) {
     last_line = line;
   }
 
-  std::regex log_regex(
-      R"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \[.+\] <info> Test file output)");
+  std::regex log_regex(R"(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6} \[.+\] <info> Test file output)");
   EXPECT_TRUE(std::regex_search(last_line, log_regex));
 }

@@ -26,8 +26,7 @@ std::string RequestDispatcher::ExtractUriBasePath(const std::string& uri) {
   }
 
   // Strip any trailing slashes from the URI
-  boost::algorithm::trim_right_if(stripped_uri,
-                                  boost::algorithm::is_any_of("/"));
+  boost::algorithm::trim_right_if(stripped_uri, boost::algorithm::is_any_of("/"));
 
   // Add back the final slash if the URI is now empty
   if (stripped_uri.empty()) {
@@ -37,10 +36,9 @@ std::string RequestDispatcher::ExtractUriBasePath(const std::string& uri) {
   return stripped_uri;
 }
 
-void RequestDispatcher::RouteRequest(
-    boost::beast::http::request<boost::beast::http::string_body> req,
-    boost::beast::http::response<boost::beast::http::dynamic_body>& res,
-    ServingConfig serving_config, std::string client_ip) {
+void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::http::string_body> req,
+                                     boost::beast::http::response<boost::beast::http::dynamic_body>& res,
+                                     ServingConfig serving_config, std::string client_ip) {
   std::string req_uri_ = req.target().to_string();
   std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req_uri_);
   auto handler_factories_ = serving_config.handler_factories_;
@@ -49,8 +47,7 @@ void RequestDispatcher::RouteRequest(
   // Check if the URI matches any of the echo paths
   if (handler_factories_.find(uri_base_path) != handler_factories_.end()) {
     LOG(info) << "Request matched to path: " << uri_base_path;
-    I_RequestHandler* handler =
-        handler_factories_[uri_base_path]->CreateHandler(uri_base_path);
+    I_RequestHandler* handler = handler_factories_[uri_base_path]->CreateHandler(uri_base_path);
     handler->HandleRequest(req, res);
     delete handler;
     return;
@@ -67,8 +64,7 @@ void RequestDispatcher::RouteRequest(
   while (cur_path.rfind('/') != std::string::npos) {
     if (handler_factories_.find(cur_path) != handler_factories_.end()) {
       LOG(info) << "Request matched to " << cur_path;
-      StaticHandlerFactory* factory =
-          dynamic_cast<StaticHandlerFactory*>(handler_factories_[cur_path]);
+      StaticHandlerFactory* factory = dynamic_cast<StaticHandlerFactory*>(handler_factories_[cur_path]);
       // cur_path.length() + 1 will never be out of bounds since we never
       // have trailing slashes and we will not enter the loop body in the
       // case of cur_path == "/"
@@ -83,8 +79,7 @@ void RequestDispatcher::RouteRequest(
 
   // If neither echo path nor file path matches, return a 400 Bad Request
   // response
-  LOG(warning) << "Client with IP: " << client_ip
-               << " tried to access invalid URI: " << req_uri_;
+  LOG(warning) << "Client with IP: " << client_ip << " tried to access invalid URI: " << req_uri_;
   // set res to 400 bad request
   boost::beast::ostream(res.body()) << "400 Bad Request";
 
