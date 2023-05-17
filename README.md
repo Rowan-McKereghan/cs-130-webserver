@@ -64,25 +64,31 @@ In the root directory of the ctrl-c-ctrl-v repo run the following command.
    ./build/bin/webserver configs/dev_config
 ```
 You can write your own config files.
-A config file is specified as follows.
+A basic config file is specified as follows.
 ```
 server {
-   listen <port_number>;
-   static_file_paths {
-      <static_endpoints_1> <src_dir_1>;
-      <static_endpoint_2> <src_dir_2>;
-      ...
+   port 80; # port my server listens on
+
+   location /echo EchoHandler { # no arguments
    }
-   echo_paths {
-      <echo_endpoint_1>;
-      <echo_endpoint_2>;
+
+   location /static StaticHandler {
+   root ./files # supports relative paths
    }
 }
 ```
-All contents in the config file must be wrapped in a `server` block.
-Port numbers are specified by the `listen` keyword.
-The static file endpoints are mapped to the source directories inside the `static_file_paths` block.
-The echo endpoints are listed inside the `echo_paths` block.
+- All contents in the config file must be wrapped in a `server` block.
+- The config uses “#” for comments, which we found convenient because the Nginx parser already supports it.
+- Each handler conforms to the “location-major typed” format
+  - The keyword location, followed by a serving path, followed by the name of the handler, and a collection of arguments inside { ... }
+  - This format emphasizes the paths, encouraging (but not forcing) their uniqueness
+- Arguments for each handler appear as named elements within the { ... } block
+   - The presence of explicit names avoids ambiguity, aids in readability (especially for humans, but also for machines) and allows for hard-coded default values.
+- Each serving path stanza begins with the keyword `location`, that distinguishes from server-level arguments (such as `port`).
+- The presence of quoting around strings (e.g. the serving path) is not required.
+- Filesystem paths (such as `root` for the `StaticHandler`) are relative (implicitly anchored to the webserver binary location).
+- Trailing slashes on URL serving paths are optional and should be ignored.
+- Port numbers are specified by the `listen` or `port` keyword.
 
 ## Testing
 You can run the server tests by entering the build folder and running  `make test`.
@@ -100,6 +106,9 @@ Next, configure the pre-commit hook with: `git config core.hooksPath hooks`. Thi
 - `src` contains all implementation code for the webserver itself with the corresponding definitions in `include`
 - `docker` contains several dockerfiles and a a google cloudbuild config which sets up the docker container to build, test (including code coverage), and run the webserver both locally and on GCE
 - `tests` contains all testing code and required files (e.g., config files for testing), organized into logical subfolders, except for `integration_test.sh`
+- `configs` contains our default development and production config files
+- `hooks` contains the bash scripts for running clang format hooks
+- `logs`, which will be created once the server is run, contains the log files where `logger.cc` stores internal server data
 
 ### Code Structure
 
@@ -113,7 +122,7 @@ Our code is organized as follows. Where possible, we list implementations in the
 - `session.cc`: Handles a single request and response from a client. Asynchronously reads in data from the socket, constructs the `boost::beast::http::request` and `boost::beast::http::response`, calls the `RequestDispatcher` (`request_dispatcher.cc`) to fill out the response, and subsequently writes the response to the socket.
 - `request_dispatcher.cc`: Routes requests to an `I_RequestHandler` by using the `ServingConfig` to determine which implementation if any, to route to.
 
-We currently have two request handlers and corresponding request_handler_factories that implement `I_RequestHandler`, and `I_RequestHandlerFactory` respectively. These are `echo_handler` and `static_handler` which echo the request message exactly and serve static files on a path respectively.
+We currently have three request handlers and corresponding request_handler_factories that implement `I_RequestHandler`, and `I_RequestHandlerFactory` respectively. These are `echo_handler`, `static_handler`, and `not_found_handler`, which echo the request message exactly, serve static files on a path, and deal with `404 NOT FOUND` HTTP responses respectively.
 
 We will use the simple example of `echo_handler` to illustrate how to add a new request handler in the future.
 
@@ -122,3 +131,10 @@ Once`request_dispatcher` determines based on the request that it should dispatch
 The `EchoHandlerFactory` must implement `CreateHandler()` which constructs and returns an `EchoHandler`, although in this case the construction is trivial (seen in` echo_handler_factory.cc`). This constructed `EchoHandler` is short-lived, only used for a single request/response on a single-thread and is never shared. The dispatcher then calls the `HandleRequest()` of the `EchoHandler` which takes only a `boost::beast::http::request` object and the address of a `boost::beast::http::response` object.
 
 Finally, the `EchoHandler` must fill out this response object. To implement a new request handler, developers must create a new header and implementation for the handler factory and handler itself following this pattern. Any response logic will be contained in the implementation of `I_RequestHandler`.
+
+Similar request handlers `StaticHandler` and `NotFoundHandler` exist for our other currently supported options, serving static test files and a `404 NOT FOUND` request.
+
+Note that `StaticHandler` accepts paths relative to the current working directory. The default developer config file `dev_config` we are using at the moment assumes that the working directory is the main `ctrl-c-ctrl-v` repository directory. If you wish to run the webserver from a different directory, please use a different config file that will create a working relative file path to your directory, instead of the default one.
+
+For testing, `integration_test.sh` sets up a dummy client in a new terminal in order to test `boost::beast` functionality we cannot unit test, e.g. functions like `boost::beast::http::read` and other I/O methods, as well as some of the response and request formatting. We have static test files that test upload and download equality across server and client in `tests/IntegrationDiffs` and `tests/static_test_files`. We also recommend manually testing files to double check that the integration test works as intended.
+The unit tests in test files that correspond to `.cc` files (for example, `request_dispatcher.cc` -> `request_dispatcher_test.cc`) do not directly test the response and request formatting because it is internally handled by `boost::beast` when reading and writing into buffers.
