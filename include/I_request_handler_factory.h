@@ -11,7 +11,7 @@ using namespace std;
 
 class I_RequestHandlerFactory {
  public:
-  virtual I_RequestHandler* CreateHandler(std::string& file_path) = 0;
+  virtual I_RequestHandler* CreateHandler(std::string& uri_path) = 0;
 };
 
 #endif

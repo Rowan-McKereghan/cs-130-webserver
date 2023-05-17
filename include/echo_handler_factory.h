@@ -8,6 +8,6 @@
 
 class EchoHandlerFactory : public I_RequestHandlerFactory {
  public:
-  EchoHandler* CreateHandler(std::string& file_path);
+  EchoHandler* CreateHandler(std::string& uri_path);
 };
 #endif

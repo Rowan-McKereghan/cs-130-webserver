@@ -8,6 +8,6 @@
 
 class NotFoundHandlerFactory : public I_RequestHandlerFactory {
  public:
-  NotFoundHandler* CreateHandler(std::string& file_path);
+  NotFoundHandler* CreateHandler(std::string& uri_path);
 };
 #endif

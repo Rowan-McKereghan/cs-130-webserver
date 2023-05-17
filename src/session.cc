@@ -1,5 +1,6 @@
 #include "session.h"
 
+#include <time.h>
 
 #include <boost/asio.hpp>
 #include <boost/beast/http.hpp>
@@ -10,30 +11,23 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <time.h>
-
 
 #include "logger.h"
 #include "request_dispatcher.h"
 
 Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config)
-      : socket_(io_service), serving_config_(serving_config) {}
+    : socket_(io_service), serving_config_(serving_config) {}
 
 boost::asio::ip::tcp::socket& Session::get_socket() { return socket_; }
 
 void Session::Start() {
   req = std::make_shared<boost::beast::http::request<boost::beast::http::string_body>>();
-  boost::beast::http::async_read(
-      socket_,
-      request_buffer,
-      *req,
-      boost::bind(&Session::HandleRead, this, boost::asio::placeholders::error,
-                  boost::asio::placeholders::bytes_transferred));
+  boost::beast::http::async_read(socket_, request_buffer, *req,
+                                 boost::bind(&Session::HandleRead, this, boost::asio::placeholders::error,
+                                             boost::asio::placeholders::bytes_transferred));
 }
 
-
-void Session::HandleRead(const boost::system::error_code& error,
-                          size_t bytes_transferred) {
+void Session::HandleRead(const boost::system::error_code& error, size_t bytes_transferred) {
   boost::system::error_code ec;
   boost::asio::ip::tcp::endpoint endpoint = socket_.remote_endpoint(ec);
   std::string client_ip;
@@ -41,16 +35,14 @@ void Session::HandleRead(const boost::system::error_code& error,
     client_ip = endpoint.address().to_string();
   } else {
     client_ip = "Unknown IP";
-    LOG(warning) << "Failed to obtain remote endpoint of socket: "
-                 << FormatError(ec);
+    LOG(warning) << "Failed to obtain remote endpoint of socket: " << FormatError(ec);
   }
 
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   if (error == boost::system::errc::success) {
-    if((*req).version() != 11) {
-      LOG(trace) << "Unsupported HTTP version: HTTP " << 
-        std::to_string((*req).version() / 10) << "." << 
-        std::to_string((*req).version() % 10);
+    if ((*req).version() != 11) {
+      LOG(trace) << "Unsupported HTTP version: HTTP " << std::to_string((*req).version() / 10) << "."
+                 << std::to_string((*req).version() % 10);
     }
     RequestDispatcher req_dispatcher;
 
@@ -64,21 +56,14 @@ void Session::HandleRead(const boost::system::error_code& error,
     strftime(date, sizeof(date), "Date: %a, %d %b %G %T GMT", myTime);
     res.set(boost::beast::http::field::date, std::string(date));
 
+    // TODO: async_write() was causing a segfault. Figure out why and possibly change back.
     size_t bytes_t = boost::beast::http::write(socket_, res);
-    if(bytes_t < 0) {LOG(error) << "An error occurred writing to the socket.";}
-
-
-    // boost::beast::http::async_write(
-    //   socket_,
-    //   res,
-    //   boost::bind(&Session::HandleWrite, this, boost::asio::placeholders::error)); 
-    
-    //async_write() was causing a segfault so i switched to regular write() for now. 
-    //TODO: figure out why and possibly change back.
-
+    if (bytes_t < 0) {
+      LOG(error) << "An error occurred writing to the socket.";
+    }
   } else {
     LOG(info) << "An error occurred in HandleRead\n";
-    if (error == boost::beast::http::error::bad_target)  {
+    if (error == boost::beast::http::error::bad_target) {
       boost::beast::ostream(res.body()) << "400 Bad Request";
 
       res.version(11);
@@ -87,15 +72,15 @@ void Session::HandleRead(const boost::system::error_code& error,
       res.prepare_payload();
 
       size_t bytes_t = boost::beast::http::write(socket_, res);
-      if(bytes_t < 0) {LOG(error) << "An error occurred writing to the socket.";}
-    }
-    else {
+      if (bytes_t < 0) {
+        LOG(error) << "An error occurred writing to the socket.";
+      }
+    } else {
       LOG(error) << "The error in HandleRead was a read I/O error\n";
     }
   }
   delete this;
 }
-
 
 void Session::HandleWrite(const boost::system::error_code& error) {
   if (error != boost::system::errc::success) {
