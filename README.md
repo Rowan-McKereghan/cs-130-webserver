@@ -87,13 +87,21 @@ The echo endpoints are listed inside the `echo_paths` block.
 ## Testing
 You can run the server tests by entering the build folder and running  `make test`.
 
-## Directory Structure
+## Contributing
+
+To commit code, please first install [clang-format](https://clang.llvm.org/docs/ClangFormat.html).
+
+On Debian-based OSes (including the CS130 development enviorment), run `sudo apt install clang-format`.
+
+Next, configure the pre-commit hook with: `git config core.hooksPath hooks`. This will automatically format any changed files before the commit.
+
+### Directory Structure
 
 - `src` contains all implementation code for the webserver itself with the corresponding definitions in `include`
 - `docker` contains several dockerfiles and a a google cloudbuild config which sets up the docker container to build, test (including code coverage), and run the webserver both locally and on GCE
 - `tests` contains all testing code and required files (e.g., config files for testing), organized into logical subfolders, except for `integration_test.sh`
 
-## Code Structure
+### Code Structure
 
 Our code is organized as follows. Where possible, we list implementations in the same order as they would be called as the webserver runs. We reference the implementation file (e.g., `src/*.cc`) but each has a corresponding header in `include/*.h`.
 

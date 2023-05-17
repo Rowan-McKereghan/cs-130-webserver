@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Check if clang-format is installed
+if ! command -v clang-format &> /dev/null
+then
+    echo "clang-format not found. Please install clang-format."
+    exit 1
+fi
+
+# Format the files
+for file in `git diff-index --cached --name-only HEAD | grep -iE '\.(cc|h)$' ` ; do
+    echo "Formatting $file..."
+    clang-format -i "$file" # Format in place
+    git add "$file" # Add the formatted files to the commit
+done
+
+exit 0
