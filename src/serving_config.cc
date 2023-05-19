@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "config_parser.h"
+#include "crud_handler_factory.h"
 #include "echo_handler_factory.h"
 #include "logger.h"
 #include "not_found_handler_factory.h"
@@ -102,6 +103,8 @@ int ServingConfig::SetPaths(NginxConfig* config) {
                   handler_factories_[serving_path] = new StaticHandlerFactory(paths_block);
                 } else if (handler_name == "EchoHandler") {
                   handler_factories_[serving_path] = new EchoHandlerFactory();
+                } else if (handler_name == "CrudHandler") {
+                  handler_factories_[serving_path] = new CrudHandlerFactory(paths_block);
                 }
               }
             }
