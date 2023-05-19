@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b446e7af_0cb69238",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-19T06:55:44Z",
+      "side": 1,
+      "message": "General handler structure looks good! Just add a few comments as indicated for better documentation.",
+      "revId": "1b9ab5bd0c16fdd6e7318b475d69fee3b7529313",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a4a383c_47380113",
+        "filename": "include/crud_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-19T06:55:44Z",
+      "side": 1,
+      "message": "Add a short comment describing the purpose of this class. This is an ongoing process for our entire codebase.",
+      "revId": "1b9ab5bd0c16fdd6e7318b475d69fee3b7529313",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3bcabd1_b209c622",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-19T06:55:44Z",
+      "side": 1,
+      "message": "add a comment that this is 10 mb",
+      "revId": "1b9ab5bd0c16fdd6e7318b475d69fee3b7529313",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
