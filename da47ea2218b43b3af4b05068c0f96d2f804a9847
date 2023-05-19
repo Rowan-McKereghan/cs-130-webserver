@@ -50,6 +50,24 @@
       "message": "I\u0027m not able to submit code to your repo so could one of you submit the change please",
       "revId": "da47ea2218b43b3af4b05068c0f96d2f804a9847",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5643dd12_ea0fc343",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-19T22:27:49Z",
+      "side": 1,
+      "message": "Merged!",
+      "parentUuid": "5be3fadb_0e2082e9",
+      "revId": "da47ea2218b43b3af4b05068c0f96d2f804a9847",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ],
   "submitRequirementResults": []
