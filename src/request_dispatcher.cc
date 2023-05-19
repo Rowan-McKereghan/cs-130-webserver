@@ -64,12 +64,12 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
   while (cur_path.rfind('/') != std::string::npos) {
     if (handler_factories_.find(cur_path) != handler_factories_.end()) {
       LOG(info) << "Request matched to " << cur_path;
-      StaticHandlerFactory* factory = dynamic_cast<StaticHandlerFactory*>(handler_factories_[cur_path]);
+      I_RequestHandlerFactory* factory = handler_factories_[cur_path];
       // cur_path.length() + 1 will never be out of bounds since we never
       // have trailing slashes and we will not enter the loop body in the
       // case of cur_path == "/"
       std::string file_path = uri_base_path.substr(cur_path.length() + 1);
-      StaticHandler* handler = factory->CreateHandler(file_path);
+      I_RequestHandler* handler = factory->CreateHandler(file_path);
       handler->HandleRequest(req, res);
       delete handler;
       return;
