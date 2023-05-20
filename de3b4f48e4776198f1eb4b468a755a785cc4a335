@@ -33,6 +33,23 @@
       "message": "Ready to merge!",
       "revId": "de3b4f48e4776198f1eb4b468a755a785cc4a335",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc660f82_c3ec839b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T23:06:47Z",
+      "side": 1,
+      "message": "I can\u0027t merge changes to your repo btw so I need you to merge it",
+      "revId": "de3b4f48e4776198f1eb4b468a755a785cc4a335",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
