@@ -18,6 +18,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "352d4f3b_8dce429c",
+        "filename": "include/file_handler_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T20:39:17Z",
+      "side": 1,
+      "message": "Sounds good, I\u0027ve fixed this",
+      "parentUuid": "e444b100_dadfc145",
+      "revId": "22b9f483fb3ce587ef529fe194883f0d50b87991",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c8a5544_42a5b3c6",
