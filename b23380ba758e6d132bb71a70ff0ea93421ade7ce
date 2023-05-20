@@ -16,6 +16,23 @@
       "message": "I addressed the comments, please let me know if everything looks good",
       "revId": "b23380ba758e6d132bb71a70ff0ea93421ade7ce",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cde03803_b4aaab5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T22:56:22Z",
+      "side": 1,
+      "message": "Just one small clarification left.",
+      "revId": "b23380ba758e6d132bb71a70ff0ea93421ade7ce",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }

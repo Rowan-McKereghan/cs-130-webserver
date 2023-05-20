@@ -69,6 +69,24 @@
       "parentUuid": "9c8a5544_42a5b3c6",
       "revId": "22b9f483fb3ce587ef529fe194883f0d50b87991",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd146d93_e22e338a",
+        "filename": "include/static_handler_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T22:56:22Z",
+      "side": 1,
+      "message": "My mistake, you are good. Sorry for the confusion.",
+      "parentUuid": "092b25c2_a70a6df6",
+      "revId": "22b9f483fb3ce587ef529fe194883f0d50b87991",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }

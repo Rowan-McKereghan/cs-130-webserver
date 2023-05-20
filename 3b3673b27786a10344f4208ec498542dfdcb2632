@@ -53,6 +53,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8541b60_9083ea1b",
+        "filename": "include/crud_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T22:56:22Z",
+      "side": 1,
+      "message": "I\u0027ve given this a little more thought, and you can definitely implement a data structure that supports adding/deleting/querying IDs in constant time. You would use a vector and unordered_map. Check out the top comment described at this link: https://leetcode.com/discuss/interview-question/124998/design-a-data-structure-that-supports-insert-delete-search-and-getrandom-in-constant-time\n\nProbably not super important since our backend will probably be small but just another option for you to consider. \n\nIf you aren\u0027t sure on your exact approach for now just add a comment indicating that this is a placeholder for now.",
+      "parentUuid": "bae9942f_d23dc682",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb4ad26f_eca675b9",
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "I made it it\u0027s own function. I don\u0027t think there are any tests needed specifically for this function since the status_code variable is of the StatusCode type so it can\u0027t really be an unknown code and the normal behavior of this will be tested during HandleRequest tests. Because of this I made it private and didn\u0027t add tests for it.",
       "parentUuid": "d230937e_e52a1d03",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b792c367_41a5136c",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T22:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abec43eb_9d2c1924",
       "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
