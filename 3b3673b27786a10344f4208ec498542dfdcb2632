@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2dea9256_826e51f3",
+        "filename": "include/crud_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T22:57:41Z",
+      "side": 1,
+      "message": "Reopened after after accidentally resolving.",
+      "parentUuid": "a8541b60_9083ea1b",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb4ad26f_eca675b9",
         "filename": "include/crud_handler_factory.h",
         "patchSetId": 2
