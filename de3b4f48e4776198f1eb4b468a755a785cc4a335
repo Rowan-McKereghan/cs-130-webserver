@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f9fa3f2_3416389a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T23:02:07Z",
+      "side": 1,
+      "message": "Marked the map with a list as a placeholder for now and will decide on the best option later",
+      "revId": "de3b4f48e4776198f1eb4b468a755a785cc4a335",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}

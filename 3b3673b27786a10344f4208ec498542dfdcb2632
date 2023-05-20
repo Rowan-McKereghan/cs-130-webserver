@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06a6bbfe_a7faa995",
+        "filename": "include/crud_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T23:02:07Z",
+      "side": 1,
+      "message": "Ok for now I\u0027m gonna mark it as a placeholder and when me and my other teammate are figuring out the actual functionality using it we will figure out what works. The leetcode comment does look like it might be a good solutiong",
+      "parentUuid": "2dea9256_826e51f3",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb4ad26f_eca675b9",
         "filename": "include/crud_handler_factory.h",
         "patchSetId": 2
