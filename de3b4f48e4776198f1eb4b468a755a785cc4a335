@@ -16,6 +16,23 @@
       "message": "Marked the map with a list as a placeholder for now and will decide on the best option later",
       "revId": "de3b4f48e4776198f1eb4b468a755a785cc4a335",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3ad6565_552ef9f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T23:03:13Z",
+      "side": 1,
+      "message": "Ready to merge!",
+      "revId": "de3b4f48e4776198f1eb4b468a755a785cc4a335",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }

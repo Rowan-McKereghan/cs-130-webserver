@@ -107,6 +107,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44ce7c14_be93a9f5",
+        "filename": "include/crud_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T23:03:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a6bbfe_a7faa995",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb4ad26f_eca675b9",
