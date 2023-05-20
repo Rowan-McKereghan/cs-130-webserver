@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bae9942f_d23dc682",
+        "filename": "include/crud_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T20:32:11Z",
+      "side": 1,
+      "message": "I used a list because I planned to add IDs in order and then this would make it easy to traverse in order so I could find the next available ID easily and if and ID in the middle of the list has been deleted I can easily find that this has occurred and insert it back into the correct position when a new ID is needed. Tbh I\u0027m not sure what is the best option so if you think using an unordered_set is better because it makes checking uniqueness better I can change it.",
+      "parentUuid": "b7d36792_14b2479c",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb4ad26f_eca675b9",
         "filename": "include/crud_handler_factory.h",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-20T17:28:54Z",
       "side": 1,
       "message": "maybe add another interface for this that inherits from the current default for because the echo handler does not need these methods",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "655d323b_99ef02e4",
+        "filename": "include/crud_handler_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T20:32:11Z",
+      "side": 1,
+      "message": "I added the FileHandlerFactory that inherits I_RequestHandlerFactory which implements these and changed static and crud handler factories to inherit from file handler factory",
+      "parentUuid": "bb4ad26f_eca675b9",
       "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abec43eb_9d2c1924",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T20:32:11Z",
+      "side": 1,
+      "message": "I made it it\u0027s own function. I don\u0027t think there are any tests needed specifically for this function since the status_code variable is of the StatusCode type so it can\u0027t really be an unknown code and the normal behavior of this will be tested during HandleRequest tests. Because of this I made it private and didn\u0027t add tests for it.",
+      "parentUuid": "d230937e_e52a1d03",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2c34171_53115969",
         "filename": "src/crud_handler_factory.cc",
         "patchSetId": 2
@@ -82,6 +136,24 @@
       "writtenOn": "2023-05-20T17:28:54Z",
       "side": 1,
       "message": "if you ultimately don\u0027t make any changes to this function, definitely extract this as a common function like you mentioned. Inheriting from another interface in which this function is defined might make the most sense.",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6150f28_f520b73e",
+        "filename": "src/crud_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T20:32:11Z",
+      "side": 1,
+      "message": "See comment about FileHandlerFactory",
+      "parentUuid": "f2c34171_53115969",
       "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -99,6 +171,24 @@
       "writtenOn": "2023-05-20T17:28:54Z",
       "side": 1,
       "message": "same comment as GetRoot()",
+      "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73a11da3_0bb0c4ce",
+        "filename": "src/crud_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T20:32:11Z",
+      "side": 1,
+      "message": "See comment about FileHandlerFactory",
+      "parentUuid": "f1a8f890_f29b08a4",
       "revId": "3b3673b27786a10344f4208ec498542dfdcb2632",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }

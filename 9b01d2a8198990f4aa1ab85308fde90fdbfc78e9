@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b0c2522_f286e6b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-20T20:32:11Z",
+      "side": 1,
+      "message": "I made a FileHandlerFactory class that inherits I_RequestHandlerFactory and which static and crud handler factories inherit from to implement GetRoot and GetCompleteFilePath",
+      "revId": "9b01d2a8198990f4aa1ab85308fde90fdbfc78e9",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
