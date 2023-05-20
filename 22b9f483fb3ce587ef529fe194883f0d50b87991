@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e444b100_dadfc145",
+        "filename": "include/file_handler_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T20:23:44Z",
+      "side": 1,
+      "message": "give this an I_ prefix to indicate that it is an interface",
+      "revId": "22b9f483fb3ce587ef529fe194883f0d50b87991",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c8a5544_42a5b3c6",
+        "filename": "include/static_handler_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-20T20:23:44Z",
+      "side": 1,
+      "message": "definitely do this, all our constructors are in the implementation files",
+      "revId": "22b9f483fb3ce587ef529fe194883f0d50b87991",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
