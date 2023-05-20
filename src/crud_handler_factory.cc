@@ -4,8 +4,7 @@
 
 CrudHandlerFactory::CrudHandlerFactory(NginxConfig* config) : config_(config) {}
 
-std::string CrudHandlerFactory::GetRoot() { return ""; }
-
-std::string CrudHandlerFactory::GetCompleteFilePath(std::string& file_path) { return ""; }
-
-CrudHandler* CrudHandlerFactory::CreateHandler(std::string& file_path) { return new CrudHandler(file_path); }
+CrudHandler* CrudHandlerFactory::CreateHandler(std::string& file_path) {
+  std::string complete_file_path = GetCompleteFilePath(config_, file_path);
+  return new CrudHandler(file_path, entity_to_id_);
+}
