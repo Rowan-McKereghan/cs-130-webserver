@@ -74,6 +74,7 @@ add_executable(not_found_handler_test tests/request/not_found_handler_test.cc)
 add_executable(not_found_handler_factory_test tests/factories/not_found_handler_factory_test.cc)
 add_executable(crud_handler_test tests/request/crud_handler_test.cc)
 add_executable(file_handler_factory_test tests/factories/I_file_handler_factory_test.cc)
+add_executable(crud_filesystem_manager_test tests/filesystem_managers/crud_filesystem_manager_test.cc)
 
 target_link_libraries(webserver_test server_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(session_test session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
@@ -87,6 +88,7 @@ target_link_libraries(not_found_handler_test not_found_handler_lib logger_lib gt
 target_link_libraries(not_found_handler_factory_test not_found_handler_factory_lib logger_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(crud_handler_test crud_handler_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(file_handler_factory_test file_handler_factory_lib logger_lib gtest_main ${Boost_LIBRARIES})
+target_link_libraries(crud_filesystem_manager_test crud_filesystem_manager_lib logger_lib gtest_main ${Boost_LIBRARIES})
 
 add_test(NAME integration_test
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration_test.sh
@@ -104,6 +106,7 @@ gtest_discover_tests(not_found_handler_test WORKING_DIRECTORY ${CMAKE_CURRENT_SO
 gtest_discover_tests(not_found_handler_factory_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(crud_handler_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(file_handler_factory_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+gtest_discover_tests(crud_filesystem_manager_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 include(cmake/CodeCoverageReportConfig.cmake)
-generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_dispatcher_test echo_handler_test static_handler_test serving_config_test not_found_handler_factory_test not_found_handler_test crud_handler_test file_handler_factory_test)
+generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_dispatcher_test echo_handler_test static_handler_test serving_config_test not_found_handler_factory_test not_found_handler_test crud_handler_test file_handler_factory_test crud_filesystem_manager_test)
