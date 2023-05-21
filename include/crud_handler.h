@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 #include <list>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "I_request_handler.h"
 #include "crud_filesystem_manager.h"
@@ -13,7 +14,7 @@ namespace http = boost::beast::http;
 // Request Handler for basic CRUD (Create, Read, Update, and Delete) api
 class CrudHandler : public I_RequestHandler {
  public:
-  CrudHandler(std::string uri_path, unordered_map<std::string, std::list<int>>& entity_to_id,
+  CrudHandler(std::string uri_path, unordered_map<std::string, std::unordered_set<int>>& entity_to_id,
               CrudFileSystemManager* manager);
   StatusCode HandleRequest(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
 
@@ -25,9 +26,9 @@ class CrudHandler : public I_RequestHandler {
   std::pair<std::string, int> ParseTarget();
 
   // Placeholders for now
-  StatusCode HandlePost(http::response<http::dynamic_body>& res);
+  StatusCode HandlePost(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
   StatusCode HandleGet(http::response<http::dynamic_body>& res);
-  StatusCode HandlePut(http::response<http::dynamic_body>& res);
+  StatusCode HandlePut(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
   StatusCode HandleDelete(http::response<http::dynamic_body>& res);
 
  private:
@@ -39,10 +40,9 @@ class CrudHandler : public I_RequestHandler {
   // dependency injected in constructor; used for filesystem operations
   CrudFileSystemManager* manager_;
 
-  // Placeholder, may change as we implement the functionality using this
-  // map of entity name to list of IDs
+  // map of entity name to set of IDs
   // entity names in the form "/root/entity"
-  unordered_map<std::string, std::list<int>>* entity_to_id_;
+  unordered_map<std::string, std::unordered_set<int>>* entity_to_id_;
 };
 
 #endif

@@ -8,3 +8,4 @@ tests/logs
 .idea
 logs
 cmake-build*
+crud
