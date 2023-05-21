@@ -33,6 +33,24 @@
       "message": "this seems to only work for IDs of length 1, unless it\u0027s only a placeholder for now. There\u0027s also no guarantee that we only call stoi on strings that represent integers.",
       "revId": "92e4f5cfd837eb0142c890de48ba50a8fde3d2e8",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "960f8b96_82524f5b",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-21T23:22:00Z",
+      "side": 1,
+      "message": "That\u0027s a good catch. For now I\u0027ll mark it as a placeholder so my other teammate can use the rest of the file functions and I\u0027ll fix it in my next commit",
+      "parentUuid": "4905cbd6_ded7fda3",
+      "revId": "92e4f5cfd837eb0142c890de48ba50a8fde3d2e8",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
