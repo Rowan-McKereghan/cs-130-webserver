@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12b15f6f_7c9ed6f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-21T22:04:23Z",
+      "side": 1,
+      "message": "Addressed the comments, let me know if you still think I should change the creating root directory part",
+      "revId": "92e4f5cfd837eb0142c890de48ba50a8fde3d2e8",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}

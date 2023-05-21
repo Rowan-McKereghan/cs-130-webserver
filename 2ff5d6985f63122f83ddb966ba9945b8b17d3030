@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a4f8a86_42d25538",
+        "filename": "include/crud_filesystem_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-21T22:04:23Z",
+      "side": 1,
+      "message": "That\u0027s a good idea, I\u0027ve changed it to this",
+      "parentUuid": "929d49ad_62199457",
+      "revId": "2ff5d6985f63122f83ddb966ba9945b8b17d3030",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "515f441c_85db9926",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-21T21:12:54Z",
       "side": 1,
       "message": "it looks like you try to create a new directory regardless of what request type you receive. Would it make more sense to only create a directory on POST (and maybe PUT) requests?",
+      "revId": "2ff5d6985f63122f83ddb966ba9945b8b17d3030",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4124e93b_e994dc0d",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-21T22:04:23Z",
+      "side": 1,
+      "message": "This is for creating the root directory that this handler servers which is specified in the config file so I figured it was best to just ensure it exists whenever the handler is active since anything the handler does will take place inside this root directory. I can move it to only do this in post or put if you think that\u0027s best though",
+      "parentUuid": "515f441c_85db9926",
       "revId": "2ff5d6985f63122f83ddb966ba9945b8b17d3030",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
