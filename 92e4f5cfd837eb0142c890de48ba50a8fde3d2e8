@@ -16,6 +16,23 @@
       "message": "Addressed the comments, let me know if you still think I should change the creating root directory part",
       "revId": "92e4f5cfd837eb0142c890de48ba50a8fde3d2e8",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4905cbd6_ded7fda3",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-21T22:59:34Z",
+      "side": 1,
+      "message": "this seems to only work for IDs of length 1, unless it\u0027s only a placeholder for now. There\u0027s also no guarantee that we only call stoi on strings that represent integers.",
+      "revId": "92e4f5cfd837eb0142c890de48ba50a8fde3d2e8",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
