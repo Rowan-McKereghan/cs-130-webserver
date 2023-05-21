@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22c82cbf_aa5f243d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-21T21:12:54Z",
+      "side": 1,
+      "message": "Just a few implementation clarifications.",
+      "revId": "2ff5d6985f63122f83ddb966ba9945b8b17d3030",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929d49ad_62199457",
+        "filename": "include/crud_filesystem_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-21T21:12:54Z",
+      "side": 1,
+      "message": "you will need a way to distinguish between and empty directory and a nonexistent one. Maybe pass the vector as an outparam and return bool just like all the other functions?",
+      "revId": "2ff5d6985f63122f83ddb966ba9945b8b17d3030",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "515f441c_85db9926",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-21T21:12:54Z",
+      "side": 1,
+      "message": "it looks like you try to create a new directory regardless of what request type you receive. Would it make more sense to only create a directory on POST (and maybe PUT) requests?",
+      "revId": "2ff5d6985f63122f83ddb966ba9945b8b17d3030",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
