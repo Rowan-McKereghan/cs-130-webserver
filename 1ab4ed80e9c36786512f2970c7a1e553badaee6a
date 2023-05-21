@@ -3,6 +3,40 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "bfd4a452_84d7ff41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-21T01:20:02Z",
+      "side": 1,
+      "message": "Not much to comment on this one, since a lot will still depend on implementation specifics. Just one small change.",
+      "revId": "1ab4ed80e9c36786512f2970c7a1e553badaee6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f56a69e9_4959828d",
+        "filename": "include/crud_filesystem_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-21T01:20:02Z",
+      "side": 1,
+      "message": "you will need a list function to get all files in a directory as well",
+      "revId": "1ab4ed80e9c36786512f2970c7a1e553badaee6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8548b6b5_a3bdb765",
         "filename": "src/crud_handler.cc",
         "patchSetId": 1
@@ -14,6 +48,30 @@
       "writtenOn": "2023-05-21T00:58:36Z",
       "side": 1,
       "message": "I know last commit we talked about possibly changing the entity_to_id map so this function might need to change but I can change the content of this method then. The interface and tests will still work for however we change it though.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "1ab4ed80e9c36786512f2970c7a1e553badaee6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6bf9226_79212eb4",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-21T01:20:02Z",
+      "side": 1,
+      "message": "add this comment as a possible TODO",
+      "parentUuid": "8548b6b5_a3bdb765",
       "range": {
         "startLine": 29,
         "startChar": 0,
