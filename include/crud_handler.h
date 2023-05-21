@@ -20,7 +20,7 @@ class CrudHandler : public I_RequestHandler {
   // get next available ID for the given entity
   int GetNextID(std::string entity);
 
-  // Returns a pair with the entity name and the ID number in the request
+  // Returns a pair with the entity name ("/root/entity") and the ID number in the request
   // If the request didn't include an ID returns -1 for the ID value
   std::pair<std::string, int> ParseTarget();
 
@@ -40,7 +40,9 @@ class CrudHandler : public I_RequestHandler {
   CrudFileSystemManager* manager_;
 
   // Placeholder, may change as we implement the functionality using this
-  unordered_map<std::string, std::list<int>>* entity_to_id_;  // map of entity name to list of IDs
+  // map of entity name to list of IDs
+  // entity names in the form "/root/entity"
+  unordered_map<std::string, std::list<int>>* entity_to_id_;
 };
 
 #endif
