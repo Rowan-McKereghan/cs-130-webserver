@@ -44,6 +44,7 @@ add_library(not_found_handler_factory_lib src/not_found_handler_factory.cc)
 add_library(file_handler_factory_lib src/I_file_handler_factory.cc)
 add_library(crud_handler_lib src/crud_handler.cc)
 add_library(crud_handler_factory_lib src/crud_handler_factory.cc)
+add_library(crud_filesystem_manager_lib src/crud_filesystem_manager.cc)
 
 add_executable(webserver src/server_main.cc)
 target_link_libraries(webserver server_lib session_lib config_parser_lib logger_lib serving_config_lib ${Boost_LIBRARIES})
@@ -56,8 +57,10 @@ target_link_libraries(static_handler_factory_lib logger_lib config_parser_lib st
 target_link_libraries(echo_handler_factory_lib logger_lib config_parser_lib echo_handler_lib ${Boost_LIBRARIES})
 target_link_libraries(not_found_handler_lib logger_lib ${Boost_LIBRARIES})
 target_link_libraries(not_found_handler_factory_lib logger_lib not_found_handler_lib ${Boost_LIBRARIES})
-target_link_libraries(crud_handler_lib logger_lib ${Boost_LIBRARIES})
-target_link_libraries(crud_handler_factory_lib logger_lib crud_handler_lib file_handler_factory_lib ${Boost_LIBRARIES})
+target_link_libraries(crud_handler_lib logger_lib crud_filesystem_manager_lib ${Boost_LIBRARIES})
+target_link_libraries(crud_handler_factory_lib logger_lib crud_handler_lib file_handler_factory_lib crud_filesystem_manager_lib ${Boost_LIBRARIES})
+target_link_libraries(crud_filesystem_manager_lib ${Boost_LIBRARIES})
+
 
 add_executable(config_parser_test tests/config_parser/config_parser_test.cc)
 add_executable(webserver_test tests/server/server_test.cc)
@@ -82,7 +85,7 @@ target_link_libraries(echo_handler_test echo_handler_lib logger_lib gtest_main $
 target_link_libraries(serving_config_test serving_config_lib logger_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(not_found_handler_test not_found_handler_lib logger_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(not_found_handler_factory_test not_found_handler_factory_lib logger_lib gtest_main ${Boost_LIBRARIES})
-target_link_libraries(crud_handler_test crud_handler_lib logger_lib gtest_main ${Boost_LIBRARIES})
+target_link_libraries(crud_handler_test crud_handler_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(file_handler_factory_test file_handler_factory_lib logger_lib gtest_main ${Boost_LIBRARIES})
 
 add_test(NAME integration_test
