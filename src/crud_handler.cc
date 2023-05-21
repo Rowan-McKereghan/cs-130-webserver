@@ -32,7 +32,6 @@ int CrudHandler::GetNextID(std::string entity) {
   if (it == entity_to_id_->end() || it->second.front() != 1) {
     return 1;  // if empty or if ID 1 has been deleted return 1
   }
-
   int next_id = 1;
   for (int val : it->second) {  // check if an earlier ID has been deleted
     if (val > next_id) {
@@ -45,10 +44,10 @@ int CrudHandler::GetNextID(std::string entity) {
 
 std::pair<std::string, int> CrudHandler::ParseTarget() {
   int id = -1;
-  std::string entity = file_path_.filename().string();
-  if (entity.length() == 1) {  // path contains ID
-    id = std::stoi(entity);
-    entity = file_path_.parent_path().filename().string();
+  std::string entity = file_path_.string();
+  if (file_path_.filename().string().length() == 1) {  // ie last part of file is an ID #
+    id = std::stoi(file_path_.filename().string());
+    entity = file_path_.parent_path().string();
   }
   return std::pair<std::string, int>(entity, id);
 }
@@ -64,6 +63,15 @@ StatusCode CrudHandler::HandleRequest(const http::request<http::string_body> req
   StatusCode status_code_;
   res.version(req.version());
   res.set(boost::beast::http::field::server, "webserver");
+
+  boost::filesystem::path root = file_path_;
+  while (root.parent_path().string() != "/") {  // find root dir
+    root = root.parent_path();
+  }
+  root = boost::filesystem::current_path() / root;
+  if (!manager_->CreateDir(root)) {  // Create root dir if doesn't exist
+    LOG(error) << "Failed to Open CRUD root at " << root.string();
+  }
 
   LOG(info) << "Request: " << http::to_string(req.method()) << " " << file_path_;
 

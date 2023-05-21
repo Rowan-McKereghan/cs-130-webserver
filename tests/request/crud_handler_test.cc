@@ -9,6 +9,7 @@
 class MockManager : public CrudFileSystemManager {
  public:
   MockManager() : CrudFileSystemManager(){};
+  MOCK_METHOD(bool, CreateDir, (boost::filesystem::path), (override));
 };
 
 TEST(CrudHandler, GetNextIDNewEntity) {
@@ -56,7 +57,7 @@ TEST(CrudHandler, ParseTargetNoID) {
   CrudHandler handler(file_path, file_to_id, &manager);
 
   std::pair<std::string, int> res = handler.ParseTarget();
-  EXPECT_EQ(res.first, "entity");
+  EXPECT_EQ(res.first, "/crud/entity");
   EXPECT_EQ(res.second, -1);
 }
 
@@ -68,7 +69,7 @@ TEST(CrudHandler, ParseTargetYesID) {
   CrudHandler handler(file_path, file_to_id, &manager);
 
   std::pair<std::string, int> res = handler.ParseTarget();
-  EXPECT_EQ(res.first, "entity");
+  EXPECT_EQ(res.first, "/crud/entity");
   EXPECT_EQ(res.second, 1);
 }
 
@@ -84,6 +85,7 @@ TEST(CrudHandler, CrudTestUnsuportedMethod) {
   std::string file_path = "/crud/entity/1";
   unordered_map<std::string, std::list<int>> file_to_id;
   MockManager manager;
+  EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
   CrudHandler handler(file_path, file_to_id, &manager);
   handler.HandleRequest(req, res);
