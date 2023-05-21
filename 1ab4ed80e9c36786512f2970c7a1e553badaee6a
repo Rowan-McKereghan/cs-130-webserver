@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8548b6b5_a3bdb765",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000464
+      },
+      "writtenOn": "2023-05-21T00:58:36Z",
+      "side": 1,
+      "message": "I know last commit we talked about possibly changing the entity_to_id map so this function might need to change but I can change the content of this method then. The interface and tests will still work for however we change it though.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "1ab4ed80e9c36786512f2970c7a1e553badaee6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
