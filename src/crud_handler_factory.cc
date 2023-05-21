@@ -6,7 +6,9 @@
 CrudHandlerFactory::CrudHandlerFactory(NginxConfig* config) : config_(config) {}
 
 CrudHandler* CrudHandlerFactory::CreateHandler(std::string& file_path) {
-  CrudFileSystemManager manager;
+  CrudFileSystemManager* manager = new CrudFileSystemManager;
   std::string complete_file_path = GetCompleteFilePath(config_, file_path);
-  return new CrudHandler(complete_file_path, entity_to_id_, &manager);
+  std::string entity = "shoes";
+ 
+  return new CrudHandler(complete_file_path, entity_to_id_, manager);
 }

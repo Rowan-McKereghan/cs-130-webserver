@@ -3,6 +3,7 @@
 #include <list>
 #include <string>
 #include <unordered_map>
+#include <set>
 
 #include "I_file_handler_factory.h"
 #include "config_parser.h"
@@ -15,6 +16,6 @@ class CrudHandlerFactory : public I_FileHandlerFactory {
 
  private:
   NginxConfig* config_;
-  unordered_map<std::string, std::list<int>> entity_to_id_;  // map of entity name to list of IDs
+  unordered_map<std::string, std::set<int>> entity_to_id_;  // map of entity name to set of IDs
 };
 #endif
