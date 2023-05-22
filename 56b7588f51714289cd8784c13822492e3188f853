@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0539eb24_4e49ecd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T17:07:27Z",
+      "side": 1,
+      "message": "A few small comments.",
+      "revId": "56b7588f51714289cd8784c13822492e3188f853",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "557c5a1b_088337f8",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T17:07:27Z",
+      "side": 1,
+      "message": "this one would make more sense as a 404 since the entity directory does exist",
+      "revId": "56b7588f51714289cd8784c13822492e3188f853",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "152042a5_e89c8ee0",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T17:07:27Z",
+      "side": 1,
+      "message": "maybe add an error check for the write",
+      "revId": "56b7588f51714289cd8784c13822492e3188f853",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f1412c8_d6500c99",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T17:07:27Z",
+      "side": 1,
+      "message": "might be helpful to add a comment indicating the json output format looks like",
+      "revId": "56b7588f51714289cd8784c13822492e3188f853",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "770128e9_2c30e3ed",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T17:07:27Z",
+      "side": 1,
+      "message": "same here, add error check for the write",
+      "revId": "56b7588f51714289cd8784c13822492e3188f853",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
