@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e78323e7_37e7b041",
+        "filename": "include/crud_handler_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000491
+      },
+      "writtenOn": "2023-05-22T06:36:36Z",
+      "side": 1,
+      "message": "Good thinking. Updated to use unordered_set",
+      "parentUuid": "915573a9_6b624ad1",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "330aa63d_de1af41e",
         "filename": "src/crud_handler.cc",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-22T04:45:32Z",
       "side": 1,
       "message": "using an unordered_set would still give you linear time id allocation determination with this function a few small changes while you get constant time lookups. I did make a suggestion about determining the next available id in constant time, but it\u0027s probably not needed since the backend is small.",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb679d45_7eae1aae",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000491
+      },
+      "writtenOn": "2023-05-22T06:36:36Z",
+      "side": 1,
+      "message": "Updated id allocation to use unordered_set in linear time. While it could be interesting to look into implementing the constant time lookup, I agree that it\u0027s probably not needed and would add aditional complications to the code. Maybe something to look into if we have time at the end!",
+      "parentUuid": "330aa63d_de1af41e",
       "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5fe8722b_aabe4c95",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000491
+      },
+      "writtenOn": "2023-05-22T06:36:36Z",
+      "side": 1,
+      "message": "Thanks for the suggestions. I want to get basic functionality first so we can get started on integration test but after that I will definitely look into these.",
+      "parentUuid": "b017e277_aaa3d3a5",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "205212c2_c08d72f2",
         "filename": "src/crud_handler.cc",
         "patchSetId": 2
@@ -82,6 +136,24 @@
       "writtenOn": "2023-05-22T04:45:32Z",
       "side": 1,
       "message": "this would probably be 500 since it\u0027s an internal server error",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6119984_b33df3e0",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000491
+      },
+      "writtenOn": "2023-05-22T06:36:36Z",
+      "side": 1,
+      "message": "Good call!",
+      "parentUuid": "205212c2_c08d72f2",
       "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
