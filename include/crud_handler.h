@@ -21,6 +21,9 @@ class CrudHandler : public I_RequestHandler {
   // get next available ID for the given entity
   int GetNextID(std::string entity);
 
+  // returns the length of file_path_ (ie /root/entity/ID is length 3, /root/entity is length 2, etc.)
+  int GetPathLen();
+
   // Returns a pair with the entity name ("/root/entity") and the ID number in the request
   // If the request didn't include an ID returns -1 for the ID value
   std::pair<std::string, int> ParseTarget();
@@ -34,6 +37,13 @@ class CrudHandler : public I_RequestHandler {
  private:
   // fills fields in res according to status_code (assumes status code is not OK)
   void ReturnError(StatusCode status_code, http::response<http::dynamic_body>& res);
+
+  // helper for HandleRequest to select the correct Handle___ method
+  StatusCode HandleMethod(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
+
+  // helper for HandleRequest to check initial conditions of the request
+  // Checks for invalid file_path_ or unable to open root directory
+  StatusCode InitRoot(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
 
   boost::filesystem::path file_path_;
 
