@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42698956_23d6ee8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T04:45:32Z",
+      "side": 1,
+      "message": "Few questions/comments about implementation specifics.",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "915573a9_6b624ad1",
+        "filename": "include/crud_handler_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T04:45:32Z",
+      "side": 1,
+      "message": "an unordered_set would be more efficient if all you are doing is inserting, deleting, and checking for existence.",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "330aa63d_de1af41e",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T04:45:32Z",
+      "side": 1,
+      "message": "using an unordered_set would still give you linear time id allocation determination with this function a few small changes while you get constant time lookups. I did make a suggestion about determining the next available id in constant time, but it\u0027s probably not needed since the backend is small.",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b017e277_aaa3d3a5",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T04:45:32Z",
+      "side": 1,
+      "message": "up to you between 400 and 409",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "205212c2_c08d72f2",
+        "filename": "src/crud_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-22T04:45:32Z",
+      "side": 1,
+      "message": "this would probably be 500 since it\u0027s an internal server error",
+      "revId": "eea2f907ae347e2cafb953b9afd22d64e759eec2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
