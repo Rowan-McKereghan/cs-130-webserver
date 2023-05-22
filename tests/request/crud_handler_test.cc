@@ -7,12 +7,16 @@
 #include "gtest/gtest.h"
 
 class MockManager : public CrudFileSystemManager {
- public:
+  public:
   MockManager() : CrudFileSystemManager(){};
   MOCK_METHOD(bool, CreateDir, (boost::filesystem::path), (override));
   MOCK_METHOD(bool, CreateFile, (boost::filesystem::path path, std::string content), (override));
   MOCK_METHOD(bool, WriteFile, (boost::filesystem::path path, std::string content), (override));
+  MOCK_METHOD(bool, DeleteFile, (boost::filesystem::path path), (override));
+  MOCK_METHOD(bool, ReadFile, (boost::filesystem::path path,  boost::beast::http::response<boost::beast::http::dynamic_body>& res), (override));
+  MOCK_METHOD(bool, ListFiles, (boost::filesystem::path path, std::vector<std::string>& out_vect), (override));
 };
+
 
 TEST(CrudHandler, GetNextIDNewEntity) {
   std::string file_path = "/crud";
@@ -156,4 +160,99 @@ TEST(CrudHandler, CrudTestPut) {
   EXPECT_EQ(res.version(), 11);                                                      // version
   EXPECT_EQ(res.result_int(), OK);                                          // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{\"id\": 1}\n\n");  // body
+}
+
+// tests HandleRequest using Delete method
+TEST(CrudHandler, CrudTestDelete) {
+  //set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+  //set up map
+  file_to_id["/crud/entity"].insert(1);
+
+  // set up Crud handler
+  std::string file_path = "/crud/entity/1";
+  MockManager manager;
+  EXPECT_CALL(manager, DeleteFile(testing::_)).WillOnce(testing::Return(true));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+  
+  // set up put request
+  boost::beast::http::request<boost::beast::http::string_body> req{
+      boost::beast::http::verb::delete_,  // POST REQUEST
+      "/api/entity/1",                    // URI
+      11};                                // HTTP 1.1
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  handler.HandleRequest(req, res);
+
+  
+  // check put response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), OK);                                          // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{\"id\": 1}\n\n");  // body
+
+  //check that id was removed from set
+  bool wasRemoved = file_to_id["/crud/entity"].find(1) == file_to_id["/crud/entity"].end();
+  EXPECT_TRUE(wasRemoved);
+}
+
+// tests HandleRequest using Get method using ID
+TEST(CrudHandler, CrudTestGetID) {
+  //set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+  //set up map
+  file_to_id["/crud/entity"].insert(1);
+
+  // set up Crud handler
+  std::string file_path = "/crud/entity/1";
+  MockManager manager;
+  boost::beast::http::response<boost::beast::http::dynamic_body> test_res;
+  boost::beast::ostream(test_res.body()) << "{json}\n\n";
+  EXPECT_CALL(manager, ReadFile(testing::_, testing::_)).WillOnce(DoAll(testing::SetArgReferee<1>(test_res), testing::Return(true)));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+  
+  // set up put request
+  boost::beast::http::request<boost::beast::http::string_body> req{
+      boost::beast::http::verb::get,  // POST REQUEST
+      "/api/entity/1",                    // URI
+      11};                                // HTTP 1.1
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  handler.HandleRequest(req, res);
+
+  
+  // check put response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), OK);                                          // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{json}\n\n");  // body
+}
+
+// tests HandleRequest using Get method without ID to list files
+TEST(CrudHandler, CrudTestGetNoID) {
+  //set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+  //set up map
+  file_to_id["/crud/entity"].insert(1);
+  file_to_id["/crud/entity"].insert(2);
+
+  // set up Crud handler
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  std::string file_path = "/crud/entity";
+  MockManager manager;
+  std::vector<std::string> file_names{"/crud/entity/1", "/crud/entity/2"};
+  EXPECT_CALL(manager, ListFiles(testing::_, testing::_)).WillOnce(DoAll(testing::SetArgReferee<1>(file_names), testing::Return(true)));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+  
+  // set up put request
+  boost::beast::http::request<boost::beast::http::string_body> req{
+      boost::beast::http::verb::get,  // POST REQUEST
+      "/api/entity",                    // URI
+      11};                                // HTTP 1.1
+  handler.HandleRequest(req, res);
+
+  
+  // check put response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), OK);                                          // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{[\"/crud/entity/1\", \"/crud/entity/2\"]}\n\n");  // body
 }
