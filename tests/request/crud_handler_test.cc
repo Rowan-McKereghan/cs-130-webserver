@@ -154,6 +154,32 @@ TEST(CrudHandler, CrudTestPost) {
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{\"id\": 1}\n\n");  // body
 }
 
+// tests HandleRequest using bad Post request with ID included
+TEST(CrudHandler, CrudTestPostWithID) {
+  // set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+
+  // set up Crud handler for post
+  std::string file_path = "/crud/entity/1";
+  MockManager manager;
+  EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
+  CrudHandler handler(file_path, file_to_id, &manager);
+
+  // set up post request
+  string req_data = "{json}";
+  boost::beast::http::request<boost::beast::http::string_body> req_post{boost::beast::http::verb::post,  // POST REQUEST
+                                                                        "/api/entity/1",                   // URI
+                                                                        11};                             // HTTP 1.1
+  req_post.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  handler.HandleRequest(req_post, res);
+
+  // check post response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                                   // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "400 Bad Request\n\n");  // body
+}
+
 // tests HandleRequest using Put method
 TEST(CrudHandler, CrudTestPut) {
   // set up map
@@ -184,6 +210,60 @@ TEST(CrudHandler, CrudTestPut) {
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{\"id\": 1}\n\n");  // body
 }
 
+// tests HandleRequest using Put method for nonexistant item
+TEST(CrudHandler, CrudTestPutNotFound) {
+  // set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+
+  // set up Crud handler for put
+  std::string file_path = "/crud/entity/1";
+  MockManager manager;
+  EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+
+  // set up put request
+  string req_data = "{json}";
+  boost::beast::http::request<boost::beast::http::string_body> req_put{boost::beast::http::verb::put,  // POST REQUEST
+                                                                       "/api/entity/1",                // URI
+                                                                       11};                            // HTTP 1.1
+  req_put.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  handler.HandleRequest(req_put, res);
+
+  // check put response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), NOT_FOUND);                                                   // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "404 Not Found\n\n");  // body
+}
+
+// tests HandleRequest using Put method with no ID returns 400 error
+TEST(CrudHandler, CrudTestPutNoID) {
+  // set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+
+  // set up Crud handler for put
+  std::string file_path = "/crud/entity";
+  MockManager manager;
+  EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+
+  // set up put request
+  string req_data = "{json}";
+  boost::beast::http::request<boost::beast::http::string_body> req_put{boost::beast::http::verb::put,  // POST REQUEST
+                                                                       "/api/entity",                // URI
+                                                                       11};                            // HTTP 1.1
+  req_put.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  handler.HandleRequest(req_put, res);
+
+  // check put response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                                   // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "400 Bad Request\n\n");  // body
+}
+
 // tests HandleRequest using Delete method
 TEST(CrudHandler, CrudTestDelete) {
   // set up map
@@ -199,14 +279,14 @@ TEST(CrudHandler, CrudTestDelete) {
 
   CrudHandler handler(file_path, file_to_id, &manager);
 
-  // set up put request
+  // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::delete_,  // DELETE REQUEST
                                                                    "/api/entity/1",                    // URI
                                                                    11};                                // HTTP 1.1
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   handler.HandleRequest(req, res);
 
-  // check put response
+  // check response
   EXPECT_EQ(res.version(), 11);                                                      // version
   EXPECT_EQ(res.result_int(), OK);                                                   // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{\"id\": 1}\n\n");  // body
@@ -214,6 +294,56 @@ TEST(CrudHandler, CrudTestDelete) {
   // check that id was removed from set
   bool wasRemoved = file_to_id["/crud/entity"].find(1) == file_to_id["/crud/entity"].end();
   EXPECT_TRUE(wasRemoved);
+}
+
+// tests HandleRequest using Delete method with nonexistant entity returns 404 error
+TEST(CrudHandler, CrudTestDeleteNotFound) {
+  // set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+
+  // set up Crud handler
+  std::string file_path = "/crud/entity/1";
+  MockManager manager;
+  EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+
+  // set up request
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::delete_,  // DELETE REQUEST
+                                                                   "/api/entity/1",                    // URI
+                                                                   11};                                // HTTP 1.1
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  handler.HandleRequest(req, res);
+
+  // check response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), NOT_FOUND);                                                   // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "404 Not Found\n\n");  // body
+}
+
+// tests HandleRequest using Delete method without ID returns 400 error
+TEST(CrudHandler, CrudTestDeleteNoID) {
+  // set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+
+  // set up Crud handler
+  std::string file_path = "/crud/entity";
+  MockManager manager;
+  EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+
+  // set up request
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::delete_,  // DELETE REQUEST
+                                                                   "/api/entity",                    // URI
+                                                                   11};                                // HTTP 1.1
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  handler.HandleRequest(req, res);
+
+  // check response
+  EXPECT_EQ(res.version(), 11);                                                      // version
+  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                                   // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "400 Bad Request\n\n");  // body
 }
 
 // tests HandleRequest using Get method using ID
@@ -234,14 +364,14 @@ TEST(CrudHandler, CrudTestGetID) {
 
   CrudHandler handler(file_path, file_to_id, &manager);
 
-  // set up put request
+  // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET REQUEST
                                                                    "/api/entity/1",                // URI
                                                                    11};                            // HTTP 1.1
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   handler.HandleRequest(req, res);
 
-  // check put response
+  // check response
   EXPECT_EQ(res.version(), 11);                                                 // version
   EXPECT_EQ(res.result_int(), OK);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "{json}\n\n");  // body
@@ -272,7 +402,7 @@ TEST(CrudHandler, CrudTestGetNoID) {
                                                                    11};                            // HTTP 1.1
   handler.HandleRequest(req, res);
 
-  // check put response
+  // check response
   EXPECT_EQ(res.version(), 11);                                                 // version
   EXPECT_EQ(res.result_int(), OK);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "[1, 2]\n\n");  // body
@@ -291,6 +421,31 @@ TEST(CrudHandler, CrudTestGetNonexistantEntity) {
 
   CrudHandler handler(file_path, file_to_id, &manager);
 
+  // set request
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET REQUEST
+                                                                   "/api/entity",                  // URI
+                                                                   11};                            // HTTP 1.1
+  handler.HandleRequest(req, res);
+
+  // check response
+  EXPECT_EQ(res.version(), 11);                                             // version
+  EXPECT_EQ(res.result_int(), OK);                                          // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "[]\n\n");  // body
+}
+
+// tests HandleRequest using Get method with an entity and ID that does not exist
+TEST(CrudHandler, CrudTestGetNotFound) {
+  // set up map
+  unordered_map<std::string, std::unordered_set<int>> file_to_id;
+
+  // set up Crud handler
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  std::string file_path = "/crud/entity/1";
+  MockManager manager;
+  EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
+
+  CrudHandler handler(file_path, file_to_id, &manager);
+
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET REQUEST
                                                                    "/api/entity",                  // URI
@@ -299,6 +454,6 @@ TEST(CrudHandler, CrudTestGetNonexistantEntity) {
 
   // check put response
   EXPECT_EQ(res.version(), 11);                                             // version
-  EXPECT_EQ(res.result_int(), OK);                                          // status
-  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "[]\n\n");  // body
+  EXPECT_EQ(res.result_int(), NOT_FOUND);                                          // status
+  EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "404 Not Found\n\n");  // body
 }
