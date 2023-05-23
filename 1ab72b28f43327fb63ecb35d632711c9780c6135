@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8abb8a6_4db94b97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-23T18:43:09Z",
+      "side": 1,
+      "message": "One small suggestion",
+      "revId": "1ab72b28f43327fb63ecb35d632711c9780c6135",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbbe251b_98993d21",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-23T18:43:09Z",
+      "side": 1,
+      "message": "might make sense to make a separate crud test directory in case there is an entity named \"test\" in the prod filesystem",
+      "revId": "1ab72b28f43327fb63ecb35d632711c9780c6135",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
