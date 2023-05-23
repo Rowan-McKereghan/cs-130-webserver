@@ -51,6 +51,24 @@
       "parentUuid": "cbbe251b_98993d21",
       "revId": "1ab72b28f43327fb63ecb35d632711c9780c6135",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec359adc_eb04d561",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-23T20:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e265e25_dcd592df",
+      "revId": "1ab72b28f43327fb63ecb35d632711c9780c6135",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
