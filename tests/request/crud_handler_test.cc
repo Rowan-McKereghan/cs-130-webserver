@@ -230,7 +230,7 @@ TEST(CrudHandler, CrudTestGetID) {
   boost::beast::http::response<boost::beast::http::dynamic_body> test_res;
   boost::beast::ostream(test_res.body()) << "{json}\n\n";
   EXPECT_CALL(manager, ReadFile(testing::_, testing::_))
-      .WillOnce(DoAll(testing::SetArgReferee<1>(test_res), testing::Return(true)));
+      .WillOnce(testing::DoAll(testing::SetArgReferee<1>(test_res), testing::Return(true)));
 
   CrudHandler handler(file_path, file_to_id, &manager);
 
@@ -262,7 +262,7 @@ TEST(CrudHandler, CrudTestGetNoID) {
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
   std::vector<std::string> file_names{"1", "2"};
   EXPECT_CALL(manager, ListFiles(testing::_, testing::_))
-      .WillOnce(DoAll(testing::SetArgReferee<1>(file_names), testing::Return(true)));
+      .WillOnce(testing::DoAll(testing::SetArgReferee<1>(file_names), testing::Return(true)));
 
   CrudHandler handler(file_path, file_to_id, &manager);
 
