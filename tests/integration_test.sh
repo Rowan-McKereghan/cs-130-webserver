@@ -160,8 +160,87 @@ else
     (( ++numberOfSucceededTests ))
 fi
 
+
+
 # -----------------
 
+# -----------------
+
+
+# CRUD Handler Valid Create action
+# Creates an entity and makes sure it's present
+
+
+SERVER_IP=localhost
+SERVER_PORT=80
+TIMEOUT=0.5
+
+#rm -rf ../crud/test/1
+rm -rf ../ctrl-c-ctrl-v/crud/test
+#rm -rf ../api/test
+#rm -rf entitydata??
+sleep 1.0
+
+# Curl server and create
+timeout $TIMEOUT curl -s -i -X POST -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/test -d '{"a":111}'
+
+# Check if file exists or not
+FILE=../ctrl-c-ctrl-v/crud/test/1
+
+test -f "$FILE";
+RESULT=$?
+
+if [ $RESULT -eq 0 ];
+then
+    (( ++numberOfTests ))
+    (( ++numberOfSucceededTests ))
+    echo "$FILE exists."
+else 
+    echo "$FILE does NOT exist."
+    (( ++numberOfTests ))
+    finalExit=1
+fi
+
+
+
+# CRUD Handler Valid Retrieve action
+# Creates an entity and makes sure it's present
+
+# Curl server and get list
+timeout $TIMEOUT curl -s -i -X GET -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/test/1 > integration_test_GET1_result
+
+# Check if file exists or not
+fname=tests/IntegrationDiffs/integration_test_GET1_exp
+
+#diff tests/IntegrationDiffs/integration_test_GET1_exp integration_test_GET1_result
+diff "integration_test_GET1_result" "$fname" | grep "^<" | wc -l
+
+RESULT=$?
+
+DIFFLINE= diff "integration_test_GET1_result" "$fname" | grep "^<" 
+
+DIFFWORD= $DIFFLINE | head -n1 | cut -d " " -f1
+
+rm integration_test_GET1_result
+
+if ([ $RESULT -eq 1 ] && [ $DIFFWORD -eq Date:]);
+then
+    #TEST_GET_SUCCESS=1
+    (( ++numberOfTests ))
+    (( ++numberOfSucceededTests ))
+    echo "Test GET1 Success"
+elif [ $RESULT -eq 0 ];
+then
+    #TEST_GET_SUCCESS=1
+    (( ++numberOfTests ))
+    (( ++numberOfSucceededTests ))
+    echo "Test GET1 Success"
+else 
+    #SUCCESS = 0
+    echo "Test GET1 Failure"
+    (( ++numberOfTests ))
+    finalExit=1
+fi
 
 
 
@@ -175,8 +254,6 @@ exit $finalExit
 
 
 #diff btwn expected curl and curl result (tests/IntegrationDiffs/expected_curl_basic.txt)
-
-
 
 
 
