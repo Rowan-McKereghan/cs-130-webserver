@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "461f7a85_0f2eb4af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-24T05:06:22Z",
+      "side": 1,
+      "message": "Thanks for adding documentation, LGTM!",
+      "revId": "609c4c98f360bdf9b023e6a41f67ed76b2528b87",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
