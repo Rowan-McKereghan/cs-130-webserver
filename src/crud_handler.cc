@@ -73,7 +73,10 @@ std::pair<std::string, int> CrudHandler::ParseTarget() {
   return std::pair<std::string, int>(entity, id);
 }
 
-// TODO: potentially update to use more descriptive error codes instead of only BAD_REQUEST
+// Post method creates stores the content of the request into a file corresponding to next available ID for an entity
+// Returns the ID of the newly created entity EX. {"id": 1}
+// Returns BAD_REQUEST if ID is included in POST request
+// Returns INTERNAL_SERVER_ERROR if one of the file operations fails
 StatusCode CrudHandler::HandlePost(const http::request<http::string_body> req,
                                    http::response<http::dynamic_body>& res) {
   std::pair<std::string, int> entity = ParseTarget();
@@ -109,6 +112,11 @@ StatusCode CrudHandler::HandlePost(const http::request<http::string_body> req,
   return OK;
 }
 
+// Put method updates the data for a specific instance of an entity based on its ID
+// Returns the ID of the updated entity EX. {"id": 1}
+// Returns BAD_REQUEST if id is not included in request
+// Returns NOT_FOUND if instance of entity does not exists
+// Returns INTERNAL_SERVER_ERROR if file writing operation fails
 StatusCode CrudHandler::HandlePut(const http::request<http::string_body> req, http::response<http::dynamic_body>& res) {
   std::pair<std::string, int> entity = ParseTarget();
   // Return bad request if id is included in POST request
@@ -142,6 +150,12 @@ StatusCode CrudHandler::HandlePut(const http::request<http::string_body> req, ht
   return OK;
 }
 
+// Delete method deletes the data for a specific instance of an entity based on its ID
+// Deletes json file and removes ID from set of IDs for the entity
+// Returns the ID of the deleted entity EX. {"id": 1}
+// Returns BAD_REQUEST if id is not included in request
+// Returns NOT_FOUND if instance of entity does not exists
+// Returns INTERNAL_SERVER_ERROR if DeleteFile operation fails
 StatusCode CrudHandler::HandleDelete(http::response<http::dynamic_body>& res) {
   std::pair<std::string, int> entity = ParseTarget();
   // Return bad request if id is included in DELETE request
@@ -178,6 +192,12 @@ StatusCode CrudHandler::HandleDelete(http::response<http::dynamic_body>& res) {
   return OK;
 }
 
+// GET method returns information about either a specific entity or all instances of an entity
+// If ID is included returns the data corresponding to the requested entity
+// Returns NOT_FOUND if instance of entity does not exists
+// If ID is not included returns a list of all files for a given entity Ex. [1, 2, 3]
+// Returns empty list if entity does not exist
+// Returns INTERNAL_SERVER_ERROR if file reading or file listing operations fail
 StatusCode CrudHandler::HandleGet(http::response<http::dynamic_body>& res) {
   std::pair<std::string, int> entity = ParseTarget();
   // If id is included retrive information for specific instance of entity
