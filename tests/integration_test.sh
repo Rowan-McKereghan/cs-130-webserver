@@ -226,6 +226,8 @@ diff -b -I '^Date*' "tests/IntegrationDiffs/integration_test_GET1_exp" "$fname"
 RESULT=$?
 
 
+rm integration_test_GET1_result
+
 if [[ "$RESULT" -eq 1 ]]
 then 
     printf "GET: failure\n"
@@ -256,38 +258,32 @@ timeout $TIMEOUT curl -s -i -d '{"a":123}' -X PUT -H "Host:" -H "User-Agent:" $S
 # Curl server and get updated entity
 timeout $TIMEOUT curl -s -i -X GET -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integration_test/1 > integration_test_PUT_result
 
-# Check if file exists or not
-RESULT=diff tests/IntegrationDiffs/integration_test_PUT_exp integration_test_PUT_result | grep "^<" | wc -l
+
+fname=integration_test_PUT_result
 
 
 
-fname=tests/IntegrationDiffs/integration_test_PUT_exp
+#ignore date as that is a temporary metric and compare the rest to confirm info is accurate
+diff -b -I '^Date*' "tests/IntegrationDiffs/integration_test_PUT_exp" "$fname"
 
-DIFFLINE= diff "integration_test_PUT_result" "$fname" | grep "^<" 
+RESULT=$?
 
-DIFFWORD= $DIFFLINE | head -n1 | cut -d " " -f1
-#isolates the first word of the different line to check if it's the Date line
+
 
 rm integration_test_PUT_result
 
-if ([ $RESULT -eq 1 ] && [ $DIFFWORD -eq Date:]);
-then
-    #TEST_PUT_SUCCESS=1
-    (( ++numberOfTests ))
-    (( ++numberOfSucceededTests ))
-    echo "Test PUT Success"
-elif [ $RESULT -eq 0 ];
-then
-    #TEST_GET_SUCCESS=1
-    (( ++numberOfTests ))
-    (( ++numberOfSucceededTests ))
-    echo "Test PUT Success"
-else
-    #TEST_PUT_SUCCESS=0
-    echo "Test PUT Failure"
+if [[ "$RESULT" -eq 1 ]]
+then 
+    printf "PUT: failure\n"
     (( ++numberOfTests ))
     finalExit=1
+else
+    printf "PUT: success\n"
+    (( ++numberOfTests ))
+    (( ++numberOfSucceededTests ))
 fi
+
+
 
 
 # -----------------
@@ -336,6 +332,7 @@ exit $finalExit
 
 
 #diff btwn expected curl and curl result (tests/IntegrationDiffs/expected_curl_basic.txt)
+
 
 
 
