@@ -41,6 +41,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8d46a2a_66eb802d",
+        "filename": "include/health_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-25T07:22:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0250d82_f8a0c817",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "07b6fd124ed29fc36307dafcffddb70a45a037bb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04bda307_dbb8596b",
@@ -64,6 +88,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b976ec4_5a69e93c",
+        "filename": "src/health_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-25T07:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04bda307_dbb8596b",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "07b6fd124ed29fc36307dafcffddb70a45a037bb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0aceeb28_c252fd83",
@@ -77,6 +125,30 @@
       "writtenOn": "2023-05-25T06:17:34Z",
       "side": 1,
       "message": "Same for formatting here and other files as well.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "07b6fd124ed29fc36307dafcffddb70a45a037bb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a703039e_a7bda189",
+        "filename": "src/health_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-25T07:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aceeb28_c252fd83",
       "range": {
         "startLine": 2,
         "startChar": 0,
