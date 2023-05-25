@@ -11,4 +11,8 @@ server {
     location /api CrudHandler {
         root /crud;
     }
+
+    location /health HealthHandler {
+        
+    }
 }
