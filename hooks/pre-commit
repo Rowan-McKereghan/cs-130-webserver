@@ -10,7 +10,7 @@ fi
 # Format the files
 for file in `git diff-index --cached --name-only HEAD | grep -iE '\.(cc|h)$' ` ; do
     echo "Formatting $file..."
-    clang-format -i "$file" # Format in place
+    clang-format -style=file -i "$file" #Format in place
     git add "$file" # Add the formatted files to the commit
 done
 

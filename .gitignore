@@ -9,3 +9,4 @@ tests/logs
 logs
 cmake-build*
 crud
+hooks/commit-msg
