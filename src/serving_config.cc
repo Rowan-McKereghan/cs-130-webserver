@@ -18,6 +18,7 @@
 #include "config_parser.h"
 #include "crud_handler_factory.h"
 #include "echo_handler_factory.h"
+#include "health_handler_factory.h"
 #include "logger.h"
 #include "not_found_handler_factory.h"
 #include "privileged_dirs.h"
@@ -105,6 +106,8 @@ int ServingConfig::SetPaths(NginxConfig* config) {
                   handler_factories_[serving_path] = new EchoHandlerFactory();
                 } else if (handler_name == "CrudHandler") {
                   handler_factories_[serving_path] = new CrudHandlerFactory(paths_block);
+                } else if (handler_name == "HealthHandler") {
+                  handler_factories_[serving_path] = new HealthHandlerFactory();
                 }
               }
             }
