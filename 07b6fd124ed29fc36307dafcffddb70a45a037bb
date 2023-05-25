@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5549ad58_37259f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-25T06:17:34Z",
+      "side": 1,
+      "message": "Good for the most part just some small issues with formatting and documentation!",
+      "revId": "07b6fd124ed29fc36307dafcffddb70a45a037bb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0250d82_f8a0c817",
+        "filename": "include/health_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-25T06:17:34Z",
+      "side": 1,
+      "message": "Can you describe what this handler is intended to be used for briefly in a comment and also add a description to the readme to document the functionality?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "07b6fd124ed29fc36307dafcffddb70a45a037bb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04bda307_dbb8596b",
+        "filename": "src/health_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-25T06:17:34Z",
+      "side": 1,
+      "message": "It appears that this isn\u0027t formatted properly. Can you make sure to use clang-format? Installing the git commit hook should make it easy.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "07b6fd124ed29fc36307dafcffddb70a45a037bb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aceeb28_c252fd83",
+        "filename": "src/health_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-25T06:17:34Z",
+      "side": 1,
+      "message": "Same for formatting here and other files as well.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "07b6fd124ed29fc36307dafcffddb70a45a037bb",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
