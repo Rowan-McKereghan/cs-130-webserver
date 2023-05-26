@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd2796b8_0a825ab8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-26T19:45:08Z",
+      "side": 1,
+      "message": "There are some decision decisions that we should re-evaluate in followup CLs but this is a good first implementation!\n\nThanks for using shared_lock for reads to speed things up when possible!",
+      "revId": "8721ff67ebc01f345b2fb49a743c5a77960816b9",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63f1f528_cd5598f2",
+        "filename": "include/filesystem_mutex.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-26T19:45:08Z",
+      "side": 1,
+      "message": "Again, this is okay for now, but we may want to re-evaluate this design decision as we develop our websockets feature. This will likely require an additional mutex and additional functionality which might be better encapsulated in a standalone object that we should pass to all threads.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "8721ff67ebc01f345b2fb49a743c5a77960816b9",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32636b33_771e3a08",
+        "filename": "src/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-26T19:45:08Z",
+      "side": 1,
+      "message": "This is okay to start with but in a follow-up PR, we should do something more than just detach the thread.\n\nOn SIGINT, or any other exit condition once we have started sessions, we want to perform a join to make sure all threads have terminated before exiting. We also want to ensure that a single failed thread returns a 400 Bad Request (if possible) but that is also for a followup CL\u003e",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "8721ff67ebc01f345b2fb49a743c5a77960816b9",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
