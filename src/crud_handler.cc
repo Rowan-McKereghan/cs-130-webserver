@@ -1,8 +1,11 @@
 #include "crud_handler.h"
 
 #include <boost/beast/core.hpp>
+#include <shared_mutex>
+#include <thread>
 
 #include "crud_filesystem_manager.h"
+#include "filesystem_mutex.h"
 #include "logger.h"
 
 const int MAX_FILE_SIZE = 10485760;  // 10MB
@@ -58,8 +61,8 @@ int CrudHandler::GetPathLen() {
 }
 
 std::pair<std::string, int> CrudHandler::ParseTarget() {
-  int path_len = GetPathLen();  // Can only be 3 or 2 because otherwise HandleRequest would throw an error before
-                                // ParseTarget called
+  int path_len = GetPathLen();  // Can only be 3 or 2 because otherwise HandleRequest would
+                                // throw an error before ParseTarget called
   int id = -1;
   std::string entity = file_path_.string();  // if path_len is 2 this is enough
   std::string file_name = file_path_.filename().string();
@@ -73,10 +76,10 @@ std::pair<std::string, int> CrudHandler::ParseTarget() {
   return std::pair<std::string, int>(entity, id);
 }
 
-// Post method creates stores the content of the request into a file corresponding to next available ID for an entity
-// Returns the ID of the newly created entity EX. {"id": 1}
-// Returns BAD_REQUEST if ID is included in POST request
-// Returns INTERNAL_SERVER_ERROR if one of the file operations fails
+// Post method creates stores the content of the request into a file
+// corresponding to next available ID for an entity Returns the ID of the newly
+// created entity EX. {"id": 1} Returns BAD_REQUEST if ID is included in POST
+// request Returns INTERNAL_SERVER_ERROR if one of the file operations fails
 StatusCode CrudHandler::HandlePost(const http::request<http::string_body> req,
                                    http::response<http::dynamic_body>& res) {
   std::pair<std::string, int> entity = ParseTarget();
@@ -85,6 +88,9 @@ StatusCode CrudHandler::HandlePost(const http::request<http::string_body> req,
     LOG(warning) << "id incorrectly included in POST request";
     return BAD_REQUEST;
   }
+
+  // entering critical section
+  std::unique_lock<std::shared_mutex> lock(filesystem_mutex);
 
   int id = GetNextID(entity.first);
   boost::filesystem::path entity_dir = boost::filesystem::current_path() / entity.first;
@@ -112,11 +118,10 @@ StatusCode CrudHandler::HandlePost(const http::request<http::string_body> req,
   return OK;
 }
 
-// Put method updates the data for a specific instance of an entity based on its ID
-// Returns the ID of the updated entity EX. {"id": 1}
-// Returns BAD_REQUEST if id is not included in request
-// Returns NOT_FOUND if instance of entity does not exists
-// Returns INTERNAL_SERVER_ERROR if file writing operation fails
+// Put method updates the data for a specific instance of an entity based on its
+// ID Returns the ID of the updated entity EX. {"id": 1} Returns BAD_REQUEST if
+// id is not included in request Returns NOT_FOUND if instance of entity does
+// not exists Returns INTERNAL_SERVER_ERROR if file writing operation fails
 StatusCode CrudHandler::HandlePut(const http::request<http::string_body> req, http::response<http::dynamic_body>& res) {
   std::pair<std::string, int> entity = ParseTarget();
   // Return bad request if id is included in POST request
@@ -126,6 +131,9 @@ StatusCode CrudHandler::HandlePut(const http::request<http::string_body> req, ht
   }
 
   int id = entity.second;
+
+  // entering critical section
+  std::unique_lock<std::shared_mutex> lock(filesystem_mutex);
 
   // check if entity with given id does not exist return 404 error
   if (entity_to_id_->find(entity.first) == entity_to_id_->end() ||
@@ -150,8 +158,8 @@ StatusCode CrudHandler::HandlePut(const http::request<http::string_body> req, ht
   return OK;
 }
 
-// Delete method deletes the data for a specific instance of an entity based on its ID
-// Deletes json file and removes ID from set of IDs for the entity
+// Delete method deletes the data for a specific instance of an entity based on
+// its ID Deletes json file and removes ID from set of IDs for the entity
 // Returns the ID of the deleted entity EX. {"id": 1}
 // Returns BAD_REQUEST if id is not included in request
 // Returns NOT_FOUND if instance of entity does not exists
@@ -165,6 +173,9 @@ StatusCode CrudHandler::HandleDelete(http::response<http::dynamic_body>& res) {
   }
 
   int id = entity.second;
+
+  // entering critical section
+  std::unique_lock<std::shared_mutex> lock(filesystem_mutex);
 
   // if entity with given id does not exist return 404 error
   if (entity_to_id_->find(entity.first) == entity_to_id_->end() ||
@@ -192,12 +203,12 @@ StatusCode CrudHandler::HandleDelete(http::response<http::dynamic_body>& res) {
   return OK;
 }
 
-// GET method returns information about either a specific entity or all instances of an entity
-// If ID is included returns the data corresponding to the requested entity
-// Returns NOT_FOUND if instance of entity does not exists
-// If ID is not included returns a list of all files for a given entity Ex. [1, 2, 3]
-// Returns empty list if entity does not exist
-// Returns INTERNAL_SERVER_ERROR if file reading or file listing operations fail
+// GET method returns information about either a specific entity or all
+// instances of an entity If ID is included returns the data corresponding to
+// the requested entity Returns NOT_FOUND if instance of entity does not exists
+// If ID is not included returns a list of all files for a given entity Ex. [1,
+// 2, 3] Returns empty list if entity does not exist Returns
+// INTERNAL_SERVER_ERROR if file reading or file listing operations fail
 StatusCode CrudHandler::HandleGet(http::response<http::dynamic_body>& res) {
   std::pair<std::string, int> entity = ParseTarget();
   // If id is included retrive information for specific instance of entity
@@ -211,6 +222,10 @@ StatusCode CrudHandler::HandleGet(http::response<http::dynamic_body>& res) {
     }
 
     boost::filesystem::path full_path = boost::filesystem::current_path() / entity.first / std::to_string(id);
+
+    // entering critical section, only need shared_lock because we aren't
+    // writing to filesystem
+    std::shared_lock<std::shared_mutex> lock(filesystem_mutex);
 
     // read file contents into response body
     if (!manager_->ReadFile(full_path, res)) {

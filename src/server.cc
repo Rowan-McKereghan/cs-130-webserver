@@ -5,6 +5,7 @@
 #include <boost/filesystem.hpp>
 #include <cstdlib>
 #include <iostream>
+#include <thread>
 
 #include "I_session.h"
 #include "logger.h"
@@ -26,7 +27,9 @@ void Server::StartAccept() {
 void Server::HandleAccept(I_session* new_session, const boost::system::error_code& ec) {
   if (ec == boost::system::errc::success) {
     LOG(trace) << "Handling Request.";
-    new_session->Start();
+    std::thread thread(boost::bind(&I_session::Start, new_session));
+    // detaching thread because we don't need to join it later
+    thread.detach();
   } else {
     LogError(ec, "Failed to handle request");
   }
