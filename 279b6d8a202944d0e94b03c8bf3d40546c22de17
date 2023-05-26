@@ -16,6 +16,23 @@
       "message": "ok NOW it should be good. sorry about that!",
       "revId": "279b6d8a202944d0e94b03c8bf3d40546c22de17",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb576e47_b28a79e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-26T19:18:32Z",
+      "side": 1,
+      "message": "Thanks for the fixes!",
+      "revId": "279b6d8a202944d0e94b03c8bf3d40546c22de17",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
