@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00a8cc86_0d568764",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-26T23:15:31Z",
+      "side": 1,
+      "message": "Looks good for the most part, just a couple small comments!",
+      "revId": "1ae7d1d7567b58810de386357a9940458cad8107",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "351634be_54e43b9e",
+        "filename": "src/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-26T23:15:31Z",
+      "side": 1,
+      "message": "Can you verify what this ID signifies (and possibly document)? Is this unique only at a single time instance, over the life of the process, etc.",
+      "revId": "1ae7d1d7567b58810de386357a9940458cad8107",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51aaffa8_07563cc5",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-26T23:15:31Z",
+      "side": 1,
+      "message": "Is there a reason we need to hardcode this? If possible, we should keep everything configurable (e.g., if a user wanted to run something at /sleep), especially since this endpoint is theoretically only needed for testing.",
+      "revId": "1ae7d1d7567b58810de386357a9940458cad8107",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
