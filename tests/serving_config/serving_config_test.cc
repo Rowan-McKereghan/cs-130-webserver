@@ -57,7 +57,7 @@ TEST_F(ServingConfigTest, CombinedServingConfig) {
   parser.Parse("GetFilePaths/success_combined", &out_config);
   serving_config.SetPaths(&out_config);
   auto hf = serving_config.handler_factories_;
-  ASSERT_EQ(hf.size(), 3);
+  ASSERT_EQ(hf.size(), 4);
   ASSERT_NE(hf.find("/echoing"), hf.end());
   ASSERT_NE(hf.find("/static3"), hf.end());
 }
@@ -66,7 +66,7 @@ TEST_F(ServingConfigTest, EchoServingConfig) {
   parser.Parse("GetFilePaths/success_echo_only", &out_config);
   serving_config.SetPaths(&out_config);
   auto hf = serving_config.handler_factories_;
-  ASSERT_EQ(hf.size(), 2);
+  ASSERT_EQ(hf.size(), 3);
   ASSERT_NE(hf.find("/echoing"), hf.end());
 }
 
@@ -75,7 +75,7 @@ TEST_F(ServingConfigTest, StaticServingConfig) {
   serving_config.SetPaths(&out_config);
 
   auto hf = serving_config.handler_factories_;
-  ASSERT_EQ(hf.size(), 2);
+  ASSERT_EQ(hf.size(), 3);
   ASSERT_NE(hf.find("/static3"), hf.end());
 }
 

@@ -21,6 +21,7 @@
 #include "logger.h"
 #include "not_found_handler_factory.h"
 #include "privileged_dirs.h"
+#include "sleep_handler_factory.h"
 #include "static_handler_factory.h"
 
 bool IsOnlyDigits(const std::string& str) {
@@ -116,6 +117,7 @@ int ServingConfig::SetPaths(NginxConfig* config) {
 
   auto status = ValidatePaths();
 
+  handler_factories_["/sleep"] = new SleepHandlerFactory();
   handler_factories_["/"] = new NotFoundHandlerFactory();
 
   return status;
