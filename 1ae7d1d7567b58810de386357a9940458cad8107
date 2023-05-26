@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c4ae7af_687bb38d",
+        "filename": "src/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-26T23:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "351634be_54e43b9e",
+      "revId": "1ae7d1d7567b58810de386357a9940458cad8107",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51aaffa8_07563cc5",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-26T23:15:31Z",
       "side": 1,
       "message": "Is there a reason we need to hardcode this? If possible, we should keep everything configurable (e.g., if a user wanted to run something at /sleep), especially since this endpoint is theoretically only needed for testing.",
+      "revId": "1ae7d1d7567b58810de386357a9940458cad8107",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75370689_e2252632",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-26T23:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51aaffa8_07563cc5",
       "revId": "1ae7d1d7567b58810de386357a9940458cad8107",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
