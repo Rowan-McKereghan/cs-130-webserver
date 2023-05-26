@@ -21,6 +21,7 @@
 #include "logger.h"
 #include "not_found_handler_factory.h"
 #include "privileged_dirs.h"
+#include "sleep_handler_factory.h"
 #include "static_handler_factory.h"
 
 bool IsOnlyDigits(const std::string& str) {
@@ -105,6 +106,9 @@ int ServingConfig::SetPaths(NginxConfig* config) {
                   handler_factories_[serving_path] = new EchoHandlerFactory();
                 } else if (handler_name == "CrudHandler") {
                   handler_factories_[serving_path] = new CrudHandlerFactory(paths_block);
+                } else if (handler_name == "TestHandler") {
+                  // add other test endpoints as subdirectories when necessary
+                  handler_factories_[serving_path + "/sleep"] = new SleepHandlerFactory();
                 }
               }
             }

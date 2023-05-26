@@ -27,6 +27,10 @@ void Server::StartAccept() {
 void Server::HandleAccept(I_session* new_session, const boost::system::error_code& ec) {
   if (ec == boost::system::errc::success) {
     LOG(trace) << "Handling Request.";
+
+    // threads active at the same time within the same process are guaranteed to have the same ID, this output can only
+    // be reliably used to determine if a spawned session is running on a different thread from the server
+    LOG(info) << "Server in thread with ID " << std::this_thread::get_id();
     std::thread thread(boost::bind(&I_session::Start, new_session));
     // detaching thread because we don't need to join it later
     thread.detach();
