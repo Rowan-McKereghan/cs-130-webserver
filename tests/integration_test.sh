@@ -299,7 +299,7 @@ fi
 timeout $TIMEOUT curl -s -i -X DELETE -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integration_test/1
 
 # Check if file exists or not
-FILE=.../ctrl-c-ctrl-v/crud/integration_test/1
+FILE=../ctrl-c-ctrl-v/crud/integration_test/1
 
 test -f "$FILE";
 RESULT=$?
@@ -317,6 +317,78 @@ else
     finalExit=1
 fi
 
+
+# -----------------
+
+# -----------------
+
+
+# CRUD Handler Multithreading test
+
+# make request to long sleep call
+curl -s -i -X GET -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/sleep --no-keepalive & PID1=$!
+
+# attempt to POST new file, should not block if new thread is used
+curl -s -i -X POST -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integration_test -d '{"a":111}' --no-keepalive & PID2=$!
+
+# wait only for the file POST to complete
+wait $PID2
+# Check if file exists or not
+FILE=../ctrl-c-ctrl-v/crud/integration_test/1
+
+test -f "$FILE";
+RESULT=$?
+
+
+if [[ $RESULT -eq 0 ]];
+then
+    (( ++numberOfTests ))
+    (( ++numberOfSucceededTests ))
+    echo "$FILE exists"
+else 
+    echo "$FILE does NOT exist."
+    (( ++numberOfTests ))
+    finalExit=1
+fi
+
+# kill sleep process
+kill $PID1
+
+# -----------------
+
+# -----------------
+
+# CRUD Handler Concurrent Write test
+
+# making two POST requests concurrently
+curl -s -i -X POST -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integration_test -d '{"b":222}' --no-keepalive & PID3=$!
+curl -s -i -X POST -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integration_test -d '{"c":333}' --no-keepalive & PID4=$!
+
+wait $PID3
+wait $PID4
+
+# Check if files exist or not
+FILE1=../ctrl-c-ctrl-v/crud/integration_test/2
+
+test -f "$FILE1";
+RESULT1=$?
+
+FILE2=../ctrl-c-ctrl-v/crud/integration_test/3
+
+test -f "$FILE2";
+RESULT2=$?
+
+
+if [[ $RESULT1 -eq 0 && $RESULT2 -eq 0 ]];
+then
+    (( ++numberOfTests ))
+    (( ++numberOfSucceededTests ))
+    echo "Both $FILE1 and $FILE2 exist"
+else 
+    echo "$FILE1 or $FILE2 does NOT exist."
+    (( ++numberOfTests ))
+    finalExit=1
+fi
 
 # -----------------
 
