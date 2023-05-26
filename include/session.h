@@ -32,6 +32,7 @@ class Session : public I_session {
 
   void HandleWrite(const boost::system::error_code& error);
 
+  boost::asio::io_service& io_service_;
   boost::asio::ip::tcp::socket socket_;
   char data_[kMaxLength];
   std::string HTTPResponse_;

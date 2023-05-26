@@ -11,20 +11,25 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include "logger.h"
 #include "request_dispatcher.h"
 
 Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config)
-    : socket_(io_service), serving_config_(serving_config) {}
+    : socket_(io_service), io_service_(io_service), serving_config_(serving_config) {}
 
 boost::asio::ip::tcp::socket& Session::get_socket() { return socket_; }
 
 void Session::Start() {
+  // threads active at the same time within the same process are guaranteed to have the same ID, this output can only
+  // be reliably used to determine if a spawned session is running on a different thread from the server
+  LOG(info) << "Session in thread with ID " << std::this_thread::get_id();
   req = std::make_shared<boost::beast::http::request<boost::beast::http::string_body>>();
   boost::beast::http::async_read(socket_, request_buffer, *req,
                                  boost::bind(&Session::HandleRead, this, boost::asio::placeholders::error,
                                              boost::asio::placeholders::bytes_transferred));
+  io_service_.run();
 }
 
 void Session::HandleRead(const boost::system::error_code& error, size_t bytes_transferred) {

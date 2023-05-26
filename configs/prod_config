@@ -15,4 +15,8 @@ server {
     location /health HealthHandler {
         
     }
+
+    location /integration_test TestHandler {
+        
+    }
 }
