@@ -32,12 +32,16 @@ class Session : public I_session {
 
   void HandleWrite(const boost::system::error_code& error);
 
+  void timeout(const boost::system::error_code& error);
+
   boost::asio::ip::tcp::socket socket_;
   char data_[kMaxLength];
   std::string HTTPResponse_;
   boost::beast::flat_buffer request_buffer;
   std::shared_ptr<boost::beast::http::request<boost::beast::http::string_body>> req;
   ServingConfig serving_config_;
+  boost::asio::deadline_timer _timer;
+  bool timeout_check = false;
 };
 
 #endif
