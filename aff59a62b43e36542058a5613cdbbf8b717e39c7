@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb5ad88e_fbb891bd",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-27T00:58:24Z",
+      "side": 1,
+      "message": "Why is hardcoding necessary here?",
+      "revId": "aff59a62b43e36542058a5613cdbbf8b717e39c7",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
