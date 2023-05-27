@@ -16,6 +16,24 @@
       "message": "Why is hardcoding necessary here?",
       "revId": "aff59a62b43e36542058a5613cdbbf8b717e39c7",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69e87cd0_5e072c57",
+        "filename": "src/serving_config.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-27T01:12:20Z",
+      "side": 1,
+      "message": "It\u0027s not, but this lets us the specifics of any test endpoints that we create. Users just specify a single test directory and all the test endpoints are accessible as subdirectories. I think it\u0027s better than making the user specify every single test endpoint in the config instead of just keeping them all in one place.",
+      "parentUuid": "cb5ad88e_fbb891bd",
+      "revId": "aff59a62b43e36542058a5613cdbbf8b717e39c7",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
