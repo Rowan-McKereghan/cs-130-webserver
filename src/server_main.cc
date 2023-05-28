@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
     // Capture serving_config by value to avoid having to store it in the server
     // obj
     auto session_constructor = [serving_config](boost::asio::io_service& io_service) {
-      return new Session(io_service, serving_config);
+      return std::make_shared<Session>(io_service, serving_config);
     };
 
     Server s(io_service, serving_config.port_, session_constructor);

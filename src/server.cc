@@ -13,7 +13,7 @@
 using boost::asio::ip::tcp;
 
 Server::Server(boost::asio::io_service& io_service, short port,
-               std::function<I_session*(boost::asio::io_service&)> session_constructor)
+               std::function<std::shared_ptr<I_session>(boost::asio::io_service&)> session_constructor)
     : io_service_(io_service),
       acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
       session_constructor_(session_constructor) {}
@@ -24,7 +24,7 @@ void Server::StartAccept() {
                          boost::bind(&Server::HandleAccept, this, cur_session_, boost::asio::placeholders::error));
 }
 
-void Server::HandleAccept(I_session* new_session, const boost::system::error_code& ec) {
+void Server::HandleAccept(std::shared_ptr<I_session> new_session, const boost::system::error_code& ec) {
   if (ec == boost::system::errc::success) {
     LOG(trace) << "Handling Request.";
 
@@ -42,4 +42,4 @@ void Server::HandleAccept(I_session* new_session, const boost::system::error_cod
   StartAccept();
 }
 
-I_session* Server::get_cur_session() { return cur_session_; }
+std::shared_ptr<I_session> Server::get_cur_session() { return cur_session_; }
