@@ -15,6 +15,8 @@ class RequestDispatcher {
                     boost::beast::http::response<boost::beast::http::dynamic_body>& res, ServingConfig serving_config,
                     std::string client_ip);
 
+  void BadRequest(boost::beast::http::response<boost::beast::http::dynamic_body>& res);
+
  private:
   std::string ExtractUriBasePath(const std::string& uri);
 };

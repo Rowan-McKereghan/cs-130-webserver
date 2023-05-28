@@ -36,9 +36,32 @@ std::string RequestDispatcher::ExtractUriBasePath(const std::string& uri) {
   return stripped_uri;
 }
 
+void RequestDispatcher::BadRequest(boost::beast::http::response<boost::beast::http::dynamic_body>& res) {
+  boost::beast::ostream(res.body()) << "400 Bad Request";
+  res.version(11);
+  res.result(BAD_REQUEST);
+  res.set(boost::beast::http::field::content_type, "text/HTML");
+  res.prepare_payload();
+  return;
+}
+
 void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::http::string_body> req,
                                      boost::beast::http::response<boost::beast::http::dynamic_body>& res,
                                      ServingConfig serving_config, std::string client_ip) {
+  boost::beast::http::verb methods[4] = {boost::beast::http::verb::get, boost::beast::http::verb::put,
+                                         boost::beast::http::verb::post, boost::beast::http::verb::delete_};
+  if (std::find(std::begin(methods), std::end(methods), req.method()) ==
+      std::end(methods)) {  // check for unsupported verbs
+    LOG(info) << "Unsupported HTTP verb: " << req.method_string().to_string();
+    BadRequest(res);
+    return;
+  }
+  if (req.version() != 11) {  // check for HTTP/1.1
+    LOG(info) << "Unsupported HTTP version: HTTP " << std::to_string(req.version() / 10) << "."
+              << std::to_string(req.version() % 10);
+    BadRequest(res);
+    return;
+  }
   std::string req_uri_ = req.target().to_string();
   std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req_uri_);
   auto handler_factories_ = serving_config.handler_factories_;
