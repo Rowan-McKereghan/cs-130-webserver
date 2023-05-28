@@ -32,6 +32,8 @@ class Session : public I_session {
 
   void HandleWrite(const boost::system::error_code& error);
 
+  void timeout(const boost::system::error_code& error);
+
   boost::asio::io_service& io_service_;
   boost::asio::ip::tcp::socket socket_;
   char data_[kMaxLength];
@@ -39,6 +41,12 @@ class Session : public I_session {
   boost::beast::flat_buffer request_buffer;
   std::shared_ptr<boost::beast::http::request<boost::beast::http::string_body>> req;
   ServingConfig serving_config_;
+  boost::asio::deadline_timer _timer;
+  bool timeout_check = false;
+  boost::beast::http::error parse_errors[6] = {
+      boost::beast::http::error::bad_target,      boost::beast::http::error::bad_method,
+      boost::beast::http::error::bad_field,       boost::beast::http::error::bad_value,
+      boost::beast::http::error::bad_line_ending, boost::beast::http::error::bad_version};
 };
 
 #endif

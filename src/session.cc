@@ -17,14 +17,38 @@
 #include "request_dispatcher.h"
 
 Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config)
-    : socket_(io_service), io_service_(io_service), serving_config_(serving_config) {}
+    : socket_(io_service), _timer(io_service), io_service_(io_service), serving_config_(serving_config) {}
 
 boost::asio::ip::tcp::socket& Session::get_socket() { return socket_; }
+
+void Session::timeout(const boost::system::error_code& error) {
+  if (error == boost::asio::error::operation_aborted) {
+    return;
+  }
+
+  LOG(info) << "Bad HTTP Request. Session Timeout.";
+
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  RequestDispatcher req_dispatcher;
+  req_dispatcher.BadRequest(res);
+
+  size_t bytes_t = boost::beast::http::write(socket_, res);
+  if (bytes_t < 0) {
+    LOG(error) << "An error occurred writing to the socket.";
+  }
+
+  timeout_check = true;
+  delete this;
+}
 
 void Session::Start() {
   // threads active at the same time within the same process are guaranteed to have the same ID, this output can only
   // be reliably used to determine if a spawned session is running on a different thread from the server
   LOG(info) << "Session in thread with ID " << std::this_thread::get_id();
+
+  _timer.expires_from_now(boost::posix_time::seconds(1));
+  _timer.async_wait(boost::bind(&Session::timeout, this, boost::asio::placeholders::error));
+
   req = std::make_shared<boost::beast::http::request<boost::beast::http::string_body>>();
   boost::beast::http::async_read(socket_, request_buffer, *req,
                                  boost::bind(&Session::HandleRead, this, boost::asio::placeholders::error,
@@ -33,6 +57,9 @@ void Session::Start() {
 }
 
 void Session::HandleRead(const boost::system::error_code& error, size_t bytes_transferred) {
+  if (timeout_check) {  // if we timed out, immediately exit
+    return;
+  }
   boost::system::error_code ec;
   boost::asio::ip::tcp::endpoint endpoint = socket_.remote_endpoint(ec);
   std::string client_ip;
@@ -44,12 +71,15 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
   }
 
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  RequestDispatcher req_dispatcher;
+
   if (error == boost::system::errc::success) {
+    _timer.cancel();
+
     if ((*req).version() != 11) {
       LOG(trace) << "Unsupported HTTP version: HTTP " << std::to_string((*req).version() / 10) << "."
                  << std::to_string((*req).version() % 10);
     }
-    RequestDispatcher req_dispatcher;
 
     req_dispatcher.RouteRequest(*req, res, serving_config_, client_ip);
 
@@ -67,12 +97,20 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
       LOG(error) << "An error occurred writing to the socket.";
     }
   } else {
-    LOG(info) << "An error occurred in HandleRead\n";
-    if (error == boost::beast::http::error::bad_target) {
-      boost::beast::ostream(res.body()) << "400 Bad Request";
+    LOG(info) << "An error " << error.message() << " in HandleRead\n";
+    if (std::find(std::begin(parse_errors), std::end(parse_errors), error) !=
+        std::end(parse_errors)) {  // check to serve 400 on req parsing error
+      req_dispatcher.BadRequest(res);
+
+      size_t bytes_t = boost::beast::http::write(socket_, res);
+      if (bytes_t < 0) {
+        LOG(error) << "An error occurred writing to the socket.";
+      }
+    } else {
+      boost::beast::ostream(res.body()) << "500 Internal Server Error";
 
       res.version(11);
-      res.result(BAD_REQUEST);
+      res.result(INTERNAL_SERVER_ERROR);
       res.set(boost::beast::http::field::content_type, "text/HTML");
       res.prepare_payload();
 
@@ -80,8 +118,6 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
       if (bytes_t < 0) {
         LOG(error) << "An error occurred writing to the socket.";
       }
-    } else {
-      LOG(error) << "The error in HandleRead was a read I/O error\n";
     }
   }
   delete this;

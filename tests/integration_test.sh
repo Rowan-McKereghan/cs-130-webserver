@@ -22,7 +22,7 @@ fname=tests/IntegrationDiffs/integration_result_curl_basic.txt
 
 # ----------------
 # BASIC CURL TEST
-# Should return nothing
+# Should return 404
 curl localhost:80 -s -S -o "$fname"
 
 diff -b  -I '^Date*' "tests/IntegrationDiffs/expected_curl_basic.txt" "$fname"
