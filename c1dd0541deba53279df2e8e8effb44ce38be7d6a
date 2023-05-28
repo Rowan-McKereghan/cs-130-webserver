@@ -18,6 +18,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "544a1b7c_364c452e",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-28T05:21:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "415cc21f_05a5dfcb",
+      "revId": "c1dd0541deba53279df2e8e8effb44ce38be7d6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d87ebe37_b8fe15fa",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13c15439_e85ade15",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-28T05:21:47Z",
+      "side": 1,
+      "message": "Long story short, we must execute `delete this` inside `timeout()` otherwise our server hangs, because `HandleRead()` will not execute from hanging `async_read()` until the destruction of the object is initiated. Setting a flag to exit from `HandleRead()` is, in my opinion, the simplest way to deal with this issue, and also correct because it will only ever come into play when `async_read()` is hanging and not executing `HandleRead()`, because then the session object would have already been deleted and `timeout()` could not have been called.",
+      "parentUuid": "d87ebe37_b8fe15fa",
+      "revId": "c1dd0541deba53279df2e8e8effb44ce38be7d6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b0ec08f7_dbbe4846",
         "filename": "src/session.cc",
         "patchSetId": 2
@@ -48,6 +84,24 @@
       "writtenOn": "2023-05-27T00:52:12Z",
       "side": 1,
       "message": "Perhaps refractor as it\u0027s a little unwieldy to read.",
+      "revId": "c1dd0541deba53279df2e8e8effb44ce38be7d6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe62135f_a5ca0f8c",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-28T05:21:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b0ec08f7_dbbe4846",
       "revId": "c1dd0541deba53279df2e8e8effb44ce38be7d6a",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }

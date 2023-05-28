@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d58d14be_fb50dd46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-28T05:21:47Z",
+      "side": 1,
+      "message": "Addressed reafactoring. See comment reply on flag check.",
+      "revId": "6a54f2174253f27f3bdf389e3b9e6d71bc9f708c",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
