@@ -22,11 +22,13 @@ boost::asio::ip::tcp::socket& Session::get_socket() { return socket_; }
 
 void Session::Start() {
   req = std::make_shared<boost::beast::http::request<boost::beast::http::string_body>>();
+  std::shared_ptr<Session> this_shared_ptr = Session::shared_from_this();
   boost::beast::http::async_read(socket_, request_buffer, *req,
-                                 boost::bind(&Session::HandleRead, this, boost::asio::placeholders::error,
+                                 boost::bind(&Session::HandleRead, this_shared_ptr, boost::asio::placeholders::error,
                                              boost::asio::placeholders::bytes_transferred));
 }
 
+// functions extract I/O operation to allow rest of the logic to be unit tested
 void Session::HandleRead(const boost::system::error_code& error, size_t bytes_transferred) {
   boost::system::error_code ec;
   boost::asio::ip::tcp::endpoint endpoint = socket_.remote_endpoint(ec);
@@ -38,7 +40,16 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
     LOG(warning) << "Failed to obtain remote endpoint of socket: " << FormatError(ec);
   }
 
-  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  if (this->PrepareResponse(error, bytes_transferred, client_ip)) {
+    // TODO: async_write() was causing a segfault. Figure out why and possibly change back.
+    size_t bytes_t = boost::beast::http::write(socket_, res);
+    if (bytes_t < 0) {
+      LOG(error) << "An error occurred writing to the socket.";
+    }
+  }
+}
+
+bool Session::PrepareResponse(const boost::system::error_code& error, size_t bytes_transferred, std::string client_ip) {
   if (error == boost::system::errc::success) {
     if ((*req).version() != 11) {
       LOG(trace) << "Unsupported HTTP version: HTTP " << std::to_string((*req).version() / 10) << "."
@@ -56,11 +67,7 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
     strftime(date, sizeof(date), "Date: %a, %d %b %G %T GMT", myTime);
     res.set(boost::beast::http::field::date, std::string(date));
 
-    // TODO: async_write() was causing a segfault. Figure out why and possibly change back.
-    size_t bytes_t = boost::beast::http::write(socket_, res);
-    if (bytes_t < 0) {
-      LOG(error) << "An error occurred writing to the socket.";
-    }
+    return true;
   } else {
     LOG(info) << "An error occurred in HandleRead\n";
     if (error == boost::beast::http::error::bad_target) {
@@ -71,20 +78,16 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
       res.set(boost::beast::http::field::content_type, "text/HTML");
       res.prepare_payload();
 
-      size_t bytes_t = boost::beast::http::write(socket_, res);
-      if (bytes_t < 0) {
-        LOG(error) << "An error occurred writing to the socket.";
-      }
+      return true;
     } else {
       LOG(error) << "The error in HandleRead was a read I/O error\n";
+      return false;
     }
   }
-  delete this;
 }
 
 void Session::HandleWrite(const boost::system::error_code& error) {
   if (error != boost::system::errc::success) {
     LogError(error, "An error occurred in handle_write");
-    delete this;
   }
 }
