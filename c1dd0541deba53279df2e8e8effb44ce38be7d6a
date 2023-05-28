@@ -89,6 +89,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8eb0ee6_af90d462",
+        "filename": "src/session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-05-28T22:39:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7893a3e_b65595c4",
+      "revId": "c1dd0541deba53279df2e8e8effb44ce38be7d6a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0ec08f7_dbbe4846",
