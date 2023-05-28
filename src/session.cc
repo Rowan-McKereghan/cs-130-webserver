@@ -28,20 +28,22 @@ void Session::timeout(const boost::system::error_code& error) {
 
   LOG(info) << "Bad HTTP Request. Session Timeout.";
 
-  boost::beast::http::response<boost::beast::http::dynamic_body> res;
   RequestDispatcher req_dispatcher;
   req_dispatcher.BadRequest(res);
-
-  size_t bytes_t = boost::beast::http::write(socket_, res);
-  if (bytes_t < 0) {
-    LOG(error) << "An error occurred writing to the socket.";
-  }
-
   timeout_check = true;
-  delete this;
+  boost::beast::http::async_write(
+      socket_, res, boost::bind(&Session::HandleWrite, Session::shared_from_this(), boost::asio::placeholders::error));
+  socket_.close();
 }
 
 void Session::Start() {
+  // threads active at the same time within the same process are guaranteed to have the same ID, this output can only
+  // be reliably used to determine if a spawned session is running on a different thread from the server
+  LOG(info) << "Session in thread with ID " << std::this_thread::get_id();
+
+  _timer.expires_from_now(boost::posix_time::seconds(1));
+  _timer.async_wait(boost::bind(&Session::timeout, this, boost::asio::placeholders::error));
+
   // threads active at the same time within the same process are guaranteed to have the same ID, this output can only
   // be reliably used to determine if a spawned session is running on a different thread from the server
   LOG(info) << "Session in thread with ID " << std::this_thread::get_id();
@@ -56,10 +58,8 @@ void Session::Start() {
   io_service_.run();
 }
 
+// functions extract I/O operation to allow rest of the logic to be unit tested
 void Session::HandleRead(const boost::system::error_code& error, size_t bytes_transferred) {
-  if (timeout_check) {  // if we timed out, immediately exit
-    return;             // necessary because of the case where a malformed request makes async_read hang
-  }                     // and not execute HandleRead() until the session object is deleted in timeout()                       
   boost::system::error_code ec;
   boost::asio::ip::tcp::endpoint endpoint = socket_.remote_endpoint(ec);
   std::string client_ip;
@@ -70,9 +70,18 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
     LOG(warning) << "Failed to obtain remote endpoint of socket: " << FormatError(ec);
   }
 
-  boost::beast::http::response<boost::beast::http::dynamic_body> res;
-  RequestDispatcher req_dispatcher;
+  PrepareResponse(error, bytes_transferred, client_ip);
+  // TODO: async_write() was causing a segfault. Figure out why and possibly change back.
+  boost::beast::http::async_write(
+      socket_, res, boost::bind(&Session::HandleWrite, Session::shared_from_this(), boost::asio::placeholders::error));
+  // size_t bytes_t = boost::beast::http::write(socket_, res);
+  // if (bytes_t < 0) {
+  //   LOG(error) << "An error occurred writing to the socket.";
+  // }
+}
 
+void Session::PrepareResponse(const boost::system::error_code& error, size_t bytes_transferred, std::string client_ip) {
+  RequestDispatcher req_dispatcher;
   if (error == boost::system::errc::success) {
     _timer.cancel();
 
@@ -90,22 +99,11 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
     myTime = gmtime(&t);
     strftime(date, sizeof(date), "Date: %a, %d %b %G %T GMT", myTime);
     res.set(boost::beast::http::field::date, std::string(date));
-
-    // TODO: async_write() was causing a segfault. Figure out why and possibly change back.
-    size_t bytes_t = boost::beast::http::write(socket_, res);
-    if (bytes_t < 0) {
-      LOG(error) << "An error occurred writing to the socket.";
-    }
   } else {
     LOG(info) << "An error " << error.message() << " in HandleRead\n";
     if (std::find(std::begin(parse_errors), std::end(parse_errors), error) !=
         std::end(parse_errors)) {  // check to serve 400 on req parsing error
       req_dispatcher.BadRequest(res);
-
-      size_t bytes_t = boost::beast::http::write(socket_, res);
-      if (bytes_t < 0) {
-        LOG(error) << "An error occurred writing to the socket.";
-      }
     } else {
       boost::beast::ostream(res.body()) << "500 Internal Server Error";
 
@@ -120,12 +118,12 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
       }
     }
   }
-  delete this;
 }
 
 void Session::HandleWrite(const boost::system::error_code& error) {
+  LOG(info) << "should have written";
   if (error != boost::system::errc::success) {
     LogError(error, "An error occurred in handle_write");
-    delete this;
   }
+  socket_.close();
 }

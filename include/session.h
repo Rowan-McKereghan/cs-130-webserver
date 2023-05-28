@@ -20,19 +20,23 @@
 
 const int kMaxLength = 1024;
 
-class Session : public I_session {
+// inheritance from std::enable_shared_from_this is required to obtain a valid shared pointer referring to the "this"
+// pointer
+class Session : public I_session, public std::enable_shared_from_this<Session> {
  public:
   Session(boost::asio::io_service& io_service, ServingConfig serving_config);
 
-  boost::asio::ip::tcp::socket& get_socket() override;
+  virtual boost::asio::ip::tcp::socket& get_socket() override;
 
-  void Start() override;
+  virtual void Start() override;
 
-  void HandleRead(const boost::system::error_code& error, size_t bytes_transferred);
+  virtual void HandleRead(const boost::system::error_code& error, size_t bytes_transferred);
 
-  void HandleWrite(const boost::system::error_code& error);
+  virtual void PrepareResponse(const boost::system::error_code& error, size_t bytes_transferred, std::string client_ip);
 
-  void timeout(const boost::system::error_code& error);
+  virtual void timeout(const boost::system::error_code& error);
+
+  virtual void HandleWrite(const boost::system::error_code& error);
 
   boost::asio::io_service& io_service_;
   boost::asio::ip::tcp::socket socket_;
@@ -40,6 +44,7 @@ class Session : public I_session {
   std::string HTTPResponse_;
   boost::beast::flat_buffer request_buffer;
   std::shared_ptr<boost::beast::http::request<boost::beast::http::string_body>> req;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
   ServingConfig serving_config_;
   boost::asio::deadline_timer _timer;
   bool timeout_check = false;
