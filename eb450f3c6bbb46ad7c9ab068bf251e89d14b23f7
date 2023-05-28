@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "717532e1_5b446a00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-28T18:57:25Z",
+      "side": 1,
+      "message": "Looks good and thanks for adding the test. I think we should just document why we chose multiple inheritance for session.",
+      "revId": "eb450f3c6bbb46ad7c9ab068bf251e89d14b23f7",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92ea03cf_6a450039",
+        "filename": "include/session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-28T18:57:25Z",
+      "side": 1,
+      "message": "Could you add a comment mentioning why this choice was made?",
+      "revId": "eb450f3c6bbb46ad7c9ab068bf251e89d14b23f7",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
