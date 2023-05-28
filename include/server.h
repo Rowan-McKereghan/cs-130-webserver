@@ -14,17 +14,17 @@
 class Server {
  public:
   Server(boost::asio::io_service& io_service, short port,
-         std::function<I_session*(boost::asio::io_service&)> session_constructor);
+         std::function<std::shared_ptr<I_session>(boost::asio::io_service&)> session_constructor);
   virtual void StartAccept();
 
-  virtual void HandleAccept(I_session* new_session, const boost::system::error_code& error);
+  virtual void HandleAccept(std::shared_ptr<I_session> new_session, const boost::system::error_code& error);
 
-  I_session* get_cur_session();
+  std::shared_ptr<I_session> get_cur_session();
 
   boost::asio::io_service& io_service_;
   boost::asio::ip::tcp::acceptor acceptor_;
-  std::function<I_session*(boost::asio::io_service&)> session_constructor_;
-  I_session* cur_session_;
+  std::function<std::shared_ptr<I_session>(boost::asio::io_service&)> session_constructor_;
+  std::shared_ptr<I_session> cur_session_;
 };
 
 #endif
