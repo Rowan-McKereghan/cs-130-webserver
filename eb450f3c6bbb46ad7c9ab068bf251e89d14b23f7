@@ -33,6 +33,24 @@
       "message": "Could you add a comment mentioning why this choice was made?",
       "revId": "eb450f3c6bbb46ad7c9ab068bf251e89d14b23f7",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d049d7b2_31f00cd3",
+        "filename": "include/session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-05-29T00:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ea03cf_6a450039",
+      "revId": "eb450f3c6bbb46ad7c9ab068bf251e89d14b23f7",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
