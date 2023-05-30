@@ -61,18 +61,15 @@ int CrudHandler::GetPathLen() {
 }
 
 std::pair<std::string, int> CrudHandler::ParseTarget() {
-  int path_len = GetPathLen();  // Can only be 3 or 2 because otherwise HandleRequest would
-                                // throw an error before ParseTarget called
   int id = -1;
-  std::string entity = file_path_.string();  // if path_len is 2 this is enough
+  std::string entity = file_path_.string();
   std::string file_name = file_path_.filename().string();
-  if (path_len == 3 &&
-      std::strspn(file_name.c_str(), "0123456789") == file_name.length()) {  // ID is in path, and ID only contains #'s
+
+  if (std::strspn(file_name.c_str(), "0123456789") == file_name.length()) {  // ID is in path, and ID only contains #'s
     id = stoi(file_path_.filename().string());
-    entity = file_path_.parent_path().string();
-  } else if (path_len == 3) {  // ID is in path, and ID contains numbers -- bad request
-    entity = "";
-  }
+    entity = file_path_.parent_path().string();  // TODO: deal with this abysmal code from group share repo
+  }                                              // (i think there is currently no way to POST to a dir made of numbers)
+                                                 // maybe remove GetPathLen() altogether
   return std::pair<std::string, int>(entity, id);
 }
 
@@ -294,7 +291,7 @@ StatusCode CrudHandler::InitRoot(const http::request<http::string_body> req, htt
   res.version(req.version());
   res.set(boost::beast::http::field::server, "webserver");
 
-  if ((GetPathLen() != 2 && GetPathLen() != 3) || ParseTarget().first == "") {
+  if (ParseTarget().first == "") {
     LOG(warning) << "Bad request to CRUD handler, path = " << file_path_;
     return BAD_REQUEST;
   }

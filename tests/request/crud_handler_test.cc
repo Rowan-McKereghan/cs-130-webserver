@@ -100,7 +100,7 @@ TEST(CrudHandler, ParseTargetIDHasNonDigits) {
   CrudHandler handler(file_path, file_to_id, &manager);
 
   std::pair<std::string, int> res = handler.ParseTarget();
-  EXPECT_EQ(res.first, "");
+  EXPECT_EQ(res.first, "/crud/entity/1f");
   EXPECT_EQ(res.second, -1);
 }
 
@@ -168,15 +168,15 @@ TEST(CrudHandler, CrudTestPostWithID) {
   // set up post request
   string req_data = "{json}";
   boost::beast::http::request<boost::beast::http::string_body> req_post{boost::beast::http::verb::post,  // POST REQUEST
-                                                                        "/api/entity/1",                   // URI
+                                                                        "/api/entity/1",                 // URI
                                                                         11};                             // HTTP 1.1
   req_post.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   handler.HandleRequest(req_post, res);
 
   // check post response
-  EXPECT_EQ(res.version(), 11);                                                      // version
-  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                                   // status
+  EXPECT_EQ(res.version(), 11);                                                          // version
+  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "400 Bad Request\n\n");  // body
 }
 
@@ -232,8 +232,8 @@ TEST(CrudHandler, CrudTestPutNotFound) {
   handler.HandleRequest(req_put, res);
 
   // check put response
-  EXPECT_EQ(res.version(), 11);                                                      // version
-  EXPECT_EQ(res.result_int(), NOT_FOUND);                                                   // status
+  EXPECT_EQ(res.version(), 11);                                                        // version
+  EXPECT_EQ(res.result_int(), NOT_FOUND);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "404 Not Found\n\n");  // body
 }
 
@@ -252,15 +252,15 @@ TEST(CrudHandler, CrudTestPutNoID) {
   // set up put request
   string req_data = "{json}";
   boost::beast::http::request<boost::beast::http::string_body> req_put{boost::beast::http::verb::put,  // POST REQUEST
-                                                                       "/api/entity",                // URI
+                                                                       "/api/entity",                  // URI
                                                                        11};                            // HTTP 1.1
   req_put.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   handler.HandleRequest(req_put, res);
 
   // check put response
-  EXPECT_EQ(res.version(), 11);                                                      // version
-  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                                   // status
+  EXPECT_EQ(res.version(), 11);                                                          // version
+  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "400 Bad Request\n\n");  // body
 }
 
@@ -316,8 +316,8 @@ TEST(CrudHandler, CrudTestDeleteNotFound) {
   handler.HandleRequest(req, res);
 
   // check response
-  EXPECT_EQ(res.version(), 11);                                                      // version
-  EXPECT_EQ(res.result_int(), NOT_FOUND);                                                   // status
+  EXPECT_EQ(res.version(), 11);                                                        // version
+  EXPECT_EQ(res.result_int(), NOT_FOUND);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "404 Not Found\n\n");  // body
 }
 
@@ -335,14 +335,14 @@ TEST(CrudHandler, CrudTestDeleteNoID) {
 
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::delete_,  // DELETE REQUEST
-                                                                   "/api/entity",                    // URI
+                                                                   "/api/entity",                      // URI
                                                                    11};                                // HTTP 1.1
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   handler.HandleRequest(req, res);
 
   // check response
-  EXPECT_EQ(res.version(), 11);                                                      // version
-  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                                   // status
+  EXPECT_EQ(res.version(), 11);                                                          // version
+  EXPECT_EQ(res.result_int(), BAD_REQUEST);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "400 Bad Request\n\n");  // body
 }
 
@@ -453,7 +453,7 @@ TEST(CrudHandler, CrudTestGetNotFound) {
   handler.HandleRequest(req, res);
 
   // check put response
-  EXPECT_EQ(res.version(), 11);                                             // version
-  EXPECT_EQ(res.result_int(), NOT_FOUND);                                          // status
+  EXPECT_EQ(res.version(), 11);                                                        // version
+  EXPECT_EQ(res.result_int(), NOT_FOUND);                                              // status
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "404 Not Found\n\n");  // body
 }
