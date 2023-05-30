@@ -21,7 +21,7 @@ finalExit=0
 fname=tests/IntegrationDiffs/integration_result_curl_basic.txt
 
 # add delay to give server time to parse config
-sleep 0
+sleep 0.5
 
 # ----------------
 # BASIC CURL TEST
