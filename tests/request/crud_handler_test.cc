@@ -24,7 +24,7 @@ TEST(CrudHandler, GetNextIDNewEntity) {
   unordered_map<std::string, std::unordered_set<int>> file_to_id;
   MockManager manager;
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   int res = handler.GetNextID("entity");
   EXPECT_EQ(res, 1);
@@ -37,7 +37,7 @@ TEST(CrudHandler, GetNextIDNormal) {
   file_to_id["entity"].insert(2);
   MockManager manager;
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   int res = handler.GetNextID("entity");
   EXPECT_EQ(res, 3);
@@ -50,7 +50,7 @@ TEST(CrudHandler, GetNextIDDeletedNum) {
   file_to_id["entity"].insert(3);
   MockManager manager;
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   int res = handler.GetNextID("entity");
   EXPECT_EQ(res, 2);
@@ -61,7 +61,7 @@ TEST(CrudHandler, ParseTargetNoID) {
   unordered_map<std::string, std::unordered_set<int>> file_to_id;
   MockManager manager;
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   std::pair<std::string, int> res = handler.ParseTarget();
   EXPECT_EQ(res.first, "/crud/entity");
@@ -73,7 +73,7 @@ TEST(CrudHandler, ParseTargetYesID) {
   unordered_map<std::string, std::unordered_set<int>> file_to_id;
   MockManager manager;
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   std::pair<std::string, int> res = handler.ParseTarget();
   EXPECT_EQ(res.first, "/crud/entity");
@@ -85,7 +85,7 @@ TEST(CrudHandler, ParseTargetDoubleDigitID) {
   unordered_map<std::string, std::unordered_set<int>> file_to_id;
   MockManager manager;
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   std::pair<std::string, int> res = handler.ParseTarget();
   EXPECT_EQ(res.first, "/crud/entity");
@@ -97,7 +97,7 @@ TEST(CrudHandler, ParseTargetIDHasNonDigits) {
   unordered_map<std::string, std::unordered_set<int>> file_to_id;
   MockManager manager;
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   std::pair<std::string, int> res = handler.ParseTarget();
   EXPECT_EQ(res.first, "");
@@ -118,7 +118,7 @@ TEST(CrudHandler, CrudTestUnsuportedMethod) {
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
   handler.HandleRequest(req, res);
 
   EXPECT_EQ(res.version(), 11);                                                          // version
@@ -137,7 +137,7 @@ TEST(CrudHandler, CrudTestPost) {
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true)).WillOnce(testing::Return(true));
   EXPECT_CALL(manager, CreateFile(testing::_, testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up post request
   string req_data = "{json}";
@@ -163,7 +163,7 @@ TEST(CrudHandler, CrudTestPostWithID) {
   std::string file_path = "/crud/entity/1";
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up post request
   string req_data = "{json}";
@@ -193,7 +193,7 @@ TEST(CrudHandler, CrudTestPut) {
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
   EXPECT_CALL(manager, WriteFile(testing::_, testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up put request
   string req_data = "{json}";
@@ -220,7 +220,7 @@ TEST(CrudHandler, CrudTestPutNotFound) {
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up put request
   string req_data = "{json}";
@@ -247,7 +247,7 @@ TEST(CrudHandler, CrudTestPutNoID) {
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up put request
   string req_data = "{json}";
@@ -277,7 +277,7 @@ TEST(CrudHandler, CrudTestDelete) {
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
   EXPECT_CALL(manager, DeleteFile(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::delete_,  // DELETE REQUEST
@@ -306,7 +306,7 @@ TEST(CrudHandler, CrudTestDeleteNotFound) {
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::delete_,  // DELETE REQUEST
@@ -331,7 +331,7 @@ TEST(CrudHandler, CrudTestDeleteNoID) {
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::delete_,  // DELETE REQUEST
@@ -362,7 +362,7 @@ TEST(CrudHandler, CrudTestGetID) {
   EXPECT_CALL(manager, ReadFile(testing::_, testing::_))
       .WillOnce(testing::DoAll(testing::SetArgReferee<1>(test_res), testing::Return(true)));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET REQUEST
@@ -394,7 +394,7 @@ TEST(CrudHandler, CrudTestGetNoID) {
   EXPECT_CALL(manager, ListFiles(testing::_, testing::_))
       .WillOnce(testing::DoAll(testing::SetArgReferee<1>(file_names), testing::Return(true)));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET REQUEST
@@ -419,7 +419,7 @@ TEST(CrudHandler, CrudTestGetNonexistantEntity) {
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET REQUEST
@@ -444,7 +444,7 @@ TEST(CrudHandler, CrudTestGetNotFound) {
   MockManager manager;
   EXPECT_CALL(manager, CreateDir(testing::_)).WillOnce(testing::Return(true));
 
-  CrudHandler handler(file_path, file_to_id, &manager);
+  CrudHandler handler(file_path, file_to_id, &manager, "sample_ip");
 
   // set up request
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET REQUEST

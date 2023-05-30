@@ -15,7 +15,9 @@
 
 const int MAX_FILE_SIZE = 10485760;
 
-StaticHandler::StaticHandler(std::string file_path) : file_path_(boost::filesystem::path(file_path)) {}
+StaticHandler::StaticHandler(std::string file_path, const std::string& client_ip) : file_path_(boost::filesystem::path(file_path)) {
+	this->client_ip = client_ip;
+}
 
 // surprising not a library function for this in boost::filesystem
 // please replace if someone can find one
@@ -134,6 +136,7 @@ StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost:
     }
 
     boost::beast::ostream(res.body()) << status_string;
+    LOG(info) << log_magic << "Response code: " << status_code_ << " Request path: " << req.target() << " Request IP: " << client_ip << " Handler Name: " << handler_name;
     res.prepare_payload();
     res.set(boost::beast::http::field::content_type, "text/HTML");
     return status_code_;
@@ -156,6 +159,7 @@ StatusCode StaticHandler::HandleRequest(const boost::beast::http::request<boost:
     }
   }
 
+  LOG(info) << log_magic << "Response code: " << status_code_ << " Request path: " << req.target() << " Request IP: " << client_ip << " Handler Name: " << handler_name;
   res.prepare_payload();
   res.erase(boost::beast::http::field::transfer_encoding);
 

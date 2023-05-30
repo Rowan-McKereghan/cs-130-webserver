@@ -74,6 +74,7 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
       res.version(11);
       res.result(BAD_REQUEST);
       res.set(boost::beast::http::field::content_type, "text/HTML");
+	  LOG(info) << log_magic << "Response code: " << BAD_REQUEST << " Request path: " << (*req).target() << " Request IP: " << client_ip << " Handler Name: " << "Session";
       res.prepare_payload();
 
       size_t bytes_t = boost::beast::http::write(socket_, res);

@@ -9,6 +9,8 @@
 
 using namespace std;
 
+const std::string log_magic = "[ResponseMetrics]";
+
 enum StatusCode { OK = 200, BAD_REQUEST = 400, FORBIDDEN = 403, NOT_FOUND = 404, INTERNAL_SERVER_ERROR = 500 };
 
 const unordered_map<StatusCode, pair<std::string, boost::beast::http::status>> status_code_map_ = {
@@ -24,6 +26,8 @@ class I_RequestHandler {
  public:
   virtual StatusCode HandleRequest(const boost::beast::http::request<boost::beast::http::string_body> req,
                                    boost::beast::http::response<boost::beast::http::dynamic_body>& res) = 0;
+protected:
+  std::string client_ip;
 };
 
 #endif

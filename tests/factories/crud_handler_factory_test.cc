@@ -14,7 +14,8 @@ TEST(HandlerFactoryTest, TestStaticHandlerFactory) {
 
   // checks if the objects are created of the right types
   std::string temp = "";
-  I_RequestHandler *handler = crudHandlerFactory.CreateHandler(temp);
+  std::string client_ip = "";
+  I_RequestHandler *handler = crudHandlerFactory.CreateHandler(temp, client_ip);
   EXPECT_TRUE(dynamic_cast<StaticHandler *>(handler) == nullptr);
 
   EXPECT_FALSE(dynamic_cast<CrudHandler *>(handler) == nullptr);

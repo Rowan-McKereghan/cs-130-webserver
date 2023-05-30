@@ -47,7 +47,7 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
   // Check if the URI matches any of the echo paths
   if (handler_factories_.find(uri_base_path) != handler_factories_.end()) {
     LOG(info) << "Request matched to path: " << uri_base_path;
-    I_RequestHandler* handler = handler_factories_[uri_base_path]->CreateHandler(uri_base_path);
+    I_RequestHandler* handler = handler_factories_[uri_base_path]->CreateHandler(uri_base_path, client_ip);
     handler->HandleRequest(req, res);
     delete handler;
     return;
@@ -69,7 +69,7 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
       // have trailing slashes and we will not enter the loop body in the
       // case of cur_path == "/"
       std::string file_path = uri_base_path.substr(cur_path.length() + 1);
-      I_RequestHandler* handler = factory->CreateHandler(file_path);
+      I_RequestHandler* handler = factory->CreateHandler(file_path, client_ip);
       handler->HandleRequest(req, res);
       delete handler;
       return;
@@ -86,5 +86,6 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
   res.version(req.version());
   res.result(BAD_REQUEST);
   res.set(boost::beast::http::field::content_type, "text/HTML");
+  LOG(info) << log_magic << "Response code: " << BAD_REQUEST << " Request path: " << req.target() << " Request IP: " << client_ip << " Handler Name: " << "RequestDispatcher";
   res.prepare_payload();
 }

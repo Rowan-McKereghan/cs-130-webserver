@@ -11,8 +11,9 @@
 const int MAX_FILE_SIZE = 10485760;  // 10MB
 
 CrudHandler::CrudHandler(std::string file_path, unordered_map<std::string, std::unordered_set<int>>& entity_to_id,
-                         CrudFileSystemManager* manager)
+                         CrudFileSystemManager* manager, const std::string& client_ip)
     : file_path_(boost::filesystem::path(file_path)), entity_to_id_(&entity_to_id), manager_(manager) {
+  this->client_ip = client_ip;
   LOG(info) << "creating crud handler";
 }
 
@@ -322,12 +323,15 @@ StatusCode CrudHandler::HandleRequest(const http::request<http::string_body> req
   // set response to error page if status isn't OK
   if (status_code_ != OK) {
     ReturnError(status_code_, res);
+    LOG(info) << log_magic << "Response code: " << status_code_ << " Request path: " << req.target() << " Request IP: " << client_ip << " Handler Name: " << handler_name;
     return status_code_;
   }
 
   // Temporary to return a response to confirm this handler is running
   res.result(status_code_);
   // boost::beast::ostream(res.body()) << "testing crud handler setup";
+
+  LOG(info) << log_magic << "Response code: " << status_code_ << " Request path: " << req.target() << " Request IP: " << client_ip << " Handler Name: " << handler_name;
   res.prepare_payload();
   res.set(boost::beast::http::field::content_type, "application/json");
 

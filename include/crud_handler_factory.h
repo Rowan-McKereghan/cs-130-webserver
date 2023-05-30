@@ -11,7 +11,7 @@
 class CrudHandlerFactory : public I_FileHandlerFactory {
  public:
   CrudHandlerFactory(NginxConfig* config);
-  CrudHandler* CreateHandler(std::string& uri_path);
+  CrudHandler* CreateHandler(std::string& uri_path, const std::string& client_ip);
 
  private:
   NginxConfig* config_;

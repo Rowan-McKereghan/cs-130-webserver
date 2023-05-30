@@ -8,6 +8,6 @@
 
 class HealthHandlerFactory : public I_RequestHandlerFactory {
  public:
-  HealthHandler* CreateHandler(std::string& uri_path);
+  HealthHandler* CreateHandler(std::string& uri_path, const std::string& client_ip);
 };
 #endif

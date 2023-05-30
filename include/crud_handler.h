@@ -15,7 +15,7 @@ namespace http = boost::beast::http;
 class CrudHandler : public I_RequestHandler {
  public:
   CrudHandler(std::string uri_path, unordered_map<std::string, std::unordered_set<int>>& entity_to_id,
-              CrudFileSystemManager* manager);
+              CrudFileSystemManager* manager, const std::string& client_ip);
   StatusCode HandleRequest(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
 
   // get next available ID for the given entity
@@ -53,6 +53,7 @@ class CrudHandler : public I_RequestHandler {
   // map of entity name to set of IDs
   // entity names in the form "/root/entity"
   unordered_map<std::string, std::unordered_set<int>>* entity_to_id_;
+  const std::string handler_name = "CrudHandler";
 };
 
 #endif

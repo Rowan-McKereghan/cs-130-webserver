@@ -12,7 +12,7 @@ TEST(EchoHandler, BasicSuccessEchoTest) {
                                                                    11};                            // HTTP 1.1
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
-  EchoHandler handler;
+  EchoHandler handler("sample_ip");
   handler.HandleRequest(req, res);
 
   boost::beast::http::dynamic_body::value_type req_body;

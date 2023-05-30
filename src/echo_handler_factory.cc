@@ -2,4 +2,4 @@
 
 #include "echo_handler.h"
 
-EchoHandler* EchoHandlerFactory::CreateHandler(std::string& file_path) { return new EchoHandler(); }
+EchoHandler* EchoHandlerFactory::CreateHandler(std::string& file_path, const std::string& client_ip) { return new EchoHandler(client_ip); }

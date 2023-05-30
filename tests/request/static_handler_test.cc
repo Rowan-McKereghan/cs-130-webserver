@@ -10,7 +10,7 @@ TEST(StaticHandler, StaticTest403) {
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   std::string root = "/usr/bin";
-  StaticHandler handler(root);
+  StaticHandler handler(root, "sample_ip");
   handler.SetHeaders(req, res);
   EXPECT_EQ(res.version(), 11);
   EXPECT_EQ(res.result_int(), FORBIDDEN);
@@ -23,7 +23,7 @@ TEST(StaticHandler, StaticTest404) {
                                                                    11};  // HTTP 1.1
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   std::string root = "/usr/src/projects/";
-  StaticHandler handler(root);
+  StaticHandler handler(root, "sample_ip");
   handler.SetHeaders(req, res);
   EXPECT_EQ(res.version(), 11);
   EXPECT_EQ(res.result_int(), NOT_FOUND);
@@ -37,7 +37,7 @@ TEST(StaticHandler, StaticTestTxtFile) {
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   std::string root = "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.txt";
-  StaticHandler handler(root);
+  StaticHandler handler(root, "sample_ip");
   handler.SetHeaders(req, res);
   auto it = res.find(boost::beast::http::field::content_type);
   EXPECT_NE(it, res.end());
@@ -54,7 +54,7 @@ TEST(StaticHandler, StaticTestPngFile) {
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
   std::string root = "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.png";
-  StaticHandler handler(root);
+  StaticHandler handler(root, "sample_ip");
   handler.SetHeaders(req, res);
   auto it = res.find(boost::beast::http::field::content_type);
   EXPECT_NE(it, res.end());

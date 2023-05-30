@@ -8,7 +8,7 @@
 
 class I_FileHandlerFactory : public I_RequestHandlerFactory {
  public:
-  virtual I_RequestHandler* CreateHandler(std::string& uri_path) = 0;
+  virtual I_RequestHandler* CreateHandler(std::string& uri_path, const std::string& client_ip) = 0;
   std::string GetCompleteFilePath(NginxConfig* config, std::string& file_path);
   std::string GetRoot(NginxConfig* config);
 };

@@ -8,6 +8,6 @@
 
 class SleepHandlerFactory : public I_RequestHandlerFactory {
  public:
-  SleepHandler* CreateHandler(std::string& uri_path);
+  SleepHandler* CreateHandler(std::string& uri_path, const std::string& client_ip);
 };
 #endif

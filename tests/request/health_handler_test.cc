@@ -12,7 +12,7 @@ TEST(HealthHandler, BasicSuccessHealthTest) {
                                                                    11};                            // HTTP 1.1
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
-  HealthHandler handler;
+  HealthHandler handler("sample_ip");
   handler.HandleRequest(req, res);
 
   EXPECT_EQ(boost::beast::buffers_to_string(res.body().data()), "OK");
