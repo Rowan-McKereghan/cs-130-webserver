@@ -9,7 +9,7 @@ if [ -e "./build/bin/webserver" ]
 then
     ./build/bin/webserver ./configs/dev_config &
 else
-    ./build_coverage/bin/webserver configs/dev_config &
+    ./build_coverage/bin/webserver ./configs/dev_config &
 fi
 
 webserverPID=$!
@@ -21,7 +21,7 @@ finalExit=0
 fname=tests/IntegrationDiffs/integration_result_curl_basic.txt
 
 # add delay to give server time to parse config
-sleep 0.5
+sleep .5
 
 # ----------------
 # BASIC CURL TEST
@@ -106,11 +106,11 @@ diffExit=$?
 
 if [[ "$diffExit" -eq 1 ]]
 then 
-    printf "txt file transfer test: failure\n"
+    printf "jpeg file transfer test: failure\n"
     (( ++numberOfTests ))
     finalExit=1
 else
-    printf "txt file transfer test: success\n"
+    printf " file transfer test: success\n"
     (( ++numberOfTests ))
     (( ++numberOfSucceededTests ))
 fi
@@ -178,17 +178,15 @@ SERVER_IP=localhost
 SERVER_PORT=80
 TIMEOUT=0.5
 
-#rm -rf ../crud/test/1
-rm -rf ../ctrl-c-ctrl-v/crud/integration_test
-#rm -rf ../api/test
-#rm -rf entitydata??
+rm -rf crud/integration_test
+
 sleep 1.0
 
 # Curl server and create
 timeout $TIMEOUT curl -s -i -X POST -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integration_test -d '{"a":111}'
 
 # Check if file exists or not
-FILE=../ctrl-c-ctrl-v/crud/integration_test/1
+FILE=crud/integration_test/1
 
 test -f "$FILE";
 RESULT=$?
@@ -302,7 +300,7 @@ fi
 timeout $TIMEOUT curl -s -i -X DELETE -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integration_test/1
 
 # Check if file exists or not
-FILE=../ctrl-c-ctrl-v/crud/integration_test/1
+FILE=crud/integration_test/1
 
 test -f "$FILE";
 RESULT=$?
@@ -337,7 +335,7 @@ curl -s -i -X POST -H "Host:" -H "User-Agent:" $SERVER_IP:$SERVER_PORT/api/integ
 # wait only for the file POST to complete
 wait $PID2
 # Check if file exists or not
-FILE=../ctrl-c-ctrl-v/crud/integration_test/1
+FILE=crud/integration_test/1
 
 test -f "$FILE";
 RESULT=$?
@@ -371,12 +369,12 @@ wait $PID3
 wait $PID4
 
 # Check if files exist or not
-FILE1=../ctrl-c-ctrl-v/crud/integration_test/2
+FILE1=crud/integration_test/2
 
 test -f "$FILE1";
 RESULT1=$?
 
-FILE2=../ctrl-c-ctrl-v/crud/integration_test/3
+FILE2=crud/integration_test/3
 
 test -f "$FILE2";
 RESULT2=$?
