@@ -9,15 +9,14 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "serving_config.h"
+#include "session.h"
 
 class MockServer : public Server {
  public:
   MockServer(boost::asio::io_service& io_service, short port,
              std::function<std::shared_ptr<I_session>(boost::asio::io_service&)> session_constructor)
       : Server(io_service, port, session_constructor) {}
-  MOCK_METHOD(void, StartAccept, (), (override));
-  MOCK_METHOD(void, HandleAccept, (std::shared_ptr<I_session> new_session, const boost::system::error_code& error),
-              (override));
+  MOCK_METHOD(void, StartSession, (std::shared_ptr<I_session> new_session), (override));
 };
 
 class MockSession : public I_session {
@@ -36,7 +35,7 @@ class ServerTest : public ::testing::Test {
  protected:
   boost::asio::io_service io_service;
   short port;
-  Server* server_;
+  MockServer* server_;
   boost::system::error_code ec;
 
   void SetUp() override {
@@ -44,8 +43,8 @@ class ServerTest : public ::testing::Test {
 
     ServingConfig serving_config;
     // Default root path (for now, testing purposes only)
-    server_ = new Server(io_service, port, [serving_config](boost::asio::io_service& io_service) {
-      return std::make_shared<MockSession>(io_service, serving_config);
+    server_ = new MockServer(io_service, port, [serving_config](boost::asio::io_service& io_service) {
+      return std::make_shared<Session>(io_service, serving_config);
     });
   }
 
@@ -58,16 +57,16 @@ TEST_F(ServerTest, ServerSetup) {
 
   // set default value fo MockSession->socket() on initial run
   server_->StartAccept();
-  std::shared_ptr<MockSession> session1 = std::static_pointer_cast<MockSession>(server_->get_cur_session());
+  std::shared_ptr<I_session> session1 = server_->get_cur_session();
 
-  // becuase second call has error, Start() should only be called once
-  EXPECT_CALL(*session1, Start()).Times(1);
+  // becuase second HandleAccept call has an error, StartSession should only be called once
+  EXPECT_CALL(*server_, StartSession(session1)).Times(1);
   server_->HandleAccept(session1, ec);
   ec.assign(123, boost::system::generic_category());
   server_->HandleAccept(session1, ec);
 
   server_->StartAccept();
-  std::shared_ptr<MockSession> session2 = std::static_pointer_cast<MockSession>(server_->get_cur_session());
+  std::shared_ptr<I_session> session2 = server_->get_cur_session();
   // accepting new session should have changed active session
   ASSERT_NE(session1, session2);
 }

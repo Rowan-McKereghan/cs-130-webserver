@@ -17,11 +17,15 @@
 #include "request_dispatcher.h"
 
 Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config)
-    : socket_(io_service), _timer(io_service), io_service_(io_service), serving_config_(serving_config) {}
+    : socket_(io_service),
+      strand_(io_service),
+      _timer(io_service),
+      io_service_(io_service),
+      serving_config_(serving_config) {}
 
 boost::asio::ip::tcp::socket& Session::get_socket() { return socket_; }
 
-void Session::timeout(const boost::system::error_code& error) {
+void Session::Timeout(const boost::system::error_code& error) {
   if (error == boost::asio::error::operation_aborted) {
     return;
   }
@@ -32,7 +36,8 @@ void Session::timeout(const boost::system::error_code& error) {
   req_dispatcher.BadRequest(res);
   timeout_check = true;
   boost::beast::http::async_write(
-      socket_, res, boost::bind(&Session::HandleWrite, Session::shared_from_this(), boost::asio::placeholders::error));
+      socket_, res,
+      strand_.wrap(boost::bind(&Session::HandleWrite, Session::shared_from_this(), boost::asio::placeholders::error)));
   socket_.close();
 }
 
@@ -42,13 +47,13 @@ void Session::Start() {
   LOG(info) << "Session in thread with ID " << std::this_thread::get_id();
 
   _timer.expires_from_now(boost::posix_time::seconds(1));
-  _timer.async_wait(boost::bind(&Session::timeout, this, boost::asio::placeholders::error));
+  _timer.async_wait(boost::bind(&Session::Timeout, this, boost::asio::placeholders::error));
 
   req = std::make_shared<boost::beast::http::request<boost::beast::http::string_body>>();
   boost::beast::http::async_read(
       socket_, request_buffer, *req,
-      boost::bind(&Session::HandleRead, Session::shared_from_this();
-                  , boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+      strand_.wrap(boost::bind(&Session::HandleRead, Session::shared_from_this(), boost::asio::placeholders::error,
+                               boost::asio::placeholders::bytes_transferred)));
   io_service_.run();
 }
 
@@ -70,7 +75,8 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
   PrepareResponse(error, bytes_transferred, client_ip);
   // TODO: async_write() was causing a segfault. Figure out why and possibly change back.
   boost::beast::http::async_write(
-      socket_, res, boost::bind(&Session::HandleWrite, Session::shared_from_this(), boost::asio::placeholders::error));
+      socket_, res,
+      strand_.wrap(boost::bind(&Session::HandleWrite, Session::shared_from_this(), boost::asio::placeholders::error)));
   // size_t bytes_t = boost::beast::http::write(socket_, res);
   // if (bytes_t < 0) {
   //   LOG(error) << "An error occurred writing to the socket.";
@@ -113,7 +119,6 @@ void Session::PrepareResponse(const boost::system::error_code& error, size_t byt
 }
 
 void Session::HandleWrite(const boost::system::error_code& error) {
-  LOG(info) << "should have written";
   if (error != boost::system::errc::success) {
     LogError(error, "An error occurred in handle_write");
   }

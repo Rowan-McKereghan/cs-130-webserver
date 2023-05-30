@@ -20,6 +20,9 @@ numberOfSucceededTests=0
 finalExit=0
 fname=tests/IntegrationDiffs/integration_result_curl_basic.txt
 
+# add delay to give server time to parse config
+sleep 0
+
 # ----------------
 # BASIC CURL TEST
 # Should return 404

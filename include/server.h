@@ -19,6 +19,10 @@ class Server {
 
   virtual void HandleAccept(std::shared_ptr<I_session> new_session, const boost::system::error_code& error);
 
+  // this function's sole purpose is to serve as a wrapper for the session's Start() function to allow gmock to properly
+  // track its invocations, avoiding complications from mocking a callback
+  virtual void StartSession(std::shared_ptr<I_session> new_session);
+
   std::shared_ptr<I_session> get_cur_session();
 
   boost::asio::io_service& io_service_;

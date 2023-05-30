@@ -31,15 +31,21 @@ void Server::HandleAccept(std::shared_ptr<I_session> new_session, const boost::s
     // threads active at the same time within the same process are guaranteed to have the same ID, this output can only
     // be reliably used to determine if a spawned session is running on a different thread from the server
     LOG(info) << "Server in thread with ID " << std::this_thread::get_id();
-    std::thread thread(boost::bind(&I_session::Start, new_session));
-    // detaching thread because we don't need to join it later
-    thread.detach();
+    StartSession(new_session);
   } else {
     LogError(ec, "Failed to handle request");
   }
 
   LOG(trace) << "Finished handling request, accepting new requests.";
   StartAccept();
+}
+
+// this function's sole purpose is to serve as a wrapper for the session's Start() function to allow gmock to properly
+// track its invocations, avoiding complications from mocking a callback
+void Server::StartSession(std::shared_ptr<I_session> new_session) {
+  std::thread thread(boost::bind(&I_session::Start, new_session));
+  // detaching thread because we don't need to join it later
+  thread.detach();
 }
 
 std::shared_ptr<I_session> Server::get_cur_session() { return cur_session_; }

@@ -34,12 +34,13 @@ class Session : public I_session, public std::enable_shared_from_this<Session> {
 
   virtual void PrepareResponse(const boost::system::error_code& error, size_t bytes_transferred, std::string client_ip);
 
-  virtual void timeout(const boost::system::error_code& error);
-
   virtual void HandleWrite(const boost::system::error_code& error);
+
+  virtual void Timeout(const boost::system::error_code& error);
 
   boost::asio::io_service& io_service_;
   boost::asio::ip::tcp::socket socket_;
+  boost::asio::io_service::strand strand_;
   char data_[kMaxLength];
   std::string HTTPResponse_;
   boost::beast::flat_buffer request_buffer;

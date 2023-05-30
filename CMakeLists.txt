@@ -89,7 +89,7 @@ add_executable(crud_filesystem_manager_test tests/filesystem_managers/crud_files
 add_executable(health_handler_test tests/request/health_handler_test.cc)
 
 
-target_link_libraries(webserver_test server_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
+target_link_libraries(webserver_test server_lib session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(session_test session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(request_dispatcher_test request_dispatcher_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(static_handler_test static_handler_lib logger_lib gtest_main ${Boost_LIBRARIES})
