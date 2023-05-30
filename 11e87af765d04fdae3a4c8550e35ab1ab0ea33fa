@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a7929f9_c3d52213",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-30T17:49:24Z",
+      "side": 1,
+      "message": "While you\u0027re fixing the segmentation fault can you also address the absolute path issue? This should help better diagnose future test failures.",
+      "revId": "11e87af765d04fdae3a4c8550e35ab1ab0ea33fa",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
