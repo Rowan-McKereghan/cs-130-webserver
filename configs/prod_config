@@ -9,7 +9,7 @@ server {
     }
 
     location /api CrudHandler {
-        root /crud;
+        root /mnt/storage/crud;
     }
 
     location /health HealthHandler {
