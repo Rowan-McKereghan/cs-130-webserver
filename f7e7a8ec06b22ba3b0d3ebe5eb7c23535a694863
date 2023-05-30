@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a926881_5cb16160",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-30T23:30:49Z",
+      "side": 1,
+      "message": "I think we should do a tiny bit more cleanup of the integration test here.",
+      "revId": "f7e7a8ec06b22ba3b0d3ebe5eb7c23535a694863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fbe3198_27a40ffa",
+        "filename": "tests/integration_test.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-30T23:30:49Z",
+      "side": 1,
+      "message": "While you\u0027re cleaning this up, can you remove the commented lines? Could you also remove the `../ctrl-c-ctrl-v` references in the integration test?",
+      "revId": "f7e7a8ec06b22ba3b0d3ebe5eb7c23535a694863",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
