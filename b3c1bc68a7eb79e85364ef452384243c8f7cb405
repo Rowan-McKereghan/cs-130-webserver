@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faa28429_0897ae96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-30T01:53:44Z",
+      "side": 1,
+      "message": "I think it might be easier to log one step above the handler itself either in request_dispatcher or session itself. That avoid duplication of code. Obviously, this means it\u0027s harder to customize the logging for the future however.",
+      "revId": "b3c1bc68a7eb79e85364ef452384243c8f7cb405",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
