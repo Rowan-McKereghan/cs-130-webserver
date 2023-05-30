@@ -14,7 +14,7 @@ bool CrudFileSystemManager::CreateDir(boost::filesystem::path path) {
     return true;
   }
   LOG(info) << "Creating Directory at " << path;
-  boost::filesystem::create_directory(path, ec);
+  boost::filesystem::create_directories(path, ec);
   return ec == boost::system::errc::success;
 }
 
