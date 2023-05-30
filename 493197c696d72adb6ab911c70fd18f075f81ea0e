@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "730fe31e_0e66a89f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-30T17:04:18Z",
+      "side": 1,
+      "message": "Thanks for the fixes for the integration test failure.",
+      "revId": "493197c696d72adb6ab911c70fd18f075f81ea0e",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
