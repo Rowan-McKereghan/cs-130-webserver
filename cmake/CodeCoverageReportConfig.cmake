@@ -53,7 +53,7 @@ function(generate_coverage_report)
         # Use coverage_data.stamp as a dependency proxy for coverage data files
         add_custom_command(OUTPUT ${COVERAGE_DATA_STAMP_FILE}
             COMMAND find "${CMAKE_BINARY_DIR}" -name "*.gcda" -exec rm {} \;
-            COMMAND ${CMAKE_CTEST_COMMAND}
+            COMMAND ${CMAKE_CTEST_COMMAND}  " --output-on_failure --verbose"
             COMMAND touch "${COVERAGE_DATA_STAMP_FILE}"
             DEPENDS ${COVERAGE_TARGETS} ${COVERAGE_TESTS}
             COMMENT "Running tests to generate coverage data"

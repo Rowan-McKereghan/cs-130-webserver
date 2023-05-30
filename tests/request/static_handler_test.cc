@@ -22,7 +22,7 @@ TEST(StaticHandler, StaticTest404) {
                                                                    "/static/file_does_not_exist.fake-extension",  // URI
                                                                    11};  // HTTP 1.1
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
-  std::string root = "/usr/src/projects/";
+  std::string root = ".";
   StaticHandler handler(root);
   handler.SetHeaders(req, res);
   EXPECT_EQ(res.version(), 11);
@@ -36,7 +36,7 @@ TEST(StaticHandler, StaticTestTxtFile) {
                                                                    11};                            // HTTP 1.1
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
-  std::string root = "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.txt";
+  std::string root = "./static_test_files/sample.txt";
   StaticHandler handler(root);
   handler.SetHeaders(req, res);
   auto it = res.find(boost::beast::http::field::content_type);
@@ -53,7 +53,7 @@ TEST(StaticHandler, StaticTestPngFile) {
                                                                    11};                            // HTTP 1.1
   req.body() = req_data;
   boost::beast::http::response<boost::beast::http::dynamic_body> res;
-  std::string root = "/usr/src/projects/ctrl-c-ctrl-v/tests/static_test_files/sample.png";
+  std::string root = "./static_test_files/sample.png";
   StaticHandler handler(root);
   handler.SetHeaders(req, res);
   auto it = res.find(boost::beast::http::field::content_type);

@@ -128,4 +128,12 @@ gtest_discover_tests(health_handler_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURC
 
 
 include(cmake/CodeCoverageReportConfig.cmake)
-generate_coverage_report(TARGETS webserver server_lib session_lib config_parser_lib logger_lib config_parser_test webserver_test session_test TESTS config_parser_test webserver_test session_test logger_test request_dispatcher_test echo_handler_test static_handler_test serving_config_test not_found_handler_factory_test not_found_handler_test crud_handler_test file_handler_factory_test crud_handler_factory_test crud_filesystem_manager_test health_handler_test)
+generate_coverage_report(
+    TARGETS webserver server_lib session_lib request_dispatcher_lib echo_handler_lib static_handler_lib config_parser_lib 
+    logger_lib serving_config_lib static_handler_factory_lib echo_handler_factory_lib not_found_handler_lib 
+    not_found_handler_factory_lib file_handler_factory_lib crud_handler_lib crud_handler_factory_lib crud_filesystem_manager_lib
+    TESTS config_parser_test webserver_test session_test logger_test request_dispatcher_test echo_handler_test 
+    static_handler_test serving_config_test not_found_handler_factory_test not_found_handler_test crud_handler_test 
+    file_handler_factory_test crud_handler_factory_test crud_filesystem_manager_test)
+
+set(COVERAGE_EXCLUDES "${CMAKE_SOURCE_DIR}/tests/*")
