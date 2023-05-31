@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "899b1228_037aa98a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-31T01:46:51Z",
+      "side": 1,
+      "message": "Thanks for consolidating, LGTM now!",
+      "revId": "076585c5fe5e08c7a2d5ddc55e8d09942d339903",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
