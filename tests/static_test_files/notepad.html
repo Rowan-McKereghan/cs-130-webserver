@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cursor {
+            position: absolute;
+            color: white;
+            padding: 2px 5px;
+            font-size: 12px;
+            border-radius: 2px;
+            white-space: nowrap;
+            pointer-events: none;
+            /* Disable cursor element from capturing pointer events */
+        }
+    </style>
+</head>
+
+<body class="flex flex-col">
+    <div class="flex-none">
+        Server URI: <input class="draw-border w-full p-2" id="uri" type="text">
+        Channel: <input class="draw-border w-full p-2" id="channel" value="test" type="text">
+        Your Name: <input class="draw-border w-full p-2" id="userName" type="text">
+    </div>
+    <div class="flex-grow relative">
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none" id="cursors-container"></div>
+        <textarea class="draw-border w-full p-2 h-full resize-y" id="notepad"></textarea>
+    </div>
+
+    <script>
+        function connect() {
+            console.log("connecting...")
+            ws = new WebSocket(uri.value + "/" + channel.value);
+            ws.onmessage = function (ev) {
+                showMessage(ev.data);
+            };
+            ws.onopen = function (ev) {
+                console.log("Created Connection");
+            };
+            ws.onclose = function (ev) {
+                console.log("Closed Connection");
+            };
+            ws.onerror = function (ev) {
+                console.log(ev);
+            };
+        }
+
+        function getUsernameColor(username) {
+            var hue = hashString(username);
+            var saturation = 70;
+            var lightness = 60;
+            var color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            return color;
+        }
+
+        function hashString(str) {
+            var hash = 0;
+            if (str.length === 0) {
+                return hash;
+            }
+            for (var i = 0; i < str.length; i++) {
+                var charCode = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + charCode;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return Math.abs(hash) % 360;
+        }
+
+        var cursors = {};
+        var textarea = document.getElementById('notepad');
+        var cursorsContainer = document.getElementById('cursors-container');
+
+        function showCursor(msg) {
+            var cursorData = msg.substring(9);
+            var cursorInfo = cursorData.split(":");
+            var userName = cursorInfo[0];
+            var location = parseInt(cursorInfo[1]);
+            var cursor = cursors[userName];
+
+            if (!cursor) {
+                cursor = document.createElement("div");
+                var color = getUsernameColor(userName);
+                cursor.className = "cursor";
+                cursor.style.backgroundColor = color;
+                cursor.innerText = userName;
+                cursors[userName] = cursor;
+                cursorsContainer.appendChild(cursor);
+            }
+
+            var lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
+            var rows = textarea.value.substr(0, location).split("\n");
+            var row = rows.length - 1;
+            var col = rows[row].length;
+            var topOffset = row * lineHeight;
+            var leftOffset = col * parseFloat(getComputedStyle(textarea).fontSize);
+
+            console.log("topOffset: " + topOffset + ", leftOffset: " + leftOffset)
+
+            // Adjust cursor position based on the scroll position of the textarea
+            var scrollTop = textarea.scrollTop;
+            var scrollLeft = textarea.scrollLeft;
+            topOffset -= scrollTop;
+            leftOffset -= scrollLeft;
+
+            cursor.style.top = topOffset + 'px';
+            cursor.style.left = leftOffset + 'px';
+        }
+
+        function setNotepadHeight() {
+            var windowHeight = window.innerHeight;
+            var topElementsHeight = document.querySelector('.flex-none').offsetHeight;
+            var notepad = document.getElementById('notepad');
+            notepad.style.height = (windowHeight - topElementsHeight) + 'px';
+        }
+
+        window.addEventListener('resize', setNotepadHeight);
+        setNotepadHeight();
+
+        function generateUUID() {
+            let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+            uuid = uuid.replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            return uuid;
+        }
+
+        function getRandomString(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                result += characters.charAt(randomIndex);
+            }
+
+            return result;
+        }
+
+        function showMessage(msg) {
+            if (msg.startsWith("location:")) {
+                showCursor(msg);
+            } else if (msg.startsWith("text:")) {
+                notepad.value = msg.substring(5);
+            }
+        }
+
+        function sendMessage() {
+            var message = notepad.value;
+            ws.send("text:" + message);
+        }
+
+        function sendLocation() {
+            var location = getCaretPosition();
+            ws.send("location:" + userName.value + ":" + location);
+            console.log("location:" + userName.value + ":" + location)
+        }
+
+        function hideCursor(userName) {
+            var cursor = cursors[userName];
+            if (cursor) {
+                cursor.remove();
+                delete cursors[userName];
+            }
+        }
+
+        function getCaretPosition() {
+            return textarea.selectionStart;
+        }
+
+        function setCaretPosition(position) {
+            var range = document.createRange();
+            var sel = window.getSelection();
+            var nodeStack = [notepad];
+            var node;
+            var found = false;
+            var charCount = 0;
+
+            while (node = nodeStack.pop()) {
+                if (node.nodeType === 3) {
+                    var nextCharCount = charCount + node.length;
+                    if (!found && position >= charCount && position <= nextCharCount) {
+                        range.setStart(node, position - charCount);
+                        range.collapse(true);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                        found = true;
+                    }
+                    charCount = nextCharCount;
+                } else {
+                    var i = node.childNodes.length;
+                    while (i--) {
+                        nodeStack.push(node.childNodes[i]);
+                    }
+                }
+            }
+        }
+
+
+        function handleNotepadClick() {
+            console.log("handle lick loc")
+            var location = getCaretPosition();
+            hideCursor(userName.value);
+            setCaretPosition(location);
+            sendLocation();
+        }
+
+        function handleNotepadKeyDown(event) {
+            sendLocation();
+        }
+
+        channel.onkeyup = function (ev) {
+            ev.preventDefault();
+            if (ev.keyCode === 13) {
+                ws.close();
+                connect();
+            }
+        };
+
+        window.addEventListener('load', function () {
+            var input = document.getElementById('uri');
+            var hostname = window.location.hostname;
+            var port = window.location.port;
+            var url = "ws://" + hostname + ':' + port;
+            input.value = url;
+            var userNameInput = document.getElementById('userName');
+            userNameInput.value = generateUUID();
+
+            notepad.addEventListener('input', sendMessage);
+            notepad.addEventListener('click', handleNotepadClick);
+            notepad.addEventListener('keydown', handleNotepadKeyDown);
+
+            connect();
+        });
+    </script>
+</body>
+
+</html>

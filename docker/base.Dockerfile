@@ -17,4 +17,8 @@ RUN apt-get update && apt-get install -y \
     libgtest-dev \
     netcat \
     gcovr \
-    libboost-regex-dev
+    libboost-regex-dev \
+    python3 \
+    python3-pip
+
+RUN python3 -m pip install websockets

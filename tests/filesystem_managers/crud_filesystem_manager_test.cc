@@ -93,5 +93,5 @@ TEST(CrudFileSystemManager, TestListFileIsDirectory) {
   CrudFileSystemManager manager;
   std::vector<std::string> res;
   EXPECT_EQ(manager.ListFiles(boost::filesystem::current_path() / "static_test_files", res), true);
-  EXPECT_EQ(res.size(), 6);
+  EXPECT_EQ(res.size(), 8);
 }

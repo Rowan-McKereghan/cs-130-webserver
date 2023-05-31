@@ -19,8 +19,9 @@ class SessionTest : public ::testing::Test {
 
   void SetUp() override {
     port = 80;
+    std::shared_ptr<GlobalWebsocketState> state_(std::make_shared<GlobalWebsocketState>());
 
-    session = new Session(io_service, serving_config);
+    session = new Session(io_service, serving_config, state_);
   }
 
   void TearDown() override {}

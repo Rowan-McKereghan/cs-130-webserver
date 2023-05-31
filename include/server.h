@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "I_session.h"
+#include "global_websocket_state.h"
 
 // server that accepts http connections over a specified port
 
@@ -29,6 +30,7 @@ class Server {
   boost::asio::ip::tcp::acceptor acceptor_;
   std::function<std::shared_ptr<I_session>(boost::asio::io_service&)> session_constructor_;
   std::shared_ptr<I_session> cur_session_;
+  std::shared_ptr<GlobalWebsocketState> state_;
 };
 
 #endif

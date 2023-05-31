@@ -49,13 +49,14 @@ add_library(crud_handler_factory_lib src/crud_handler_factory.cc)
 add_library(crud_filesystem_manager_lib src/crud_filesystem_manager.cc)
 add_library(health_handler_lib src/health_handler.cc)
 add_library(health_handler_factory_lib src/health_handler_factory.cc)
-
+add_library(websocket_handler_lib src/websocket_handler.cc)
+add_library(global_websocket_state_lib src/global_websocket_state.cc)
 
 
 add_executable(webserver src/server_main.cc)
-target_link_libraries(webserver server_lib session_lib config_parser_lib logger_lib serving_config_lib ${Boost_LIBRARIES})
-target_link_libraries(server_lib logger_lib ${Boost_LIBRARIES})
-target_link_libraries(session_lib logger_lib request_dispatcher_lib ${Boost_LIBRARIES})
+target_link_libraries(webserver server_lib session_lib config_parser_lib logger_lib serving_config_lib global_websocket_state_lib ${Boost_LIBRARIES})
+target_link_libraries(server_lib logger_lib global_websocket_state_lib ${Boost_LIBRARIES})
+target_link_libraries(session_lib logger_lib request_dispatcher_lib global_websocket_state_lib websocket_handler_lib ${Boost_LIBRARIES})
 target_link_libraries(request_dispatcher_lib echo_handler_lib static_handler_lib echo_handler_factory_lib static_handler_factory_lib ${Boost_LIBRARIES})
 target_link_libraries(static_handler_lib logger_lib ${Boost_LIBRARIES})
 target_link_libraries(serving_config_lib logger_lib config_parser_lib echo_handler_factory_lib static_handler_factory_lib not_found_handler_factory_lib crud_handler_factory_lib health_handler_factory_lib sleep_handler_factory_lib ${Boost_LIBRARIES})
@@ -69,7 +70,8 @@ target_link_libraries(crud_handler_lib logger_lib crud_filesystem_manager_lib ${
 target_link_libraries(crud_handler_factory_lib logger_lib crud_handler_lib file_handler_factory_lib crud_filesystem_manager_lib ${Boost_LIBRARIES})
 target_link_libraries(crud_filesystem_manager_lib ${Boost_LIBRARIES})
 target_link_libraries(health_handler_factory_lib logger_lib config_parser_lib health_handler_lib ${Boost_LIBRARIES})
-
+target_link_libraries(websocket_handler_lib logger_lib ${Boost_LIBRARIES})
+target_link_libraries(global_websocket_state_lib logger_lib ${Boost_LIBRARIES})
 
 
 add_executable(config_parser_test tests/config_parser/config_parser_test.cc)
@@ -87,7 +89,7 @@ add_executable(file_handler_factory_test tests/factories/I_file_handler_factory_
 add_executable(crud_handler_factory_test tests/factories/crud_handler_factory_test.cc)
 add_executable(crud_filesystem_manager_test tests/filesystem_managers/crud_filesystem_manager_test.cc)
 add_executable(health_handler_test tests/request/health_handler_test.cc)
-
+add_executable(websocket_handler_test tests/websocket/websocket_handler_test.cc)
 
 target_link_libraries(webserver_test server_lib session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(session_test session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
@@ -104,7 +106,7 @@ target_link_libraries(file_handler_factory_test file_handler_factory_lib logger_
 target_link_libraries(crud_handler_factory_test crud_handler_factory_lib static_handler_factory_lib gtest_main gmock_main ${Boost_LIBRARIES})
 target_link_libraries(crud_filesystem_manager_test crud_filesystem_manager_lib logger_lib gtest_main ${Boost_LIBRARIES})
 target_link_libraries(health_handler_test health_handler_lib logger_lib gtest_main ${Boost_LIBRARIES})
-
+target_link_libraries(websocket_handler_test websocket_handler_lib global_websocket_state_lib server_lib session_lib logger_lib gtest_main gmock_main ${Boost_LIBRARIES})
 
 add_test(NAME integration_test
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tests/integration_test.sh
@@ -125,7 +127,7 @@ gtest_discover_tests(file_handler_factory_test WORKING_DIRECTORY ${CMAKE_CURRENT
 gtest_discover_tests(crud_handler_factory_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(crud_filesystem_manager_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 gtest_discover_tests(health_handler_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
-
+gtest_discover_tests(websocket_handler_test WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 include(cmake/CodeCoverageReportConfig.cmake)
 generate_coverage_report(
@@ -134,6 +136,6 @@ generate_coverage_report(
     not_found_handler_factory_lib file_handler_factory_lib crud_handler_lib crud_handler_factory_lib crud_filesystem_manager_lib health_handler_lib
     TESTS config_parser_test webserver_test session_test logger_test request_dispatcher_test echo_handler_test 
     static_handler_test serving_config_test not_found_handler_factory_test not_found_handler_test crud_handler_test 
-    file_handler_factory_test crud_handler_factory_test crud_filesystem_manager_test health_handler_test)
+    file_handler_factory_test crud_handler_factory_test crud_filesystem_manager_test health_handler_test websocket_handler_test)
 
 set(COVERAGE_EXCLUDES ${CMAKE_SOURCE_DIR}/tests)
