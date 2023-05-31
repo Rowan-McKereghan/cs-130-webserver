@@ -44,7 +44,7 @@ class ServerTest : public ::testing::Test {
     ServingConfig serving_config;
     // Default root path (for now, testing purposes only)
     server_ = new MockServer(io_service, port, [serving_config](boost::asio::io_service& io_service) {
-      return std::make_shared<Session>(io_service, serving_config);
+      return std::make_shared<Session>(io_service, serving_config, std::make_shared<GlobalWebsocketState>());
     });
   }
 

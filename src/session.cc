@@ -4,7 +4,9 @@
 
 #include <boost/asio.hpp>
 #include <boost/beast/http.hpp>
+#include <boost/beast/websocket.hpp>
 #include <boost/bind.hpp>
+#include <boost/config.hpp>
 #include <boost/filesystem.hpp>
 #include <cstdlib>
 #include <ctime>
@@ -15,12 +17,15 @@
 
 #include "logger.h"
 #include "request_dispatcher.h"
+#include "websocket_handler.h"
 
-Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config)
+Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config,
+                 std::shared_ptr<GlobalWebsocketState> state)
     : socket_(io_service),
       strand_(io_service),
       _timer(io_service),
       io_service_(io_service),
+      state_(state),
       serving_config_(serving_config) {}
 
 boost::asio::ip::tcp::socket& Session::get_socket() { return socket_; }
@@ -73,14 +78,9 @@ void Session::HandleRead(const boost::system::error_code& error, size_t bytes_tr
   }
 
   PrepareResponse(error, bytes_transferred, client_ip);
-  // TODO: async_write() was causing a segfault. Figure out why and possibly change back.
   boost::beast::http::async_write(
       socket_, res,
       strand_.wrap(boost::bind(&Session::HandleWrite, Session::shared_from_this(), boost::asio::placeholders::error)));
-  // size_t bytes_t = boost::beast::http::write(socket_, res);
-  // if (bytes_t < 0) {
-  //   LOG(error) << "An error occurred writing to the socket.";
-  // }
 }
 
 void Session::PrepareResponse(const boost::system::error_code& error, size_t bytes_transferred, std::string client_ip) {
@@ -88,9 +88,9 @@ void Session::PrepareResponse(const boost::system::error_code& error, size_t byt
   if (error == boost::system::errc::success) {
     _timer.cancel();
 
-    if ((*req).version() != 11) {
-      LOG(trace) << "Unsupported HTTP version: HTTP " << std::to_string((*req).version() / 10) << "."
-                 << std::to_string((*req).version() % 10);
+    if (boost::beast::websocket::is_upgrade(*req)) {
+      std::make_shared<WebsocketHandler>(strand_, socket_, state_)->Run(*std::move(req));
+      return;
     }
 
     req_dispatcher.RouteRequest(*req, res, serving_config_, client_ip);

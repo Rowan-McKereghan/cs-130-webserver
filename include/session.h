@@ -14,8 +14,8 @@
 
 #include "I_session.h"
 #include "config_parser.h"
+#include "global_websocket_state.h"
 #include "serving_config.h"
-
 // session for handling async reads and writes through a socket
 
 const int kMaxLength = 1024;
@@ -24,7 +24,8 @@ const int kMaxLength = 1024;
 // pointer
 class Session : public I_session, public std::enable_shared_from_this<Session> {
  public:
-  Session(boost::asio::io_service& io_service, ServingConfig serving_config);
+  Session(boost::asio::io_service& io_service, ServingConfig serving_config,
+          std::shared_ptr<GlobalWebsocketState> state);
 
   virtual boost::asio::ip::tcp::socket& get_socket() override;
 
@@ -53,6 +54,8 @@ class Session : public I_session, public std::enable_shared_from_this<Session> {
       boost::beast::http::error::bad_target,      boost::beast::http::error::bad_method,
       boost::beast::http::error::bad_field,       boost::beast::http::error::bad_value,
       boost::beast::http::error::bad_line_ending, boost::beast::http::error::bad_version};
+
+  std::shared_ptr<GlobalWebsocketState> state_;
 };
 
 #endif
