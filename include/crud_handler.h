@@ -22,7 +22,7 @@ class CrudHandler : public I_RequestHandler {
   int GetNextID(std::string entity);
 
   // returns the length of file_path_ (ie /root/entity/ID is length 3, /root/entity is length 2, etc.)
-  int GetPathLen();
+//  int GetPathLen();
 
   // Returns a pair with the entity name ("/root/entity") and the ID number in the request
   // If the request didn't include an ID returns -1 for the ID value

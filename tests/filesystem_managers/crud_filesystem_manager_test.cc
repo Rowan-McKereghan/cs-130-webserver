@@ -71,6 +71,17 @@ TEST(CrudFileSystemManager, TestDeleteValidFile) {
   EXPECT_EQ(manager.DeleteFile(path), true);
 }
 
+TEST(CrudFileSystemManager, TestDeleteLastFileInDir) {
+  CrudFileSystemManager manager;
+  boost::filesystem::path dir = boost::filesystem::current_path() / "test";
+  boost::filesystem::create_directory(dir);
+  boost::filesystem::path path = dir / "test";
+  EXPECT_EQ(manager.CreateFile(path, "placeholder content"), true);
+  EXPECT_EQ(manager.DeleteFile(path), true);
+  EXPECT_EQ(boost::filesystem::exists(path), false);
+  EXPECT_EQ(boost::filesystem::exists(dir), false);
+}
+
 TEST(CrudFileSystemManager, TestListFileNotDirectory) {
   CrudFileSystemManager manager;
   std::vector<std::string> res;
