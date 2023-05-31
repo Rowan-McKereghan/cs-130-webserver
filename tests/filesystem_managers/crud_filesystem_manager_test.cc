@@ -9,9 +9,23 @@ TEST(CrudFileSystemManager, TestCreateDirAlreadyExist) {
   EXPECT_EQ(manager.CreateDir(boost::filesystem::current_path()), true);
 }
 
+TEST(CrudFileSystemManager, TestCreateNewDir) {
+  CrudFileSystemManager manager;
+  boost::filesystem::path path = boost::filesystem::current_path() / "test";
+  EXPECT_EQ(manager.CreateDir(path), true);
+  boost::filesystem::remove(path);
+}
+
 TEST(CrudFileSystemManager, TestCreateFileAlreadyExist) {
   CrudFileSystemManager manager;
   EXPECT_EQ(manager.CreateFile(boost::filesystem::current_path(), "placeholder content"), false);
+}
+
+TEST(CrudFileSystemManager, ValidCreateNewFile) {
+  CrudFileSystemManager manager;
+  boost::filesystem::path path = boost::filesystem::current_path() / "test";
+  EXPECT_EQ(manager.CreateFile(path, "placeholder content"), true);
+  boost::filesystem::remove(path);
 }
 
 TEST(CrudFileSystemManager, TestReadFileBadFile) {
@@ -20,15 +34,41 @@ TEST(CrudFileSystemManager, TestReadFileBadFile) {
   EXPECT_EQ(manager.ReadFile(boost::filesystem::current_path() / "file_that_does_not_exist", res), false);
 }
 
+TEST(CrudFileSystemManager, TestValidReadFile) {
+  CrudFileSystemManager manager;
+
+  boost::filesystem::path path = boost::filesystem::current_path() / "test";
+  EXPECT_EQ(manager.CreateFile(path, "placeholder content"), true);
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  EXPECT_EQ(manager.ReadFile(path, res), true);
+
+  boost::filesystem::remove(path);
+}
+
 TEST(CrudFileSystemManager, TestWriteFileBadFile) {
   CrudFileSystemManager manager;
   EXPECT_EQ(manager.WriteFile(boost::filesystem::current_path() / "file_that_does_not_exist", "placeholder content"),
             false);
 }
 
+TEST(CrudFileSystemManager, TestValidWrite) {
+  CrudFileSystemManager manager;
+  boost::filesystem::path path = boost::filesystem::current_path() / "test";
+  EXPECT_EQ(manager.CreateFile(path, "placeholder content"), true);
+  EXPECT_EQ(manager.WriteFile(path, "placeholder content"), true);
+  boost::filesystem::remove(path);
+}
+
 TEST(CrudFileSystemManager, TestDeleteFileBadFile) {
   CrudFileSystemManager manager;
   EXPECT_EQ(manager.DeleteFile(boost::filesystem::current_path() / "file_that_does_not_exist"), false);
+}
+
+TEST(CrudFileSystemManager, TestDeleteValidFile) {
+  CrudFileSystemManager manager;
+  boost::filesystem::path path = boost::filesystem::current_path() / "test";
+  EXPECT_EQ(manager.CreateFile(path, "placeholder content"), true);
+  EXPECT_EQ(manager.DeleteFile(path), true);
 }
 
 TEST(CrudFileSystemManager, TestListFileNotDirectory) {
