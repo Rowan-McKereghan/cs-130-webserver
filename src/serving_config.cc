@@ -124,6 +124,7 @@ int ServingConfig::SetPaths(NginxConfig* config) {
 
   auto status = ValidatePaths();
 
+  path_to_handler_name_["/"] = "NotFoundHandler";
   handler_factories_["/"] = new NotFoundHandlerFactory();
 
   return status;
