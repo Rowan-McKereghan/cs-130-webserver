@@ -18,6 +18,7 @@ const int INVALID_URI = 2;
 struct ServingConfig {
  public:
   std::unordered_map<string, I_RequestHandlerFactory*> handler_factories_;
+  std::unordered_map<string, string> path_to_handler_name_;
 
   int port_;
   bool SetPortNumber(NginxConfig* config);

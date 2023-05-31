@@ -6,6 +6,8 @@
 
 // This file defines common logging functions including disk and console logging
 
+const std::string response_log_magic = "[ResponseMetrics]";
+
 // Sets up logging to console and file
 void InitLogging(const std::string& log_file_path = "logs/server_%Y_%m_%d_%H%M%S_%5N.log");
 
