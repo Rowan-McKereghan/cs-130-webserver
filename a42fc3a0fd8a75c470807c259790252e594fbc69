@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "508a4fad_f2c06083",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-05-31T05:37:48Z",
+      "side": 1,
+      "message": "Thanks for removing dead code, but I think we should delete it instead of commenting!",
+      "revId": "a42fc3a0fd8a75c470807c259790252e594fbc69",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
