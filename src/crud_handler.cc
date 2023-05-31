@@ -50,16 +50,6 @@ int CrudHandler::GetNextID(std::string entity) {
   return next_id;
 }
 
-int CrudHandler::GetPathLen() {
-  int length = 0;
-  boost::filesystem::path path = file_path_;
-  while (!path.empty() && path != path.root_path()) {
-    path = path.parent_path();
-    length++;
-  }
-  return length;
-}
-
 std::pair<std::string, int> CrudHandler::ParseTarget() {
   int id = -1;
   std::string entity = file_path_.string();

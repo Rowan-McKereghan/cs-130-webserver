@@ -62,3 +62,32 @@ TEST(StaticHandler, StaticTestPngFile) {
   EXPECT_EQ(res.version(), 11);
   EXPECT_EQ(res.result_int(), OK);
 }
+
+TEST(StaticHandler, TestStaticHandlerHandleRequestTxtFile) {
+  string req_data = "Irrelevant stuff in request body";
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/static/sample.txt",           // URI
+                                                                   11};                            // HTTP 1.1
+  req.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  std::string root = "./static_test_files/sample.txt";
+  StaticHandler handler(root);
+  handler.HandleRequest(req, res);
+  EXPECT_EQ(res.result_int(), OK);
+  auto it = res.find(boost::beast::http::field::content_type);
+  EXPECT_EQ(it->value().to_string(), "text/plain");
+  EXPECT_EQ(res.version(), 11);
+}
+
+TEST(StaticHandler, TestHandleRequestInvalidPath) {
+  string req_data = "Irrelevant stuff in request body";
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/static/sample.txt",           // URI
+                                                                   11};                            // HTTP 1.1
+  req.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  std::string root = "./static_test_files/invalid.txt";
+  StaticHandler handler(root);
+  handler.HandleRequest(req, res);
+  EXPECT_EQ(res.result_int(), NOT_FOUND);
+}
