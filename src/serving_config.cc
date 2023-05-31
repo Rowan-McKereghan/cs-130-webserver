@@ -101,6 +101,7 @@ int ServingConfig::SetPaths(NginxConfig* config) {
               }
               NginxConfig* paths_block = block_statement->child_block_.get();
               if (paths_block != nullptr) {
+                path_to_handler_name_[serving_path] = handler_name;
                 if (handler_name == "StaticHandler") {
                   handler_factories_[serving_path] = new StaticHandlerFactory(paths_block);
                 } else if (handler_name == "EchoHandler") {

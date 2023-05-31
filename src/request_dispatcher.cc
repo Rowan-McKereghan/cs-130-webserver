@@ -45,6 +45,10 @@ void RequestDispatcher::BadRequest(boost::beast::http::response<boost::beast::ht
   return;
 }
 
+void log_local(std::string client_ip, boost::beast::http::request<boost::beast::http::string_body> req, boost::beast::http::response<boost::beast::http::dynamic_body>& res, std::string handler_name){
+  LOG(info) << response_log_magic << " Response code: " << res.result() << " Request path: " << req.target() << " Request IP: " << client_ip << " Handler Name: " << handler_name;
+}
+
 void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::http::string_body> req,
                                      boost::beast::http::response<boost::beast::http::dynamic_body>& res,
                                      ServingConfig serving_config, std::string client_ip) {
@@ -65,6 +69,7 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
   std::string req_uri_ = req.target().to_string();
   std::string uri_base_path = RequestDispatcher::ExtractUriBasePath(req_uri_);
   auto handler_factories_ = serving_config.handler_factories_;
+  auto path_to_handler_name_ = serving_config.path_to_handler_name_;
   LOG(info) << "Client with IP: " << client_ip << " accessed URI: " << req_uri_;
   NginxConfig config;  // dummy config for now
   // Check if the URI matches any of the echo paths
@@ -72,6 +77,7 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
     LOG(info) << "Request matched to path: " << uri_base_path;
     I_RequestHandler* handler = handler_factories_[uri_base_path]->CreateHandler(uri_base_path);
     handler->HandleRequest(req, res);
+    log_local(client_ip, req, res, path_to_handler_name_[uri_base_path]);
     delete handler;
     return;
   }
@@ -94,6 +100,7 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
       std::string file_path = uri_base_path.substr(cur_path.length() + 1);
       I_RequestHandler* handler = factory->CreateHandler(file_path);
       handler->HandleRequest(req, res);
+      log_local(client_ip, req, res, path_to_handler_name_[cur_path]);
       delete handler;
       return;
     }
@@ -109,5 +116,6 @@ void RequestDispatcher::RouteRequest(boost::beast::http::request<boost::beast::h
   res.version(req.version());
   res.result(BAD_REQUEST);
   res.set(boost::beast::http::field::content_type, "text/HTML");
+  log_local(client_ip, req, res, "No Handler: Bad request");
   res.prepare_payload();
 }
