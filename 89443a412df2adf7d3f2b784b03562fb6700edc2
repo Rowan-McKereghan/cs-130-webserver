@@ -301,6 +301,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3426c4f_225040a8",
+        "filename": "src/websocket_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T22:52:23Z",
+      "side": 1,
+      "message": "I was just curious as to how async read + write race conditions are dealt with, I know that theyre in separate threads, i just didnt see where the enforced sequentiality was invoked (or any mutex locks) in this file.",
+      "parentUuid": "e8861cb7_d86818ee",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1981b11_836693dd",
         "filename": "tests/static_test_files/chat.html",
         "patchSetId": 1
