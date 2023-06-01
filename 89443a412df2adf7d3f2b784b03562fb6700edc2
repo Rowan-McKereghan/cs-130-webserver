@@ -35,6 +35,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac30de1e_ef3fe1f2",
+        "filename": "src/global_websocket_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "c4c95586_04563138",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d98877b_8ee0e0b4",
@@ -48,6 +72,30 @@
       "writtenOn": "2023-06-01T02:19:36Z",
       "side": 1,
       "message": "Remove this TODO",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5046a33_bf560065",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "4d98877b_8ee0e0b4",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 0
+      },
       "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -69,6 +117,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51d681dc_67bd4d3c",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "2ae716a8_d49e7ad5",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4817b94_efda8d6e",
@@ -82,6 +154,30 @@
       "writtenOn": "2023-06-01T02:19:36Z",
       "side": 1,
       "message": "Where do we check if we can handle the correct HTTP version if this is removed? There is functionality in HTTP/2 and HTTP/3 that our server cannot handle.",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef46e292_6e133ecb",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "This is checked in RouteRequest. It was duplicated here.",
+      "parentUuid": "a4817b94_efda8d6e",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 0
+      },
       "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -103,6 +199,30 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "054c2a95_5f479dea",
+        "filename": "src/websocket_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "Yep!",
+      "parentUuid": "3c3711d9_ec0da76e",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a00cfd1a_f50f2e15",
@@ -116,6 +236,30 @@
       "writtenOn": "2023-06-01T02:19:36Z",
       "side": 1,
       "message": "remove commented code",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8489eb0d_1768f8d9",
+        "filename": "src/websocket_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "a00cfd1a_f50f2e15",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 0
+      },
       "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -139,6 +283,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8861cb7_d86818ee",
+        "filename": "src/websocket_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand this? OnRecieve is called from async_read which is itself called on its own thread.",
+      "parentUuid": "a3837ec1_f9e6f2c3",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1981b11_836693dd",
         "filename": "tests/static_test_files/chat.html",
         "patchSetId": 1
@@ -150,6 +312,30 @@
       "writtenOn": "2023-06-01T02:19:36Z",
       "side": 1,
       "message": "These HTML files contain functionality that is not just for testing, so please move them from the tests folder into something more appropriate. Also, would it be possible to extract some of the actual functionality from this HTML code into C++ (or at least a separate Javascript file), so we can unit test it?",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "974fbfd3_c12eb861",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "Almost all of the Javascript code is either directly tied to the DOM or Websockets making unit testing quite difficult. It is impossible to extract this to C++ and unit testing this would require a very complex setup.\n\nThe only exceptions are generation of random strings which is an optional feature that does not warrant setting up a separate test and coverage suite for this demo application.",
+      "parentUuid": "d1981b11_836693dd",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 0
+      },
       "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
@@ -167,6 +353,30 @@
       "writtenOn": "2023-06-01T02:19:36Z",
       "side": 1,
       "message": "List which functions have not been tested besides Add() in a TODO so its easy for other people to know what to write tests for.",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89bc9902_41feea78",
+        "filename": "tests/websocket/websocket_handler_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-01T08:24:04Z",
+      "side": 1,
+      "message": "No other functions have been tested.",
+      "parentUuid": "6b6bfcdc_ee2cdf7d",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 0
+      },
       "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
