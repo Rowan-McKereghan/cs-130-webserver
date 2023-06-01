@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebf45e79_41830b38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "Overall great work! Most comments are in regard to clarification and style, but there are also some things that need to be done for test infrastructure.",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4c95586_04563138",
+        "filename": "src/global_websocket_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "Remove commented code.",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d98877b_8ee0e0b4",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "Remove this TODO",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ae716a8_d49e7ad5",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "Remove this commented code",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4817b94_efda8d6e",
+        "filename": "src/session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "Where do we check if we can handle the correct HTTP version if this is removed? There is functionality in HTTP/2 and HTTP/3 that our server cannot handle.",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c3711d9_ec0da76e",
+        "filename": "src/websocket_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "Could you please make a short bulleted list of these functions and send them to me so i can update the PRD and design doc accordingly when we submit this week?",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a00cfd1a_f50f2e15",
+        "filename": "src/websocket_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "remove commented code",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3837ec1_f9e6f2c3",
+        "filename": "src/websocket_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "where is the strand invoked to ensure that this async code is thread safe?",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1981b11_836693dd",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "These HTML files contain functionality that is not just for testing, so please move them from the tests folder into something more appropriate. Also, would it be possible to extract some of the actual functionality from this HTML code into C++ (or at least a separate Javascript file), so we can unit test it?",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b6bfcdc_ee2cdf7d",
+        "filename": "tests/websocket/websocket_handler_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "List which functions have not been tested besides Add() in a TODO so its easy for other people to know what to write tests for.",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30da8a9b_c9f3161a",
+        "filename": "tests/websocket_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-01T02:19:36Z",
+      "side": 1,
+      "message": "What is broken specifically? A short sentence should suffice to update other contributors.",
+      "revId": "89443a412df2adf7d3f2b784b03562fb6700edc2",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
