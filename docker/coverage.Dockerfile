@@ -8,4 +8,4 @@ WORKDIR /usr/src/projects/ctrl-c-ctrl-v/build_coverage
 
 # Build and test
 RUN cmake -DCMAKE_BUILD_TYPE=Coverage ..
-RUN make coverage
+RUN make coverage -j$(nproc)

@@ -8,7 +8,7 @@ WORKDIR /usr/src/projects/ctrl-c-ctrl-v/build
 
 # Build and test
 RUN cmake ..
-RUN make
+RUN make -j$(nproc)
 RUN ctest --output-on_failure --verbose
 
 ### Deploy container ###
