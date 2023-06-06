@@ -21,7 +21,7 @@ class MockGlobalWebsocketState : public GlobalWebsocketState {
  public:
   MOCK_METHOD(void, Add, (const std::string &, WebsocketHandler *), (override));
   MOCK_METHOD(void, Remove, (const std::string &, WebsocketHandler *), (override));
-  MOCK_METHOD(void, Broadcast, (const std::string &, std::string), (override));
+  MOCK_METHOD(void, Broadcast, (const std::string &, const std::string &), (override));
 };
 
 class WebsocketHandlerTest : public ::testing::Test {

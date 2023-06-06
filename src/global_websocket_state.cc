@@ -35,8 +35,16 @@ void GlobalWebsocketState::Remove(const std::string& channel, WebsocketHandler* 
   channel_.second.erase(session);
 }
 
-void GlobalWebsocketState::Broadcast(const std::string& channel, std::string message) {
-  std::shared_ptr<std::string const> const& message_ = std::make_shared<std::string const>(std::move(message));
+void GlobalWebsocketState::Broadcast(const std::string& channel, const std::string& message) {
+  boost::beast::flat_buffer buffer;
+  auto data = boost::asio::buffer(message.data(), message.size());
+  buffer.commit(boost::asio::buffer_copy(buffer.prepare(message.size()), data));
+  this->Broadcast(channel, buffer);
+}
+
+void GlobalWebsocketState::Broadcast(const std::string& channel, const boost::beast::flat_buffer& message) {
+  std::shared_ptr<boost::beast::flat_buffer const> const& message_ =
+      std::make_shared<boost::beast::flat_buffer const>(std::move(message));
   std::unique_lock<std::shared_mutex> map_lock(map_mutex_);
   auto& channel_ = map_.at(channel);
   map_lock.unlock();
@@ -57,4 +65,15 @@ void GlobalWebsocketState::Broadcast(const std::string& channel, std::string mes
       sp->Broadcast(message_);
     }
   }
+}
+
+std::vector<std::string> GlobalWebsocketState::get_channels() {
+  std::unique_lock<std::shared_mutex> map_lock(map_mutex_);
+  std::vector<std::string> channels;
+  channels.reserve(map_.size());
+  for (auto& p : map_) {
+    channels.emplace_back(p.first);
+  }
+  map_lock.unlock();
+  return channels;
 }
