@@ -35,8 +35,9 @@ void GlobalWebsocketState::Remove(const std::string& channel, WebsocketHandler* 
   channel_.second.erase(session);
 }
 
-void GlobalWebsocketState::Broadcast(const std::string& channel, std::string message) {
-  std::shared_ptr<std::string const> const& message_ = std::make_shared<std::string const>(std::move(message));
+void GlobalWebsocketState::Broadcast(const std::string& channel, const boost::beast::flat_buffer& message) {
+  std::shared_ptr<boost::beast::flat_buffer const> const& message_ =
+      std::make_shared<boost::beast::flat_buffer const>(std::move(message));
   std::unique_lock<std::shared_mutex> map_lock(map_mutex_);
   auto& channel_ = map_.at(channel);
   map_lock.unlock();
