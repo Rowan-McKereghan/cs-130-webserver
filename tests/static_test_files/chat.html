@@ -37,8 +37,12 @@
     }
     var ws = null;
     function showMessage(msg) {
-      messages.innerText += msg + "\n";
-      messages.scrollTop = messages.scrollHeight - messages.clientHeight;
+      var parsedJson = JSON.parse(msg);
+      if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
+        messages.innerText += parsedJson['userName'] + ": " + parsedJson['text'] + "\n";
+        messages.scrollTop = messages.scrollHeight - messages.clientHeight;
+      }
+
     };
     connect.onclick = function () {
       ws = new WebSocket(uri.value + "/" + channel.value);
@@ -59,7 +63,10 @@
       ws.close();
     };
     send.onclick = function () {
-      ws.send(userName.value + ": " + sendMessage.value);
+      ws.send(JSON.stringify({
+        userName: userName.value,
+        text: sendMessage.value
+      }));
       sendMessage.value = getRandomString(10);
     };
     sendMessage.onkeyup = function (ev) {
