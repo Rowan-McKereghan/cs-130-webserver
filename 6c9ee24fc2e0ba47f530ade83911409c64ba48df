@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a53f2954_ffcfd3c9",
+        "filename": "include/global_websocket_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-07T01:07:49Z",
+      "side": 1,
+      "message": "This is simply a convenience method to do just that. I\u0027ll remove it for now since it\u0027s unused.",
+      "parentUuid": "8c6cc13c_336c4b5c",
+      "revId": "6c9ee24fc2e0ba47f530ade83911409c64ba48df",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e39f3b68_2c49bcd2",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-06-07T01:02:30Z",
       "side": 1,
       "message": "this function is never called. why did you need it?",
+      "revId": "6c9ee24fc2e0ba47f530ade83911409c64ba48df",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d81dce05_3b75fc52",
+        "filename": "src/global_websocket_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-07T01:07:49Z",
+      "side": 1,
+      "message": "Good catch, was an artifact from previous work. Will fix.",
+      "parentUuid": "e39f3b68_2c49bcd2",
       "revId": "6c9ee24fc2e0ba47f530ade83911409c64ba48df",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
