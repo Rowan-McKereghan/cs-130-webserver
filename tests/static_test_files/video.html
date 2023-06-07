@@ -1,0 +1,88 @@
+<html>
+
+<body>
+  Server URI: <input class="draw-border" id="uri" size="47" style="margin-bottom: 5px;" type="text">
+  Channel: <input class="draw-border" id="channel" value="test" size="47" style="margin-bottom: 5px;" type="text">
+  <button class="echo-button" id="connect">Connect</button>
+  <button class="echo-button" id="disconnect">Disconnect</button><br>
+  Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;" type="text"><br>
+  <div style="position: relative; display: inline-block;">
+    <img id='remote' style="display: block; max-width: 100%;">
+    <video id='local' autoplay style="position: absolute; bottom: 0; right: 0;"></video>
+  </div>
+  <script>
+    function generateUUID() {
+      let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+      uuid = uuid.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+      return uuid;
+    }
+    const video = document.getElementById('local');
+    const img = document.querySelector('img');
+    const fps = 4;
+
+    navigator.mediaDevices.getUserMedia({ video: { width: 426, height: 240 } }).then((stream) => video.srcObject = stream);
+
+    const getFrame = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      const data = userName.value + canvas.toDataURL('image/png');
+
+      return data;
+    }
+
+    var ws = null;
+
+    connect.onclick = function () {
+      ws = new WebSocket(uri.value + "/" + channel.value);
+      ws.onclose = function (ev) {
+        console.log("Closed Connection");
+      };
+      ws.onerror = function (ev) {
+        console.log(ev);
+      };
+
+      ws.onopen = () => {
+        setInterval(() => {
+          ws.send(getFrame());
+        }, 1000 / fps);
+      }
+
+      ws.onmessage = message => {
+        if (!message.data.startsWith(userName.value)) {
+          console.log('valid')
+          img.src = message.data.substring(36); // We remove the UUID prefix
+        }
+
+        img.onload = () => {
+          video.style.width = img.clientWidth * 0.25 + 'px';
+          video.style.height = img.clientHeight * 0.25 + 'px';
+        };
+      }
+
+    };
+    disconnect.onclick = function () {
+      ws.close();
+    };
+
+    window.addEventListener('load', function () {
+      var input = document.getElementById('uri');
+      var hostname = window.location.hostname;
+      var port = window.location.port;
+      var url = "ws://" + hostname + ':' + port;
+      input.value = url;
+
+      var input = document.getElementById('userName');
+      input.value = generateUUID();
+
+      document.getElementById('connect').click()
+    });
+  </script>
+</body>
+
+</html>
