@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cf524f6_88c5a7ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-07T01:02:30Z",
+      "side": 1,
+      "message": "mostly looks good just a couple q\u0027s about design choices!",
+      "revId": "6c9ee24fc2e0ba47f530ade83911409c64ba48df",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c6cc13c_336c4b5c",
+        "filename": "include/global_websocket_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-07T01:02:30Z",
+      "side": 1,
+      "message": "do we still need this overloaded version of the function if we can send arbitrary bytes in a buffer? why not just convert the string to a flat buffer when sending and vice versa when receiving (messages)?",
+      "revId": "6c9ee24fc2e0ba47f530ade83911409c64ba48df",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e39f3b68_2c49bcd2",
+        "filename": "src/global_websocket_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-07T01:02:30Z",
+      "side": 1,
+      "message": "this function is never called. why did you need it?",
+      "revId": "6c9ee24fc2e0ba47f530ade83911409c64ba48df",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
