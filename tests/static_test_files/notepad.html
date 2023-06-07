@@ -78,11 +78,8 @@
         var textarea = document.getElementById('notepad');
         var cursorsContainer = document.getElementById('cursors-container');
 
-        function showCursor(msg) {
-            var cursorData = msg.substring(9);
-            var cursorInfo = cursorData.split(":");
-            var userName = cursorInfo[0];
-            var location = parseInt(cursorInfo[1]);
+        function showCursor(userName, location) {
+            var location = parseInt(location);
             var cursor = cursors[userName];
 
             if (!cursor) {
@@ -101,8 +98,6 @@
             var col = rows[row].length;
             var topOffset = row * lineHeight;
             var leftOffset = col * parseFloat(getComputedStyle(textarea).fontSize);
-
-            console.log("topOffset: " + topOffset + ", leftOffset: " + leftOffset)
 
             // Adjust cursor position based on the scroll position of the textarea
             var scrollTop = textarea.scrollTop;
@@ -147,22 +142,26 @@
         }
 
         function showMessage(msg) {
-            if (msg.startsWith("location:")) {
-                showCursor(msg);
-            } else if (msg.startsWith("text:")) {
-                notepad.value = msg.substring(5);
+            var parsedJson = JSON.parse(msg);
+            if (parsedJson.hasOwnProperty('location') && parsedJson.hasOwnProperty('userName')) {
+                showCursor(parsedJson['userName'], parsedJson['location']);
+            } else if (parsedJson.hasOwnProperty('text')) {
+                notepad.value = parsedJson['text'];
             }
         }
 
         function sendMessage() {
-            var message = notepad.value;
-            ws.send("text:" + message);
+            ws.send(JSON.stringify({
+                userName: userName.value,
+                text: notepad.value
+            }));
         }
 
         function sendLocation() {
-            var location = getCaretPosition();
-            ws.send("location:" + userName.value + ":" + location);
-            console.log("location:" + userName.value + ":" + location)
+            ws.send(JSON.stringify({
+                userName: userName.value,
+                location: getCaretPosition()
+            }));
         }
 
         function hideCursor(userName) {
@@ -207,7 +206,6 @@
 
 
         function handleNotepadClick() {
-            console.log("handle lick loc")
             var location = getCaretPosition();
             hideCursor(userName.value);
             setCaretPosition(location);
