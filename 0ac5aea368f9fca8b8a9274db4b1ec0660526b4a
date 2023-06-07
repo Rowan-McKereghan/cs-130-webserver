@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb3f4087_7ea0f371",
+        "filename": "tests/static_test_files/notepad.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-07T01:21:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to since this is explicitly non-production code for demonstration. The code is basically identical to before except now it structures things with JSON.\n\nThe sum of the logic in this function is \"if the JSON has two keys, call a function with them, otherwise if it has a 3rd key, use that key\"",
+      "parentUuid": "43710468_17d497df",
+      "revId": "0ac5aea368f9fca8b8a9274db4b1ec0660526b4a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "811ead50_ede18e97",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-06-07T01:08:09Z",
       "side": 1,
       "message": "same as above comment, except i\u0027m not even really sure how we would \"test\" that a video stream is working? suggestions are welcome or just leave it in a comment for the person who has to write the code.",
+      "revId": "0ac5aea368f9fca8b8a9274db4b1ec0660526b4a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "221e7e7e_d93f776e",
+        "filename": "tests/static_test_files/video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000082
+      },
+      "writtenOn": "2023-06-07T01:21:22Z",
+      "side": 1,
+      "message": "Same comment as before. I don\u0027t think there\u0027s much to test here that isn\u0027t inherently tied to so many browser things.\n\nE.g., testing CSS generally requires a whole UI test framework, and it\u0027s very difficult to test say whether the dom was updated properly. I think this is clearly out of scope here.",
+      "parentUuid": "811ead50_ede18e97",
       "revId": "0ac5aea368f9fca8b8a9274db4b1ec0660526b4a",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
