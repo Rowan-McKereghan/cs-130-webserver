@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be5a3d03_7d1d2944",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-07T01:08:09Z",
+      "side": 1,
+      "message": "amazing work! just a couple questions about testing.",
+      "revId": "0ac5aea368f9fca8b8a9274db4b1ec0660526b4a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43710468_17d497df",
+        "filename": "tests/static_test_files/notepad.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-07T01:08:09Z",
+      "side": 1,
+      "message": "I really think we should test this functionality now, since it involves more than simply generating UUIDs and displaying messages in order. It doesn\u0027t have to be with unit tests, but a simple python/bash (or even JS?) script should do. you don\u0027t have to do it since you\u0027ve already written so much, but please at least make a file and add a comment so i can add it to the assignment tracker.",
+      "revId": "0ac5aea368f9fca8b8a9274db4b1ec0660526b4a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "811ead50_ede18e97",
+        "filename": "tests/static_test_files/video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-07T01:08:09Z",
+      "side": 1,
+      "message": "same as above comment, except i\u0027m not even really sure how we would \"test\" that a video stream is working? suggestions are welcome or just leave it in a comment for the person who has to write the code.",
+      "revId": "0ac5aea368f9fca8b8a9274db4b1ec0660526b4a",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
