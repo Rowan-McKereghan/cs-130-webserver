@@ -5,6 +5,7 @@
   Server URI: <input class="draw-border" id="uri" size="47" style="margin-bottom: 5px;" type="text">
   Channel: <input class="draw-border" id="channel" value="test" size="47" style="margin-bottom: 5px;" type="text">
   <button class="echo-button" id="connect">Connect</button>
+  <button class="echo-button" id="connect_public">Connect to public server</button>
   <button class="echo-button" id="disconnect">Disconnect</button><br>
   Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;" type="text"><br>
   <pre id="messages"
@@ -42,9 +43,33 @@
         messages.innerText += parsedJson['userName'] + ": " + parsedJson['text'] + "\n";
         messages.scrollTop = messages.scrollHeight - messages.clientHeight;
       }
-
     };
+
+	function public_onclick () {
+		channel.value = "public";
+		if (ws != null) {
+			ws.close();
+		}
+        ws = new WebSocket(uri.value + "/" + channel.value);
+        ws.onmessage = function (ev) {
+          showMessage(ev.data);
+        };
+        ws.onopen = function (ev) {
+          console.log("Created Connection");
+        };
+        ws.onclose = function (ev) {
+          console.log("Closed Connection");
+        };
+        ws.onerror = function (ev) {
+          console.log(ev);
+        };
+	}
+	
+	
     connect.onclick = function () {
+	  if (ws != null) {
+	  	ws.close();
+	  }
       ws = new WebSocket(uri.value + "/" + channel.value);
       ws.onmessage = function (ev) {
         showMessage(ev.data);
@@ -88,7 +113,8 @@
       var input = document.getElementById('sendMessage');
       input.value = getRandomString(10);
 
-      document.getElementById('connect').click()
+      document.getElementById('connect').click();
+      document.getElementById('connect_public').onclick = public_onclick;
     });
   </script>
 </body>
