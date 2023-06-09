@@ -38,6 +38,7 @@ class WebsocketHandler : public std::enable_shared_from_this<WebsocketHandler> {
   void OnConnect(boost::beast::error_code ec);
   void OnRecieve(boost::beast::error_code ec, std::size_t bytes_transferred);
   void OnWrite(boost::beast::error_code ec, std::size_t bytes_transferred);
+  std::string GetChannel();
 };
 
 #endif

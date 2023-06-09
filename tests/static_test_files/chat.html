@@ -2,121 +2,135 @@
 <html>
 
 <body>
-  Server URI: <input class="draw-border" id="uri" size="47" style="margin-bottom: 5px;" type="text">
-  Channel: <input class="draw-border" id="channel" value="test" size="47" style="margin-bottom: 5px;" type="text">
-  <button class="echo-button" id="connect">Connect</button>
-  <button class="echo-button" id="connect_public">Connect to public server</button>
-  <button class="echo-button" id="disconnect">Disconnect</button><br>
-  Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;" type="text"><br>
-  <pre id="messages"
-    style="width: 600px; height: 400px; white-space: normal; overflow: auto; border: solid 1px #cccccc; margin-bottom: 5px;"></pre>
-  <div style="margin-bottom: 5px;">
-    Message<br>
-    <input class="draw-border" id="sendMessage" size="74" value="">
-    <button class="echo-button" id="send">Send</button>
-  </div>
-  <script>
-    function generateUUID() {
-      let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-      uuid = uuid.replace(/[xy]/g, function (c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-      return uuid;
-    }
-    function getRandomString(length) {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
+	Server URI: <input class="draw-border" id="uri" size="47" style="margin-bottom: 5px;" type="text">
+	Channel: <input class="draw-border" id="channel" value="test" size="47" style="margin-bottom: 5px;" type="text">
+	<button class="echo-button" id="connect">Connect</button>
+	<button class="echo-button" id="connect_public">Connect to public server</button>
+	<button class="echo-button" id="disconnect">Disconnect</button><br>
+	Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;" type="text"><br>
+	<pre id="messages"
+		style="width: 600px; height: 400px; white-space: normal; overflow: auto; border: solid 1px #cccccc; margin-bottom: 5px;"></pre>
+	<div style="margin-bottom: 5px;">
+		Message<br>
+		<input class="draw-border" id="sendMessage" size="74" value="">
+		<button class="echo-button" id="send">Send</button>
+	</div>
+  Available Channels:
+	<div class="draw-border" id="availableServers"></div>
+	<script>
+		let saved_channels = new Set();
 
-      for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters.charAt(randomIndex);
-      }
-
-      return result;
-    }
-    var ws = null;
-    function showMessage(msg) {
-      var parsedJson = JSON.parse(msg);
-      if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
-        messages.innerText += parsedJson['userName'] + ": " + parsedJson['text'] + "\n";
-        messages.scrollTop = messages.scrollHeight - messages.clientHeight;
-      }
-    };
-
-	function public_onclick () {
-		channel.value = "public";
-		if (ws != null) {
-			ws.close();
+		function generateUUID() {
+			let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+			uuid = uuid.replace(/[xy]/g, function (c) {
+				const r = Math.random() * 16 | 0;
+				const v = c === 'x' ? r : (r & 0x3 | 0x8);
+				return v.toString(16);
+			});
+			return uuid;
 		}
-        ws = new WebSocket(uri.value + "/" + channel.value);
-        ws.onmessage = function (ev) {
-          showMessage(ev.data);
-        };
-        ws.onopen = function (ev) {
-          console.log("Created Connection");
-        };
-        ws.onclose = function (ev) {
-          console.log("Closed Connection");
-        };
-        ws.onerror = function (ev) {
-          console.log(ev);
-        };
-	}
-	
-	
-    connect.onclick = function () {
-	  if (ws != null) {
-	  	ws.close();
-	  }
-      ws = new WebSocket(uri.value + "/" + channel.value);
-      ws.onmessage = function (ev) {
-        showMessage(ev.data);
-      };
-      ws.onopen = function (ev) {
-        console.log("Created Connection");
-      };
-      ws.onclose = function (ev) {
-        console.log("Closed Connection");
-      };
-      ws.onerror = function (ev) {
-        console.log(ev);
-      };
-    };
-    disconnect.onclick = function () {
-      ws.close();
-    };
-    send.onclick = function () {
-      ws.send(JSON.stringify({
-        userName: userName.value,
-        text: sendMessage.value
-      }));
-      sendMessage.value = getRandomString(10);
-    };
-    sendMessage.onkeyup = function (ev) {
-      ev.preventDefault();
-      if (ev.keyCode === 13) {
-        send.click();
-      }
-    }
-    window.addEventListener('load', function () {
-      var input = document.getElementById('uri');
-      var hostname = window.location.hostname;
-      var port = window.location.port;
-      var url = "ws://" + hostname + ':' + port;
-      input.value = url;
+		function getRandomString(length) {
+			const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			let result = '';
 
-      var input = document.getElementById('userName');
-      input.value = generateUUID();
+			for (let i = 0; i < length; i++) {
+				const randomIndex = Math.floor(Math.random() * characters.length);
+				result += characters.charAt(randomIndex);
+			}
 
-      var input = document.getElementById('sendMessage');
-      input.value = getRandomString(10);
+			return result;
+		}
+		var ws = null;
+		function showMessage(msg) {
+			var parsedJson = JSON.parse(msg);
+			console.log(parsedJson);
+			if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
+				messages.innerText += parsedJson['userName'] + ": " + parsedJson['text'] + "\n";
+				messages.scrollTop = messages.scrollHeight - messages.clientHeight;
+			}
+			if (parsedJson.hasOwnProperty('available_channels') && parsedJson['available_channels'].constructor.name == "Array") {
+				parsedJson['available_channels'].forEach(function (item, index) {
+					if (!saved_channels.has(item)) {
+						saved_channels.add(item);
+            availableServers.innerText += item + "\n";
+					}
+				})
 
-      document.getElementById('connect').click();
-      document.getElementById('connect_public').onclick = public_onclick;
-    });
-  </script>
+			}
+		};
+
+		function public_onclick() {
+			channel.value = "public";
+			if (ws != null) {
+				ws.close();
+			}
+			ws = new WebSocket(uri.value + "/" + channel.value);
+			ws.onmessage = function (ev) {
+				showMessage(ev.data);
+			};
+			ws.onopen = function (ev) {
+				console.log("Created Connection");
+			};
+			ws.onclose = function (ev) {
+				console.log("Closed Connection");
+			};
+			ws.onerror = function (ev) {
+				console.log(ev);
+			};
+		}
+
+
+		connect.onclick = function () {
+			if (ws != null) {
+				ws.close();
+			}
+			ws = new WebSocket(uri.value + "/" + channel.value);
+			ws.onmessage = function (ev) {
+				showMessage(ev.data);
+			};
+			ws.onopen = function (ev) {
+				console.log("Created Connection");
+			};
+			ws.onclose = function (ev) {
+				console.log("Closed Connection");
+			};
+			ws.onerror = function (ev) {
+				console.log(ev);
+			};
+		};
+		disconnect.onclick = function () {
+			ws.close();
+		};
+		send.onclick = function () {
+			ws.send(JSON.stringify({
+				userName: userName.value,
+				text: sendMessage.value
+			}));
+			sendMessage.value = getRandomString(10);
+		};
+		sendMessage.onkeyup = function (ev) {
+			ev.preventDefault();
+			if (ev.keyCode === 13) {
+				send.click();
+			}
+		}
+		window.addEventListener('load', function () {
+			var input = document.getElementById('uri');
+			var hostname = window.location.hostname;
+			var port = window.location.port;
+			var url = "ws://" + hostname + ':' + port;
+			input.value = url;
+
+			var input = document.getElementById('userName');
+			input.value = generateUUID();
+
+			var input = document.getElementById('sendMessage');
+			input.value = getRandomString(10);
+
+			document.getElementById('connect').click();
+			document.getElementById('connect_public').onclick = public_onclick;
+		});
+	</script>
 </body>
 
 </html>
