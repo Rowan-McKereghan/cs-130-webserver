@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1773bd7d_14323b33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-09T07:01:45Z",
+      "side": 1,
+      "message": "this cl breaks video calling, see comment.",
+      "revId": "c4f948de026805e45c95f0080915925156f915ec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98cf2b57_203f2456",
+        "filename": "src/global_websocket_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-09T07:01:45Z",
+      "side": 1,
+      "message": "i\u0027m pretty sure style-wise we decided on not doing single line if statements.",
+      "revId": "c4f948de026805e45c95f0080915925156f915ec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffdd3828_e205adfd",
+        "filename": "src/global_websocket_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-09T07:01:45Z",
+      "side": 1,
+      "message": "broadcasting twice here breaks video calling because you\u0027re broadcasting a message that isn\u0027t explicitly sent. i\u0027d recommend creating a separate request handler for the new second broadcast to fix this, but I think you might also be able to tweak how video calling works if you\u0027re short on time.",
+      "revId": "c4f948de026805e45c95f0080915925156f915ec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
