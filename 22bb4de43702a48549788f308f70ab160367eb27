@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "931fddec_6049ff13",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-06-09T23:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7482147e_78e2f1d1",
+      "revId": "22bb4de43702a48549788f308f70ab160367eb27",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "022bd8dc_78802639",
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "+1 on this bug appearing, waiting for new patch set",
       "parentUuid": "022bd8dc_78802639",
+      "range": {
+        "startLine": 42,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "22bb4de43702a48549788f308f70ab160367eb27",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "330f7c89_c5ec0029",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-06-09T23:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be9eca1_1df816d5",
       "range": {
         "startLine": 42,
         "startChar": 1,
