@@ -113,3 +113,7 @@ void WebsocketHandler::OnWrite(boost::beast::error_code ec, std::size_t) {
                     });
   }
 }
+
+std::string WebsocketHandler::GetChannel() {
+	return channel_;
+}
