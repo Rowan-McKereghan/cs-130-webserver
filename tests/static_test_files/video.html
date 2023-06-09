@@ -53,11 +53,27 @@
         }, 1000 / fps);
       }
 
-      ws.onmessage = message => {
-        if (!message.data.startsWith(userName.value)) {
-          console.log('valid')
-          img.src = message.data.substring(36); // We remove the UUID prefix
-        }
+      ws.onmessage = e => {
+        const fileReader = new FileReader();
+
+        fileReader.onload = function (event) {
+          const message = event.target.result;
+          try {
+            if (!message.startsWith(userName.value)) {
+              console.log('valid')
+              img.src = message.substring(36); // We remove the UUID prefix
+            }
+
+            img.onload = () => {
+              video.style.width = img.clientWidth * 0.25 + 'px';
+              video.style.height = img.clientHeight * 0.25 + 'px';
+            };
+          } catch (error) {
+            console.log(error);
+          }
+        };
+
+        fileReader.readAsText(e.data);
 
         img.onload = () => {
           video.style.width = img.clientWidth * 0.25 + 'px';
