@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abecb0aa_8f6136d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-09T12:04:19Z",
+      "side": 1,
+      "message": "just a suggestion about merging. I\u0027ll look more in depth later.",
+      "revId": "22bb4de43702a48549788f308f70ab160367eb27",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7482147e_78e2f1d1",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-09T12:04:19Z",
+      "side": 1,
+      "message": "i would pull and merge off of samarth\u0027s CL where he makes some changes to this file to check for UI errors now because there\u0027s probably going to be some when you have to rebase.",
+      "revId": "22bb4de43702a48549788f308f70ab160367eb27",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
