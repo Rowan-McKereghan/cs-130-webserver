@@ -8,7 +8,7 @@
         body {
             height: 100%;
             margin: 0;
-            padding: 0;
+            padding: 4pt;
         }
 
         .cursor {
@@ -26,13 +26,13 @@
 
 <body class="flex flex-col">
     <div class="flex-none">
-        Server URI: <input class="draw-border w-full p-2" id="uri" type="text">
-        Channel: <input class="draw-border w-full p-2" id="channel" value="test" type="text">
-        Your Name: <input class="draw-border w-full p-2" id="userName" type="text">
+        Server URI: <input class="draw-border border-2 w-full p-2" id="uri" type="text" readonly="readonly">
+        Channel: <input class="draw-border border-2 w-full p-2" id="channel" value="test" type="text">
+        Your Name: <input class="draw-border border-2 w-full p-2" id="userName" type="text">
     </div>
     <div class="flex-grow relative">
         <div class="absolute top-0 left-0 w-full h-full pointer-events-none" id="cursors-container"></div>
-        <textarea class="draw-border w-full p-2 h-full resize-y" id="notepad"></textarea>
+        <textarea class="draw-border border-2 w-full p-2 h-full resize-y" id="notepad"></textarea>
     </div>
 
     <script>
