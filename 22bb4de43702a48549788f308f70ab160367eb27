@@ -33,6 +33,29 @@
       "message": "i would pull and merge off of samarth\u0027s CL where he makes some changes to this file to check for UI errors now because there\u0027s probably going to be some when you have to rebase.",
       "revId": "22bb4de43702a48549788f308f70ab160367eb27",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "022bd8dc_78802639",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-06-09T21:28:34Z",
+      "side": 1,
+      "message": "we\u0027ve lost information about who sent what messages with this change",
+      "range": {
+        "startLine": 42,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "22bb4de43702a48549788f308f70ab160367eb27",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
