@@ -7,8 +7,9 @@
   <button class="echo-button" id="connect">Connect</button>
   <button class="echo-button" id="disconnect">Disconnect</button><br>
   Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;" type="text"><br>
-  <pre id="messages"
-    style="width: 600px; height: 400px; white-space: normal; overflow: auto; border: solid 1px #cccccc; margin-bottom: 5px;"></pre>
+  <ul id="messages"
+    style="display: flex; flex-direction: column; width: 100%; height: 400px; white-space: normal; overflow-x: hidden; overflow-y: auto; border: solid 1px; padding-left: 0; padding-right: 0; margin-bottom: 5px;">
+  </ul>
   <div style="margin-bottom: 5px;">
     Message<br>
     <input class="draw-border" id="sendMessage" size="74" value="">
@@ -39,7 +40,18 @@
     function showMessage(msg) {
       var parsedJson = JSON.parse(msg);
       if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
-        messages.innerText += parsedJson['userName'] + ": " + parsedJson['text'] + "\n";
+        let newMsg = document.createElement("li");
+        newMsg.className = "msg";
+        newMsg.style = `position: relative; max-width: 40%; overflow-wrap: break-word; border-radius: 10px; color: white; background-color: ${parsedJson.userName === userName.value ? "#E000B2" : "#777777"}; margin: 15px; padding: 10px; align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"};`;
+        newMsg.innerText = parsedJson['text'] + "\n";
+        let timestamp = document.createElement("p");
+        timestamp.style = "position: absolute; top: 0; color: black; height: 100%; margin: 0; margin-left: 15px; display: flex; align-items: center; ";
+        timestamp.innerText = "00:00";
+        messages.appendChild(newMsg);
+        var l = window.innerWidth - messages.offsetLeft - newMsg.offsetLeft - 10;
+        timestamp.style.left = l + "px"
+        timestamp.className = "ts";
+        newMsg.appendChild(timestamp);
         messages.scrollTop = messages.scrollHeight - messages.clientHeight;
       }
 
@@ -90,6 +102,67 @@
 
       document.getElementById('connect').click()
     });
+
+    var startX, startY;
+
+    var msgs = document.getElementsByClassName('msg');
+
+    messages.addEventListener('mousedown', handleSwipeStart);
+
+    messages.addEventListener('mouseup', handleSwipeEnd);
+
+    // reveals timestamp when swiping left similar to iMessage
+    function handleSwipeStart(e) {
+      startX = e.clientX;
+      startY = e.clientY;
+
+      messages.addEventListener('mousemove', handleSwipeMove);
+    }
+
+    function handleSwipeMove(e) {
+      e.preventDefault();
+
+      var currentX, currentY;
+
+      if (e.type === 'mousemove') {
+        currentX = e.clientX;
+        currentY = e.clientY;
+      }
+
+      var deltaX = currentX - startX;
+      var deltaY = currentY - startY;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < 0) {
+          console.log('Swipe left');
+          Array.from(msgs).forEach(function (msg) {
+            deltaX = Math.max(deltaX, -120);
+            msg.style.transform = 'translate(' + .5 * deltaX + 'px)';
+          });
+        }
+      }
+    }
+
+    function handleSwipeEnd() {
+      Array.from(msgs).forEach(function (msg) {
+        msg.style.transition = 'transform .2s';
+        msg.style.transform = null;
+      });
+      messages.removeEventListener('mousemove', handleSwipeMove);
+    }
+
+    // keep timestamp hidden with correct offset when resizing window
+    function updatePosition() {
+      const msgs = document.getElementsByClassName('msg');
+      const timestamps = document.getElementsByClassName('ts');
+
+      Array.from(timestamps).forEach(function (timestamp, i) {
+        var l = window.innerWidth - messages.offsetLeft - msgs[i].offsetLeft - 10;
+        timestamp.style.left = l + "px";
+      });
+    }
+
+    window.addEventListener('resize', updatePosition);
   </script>
 </body>
 
