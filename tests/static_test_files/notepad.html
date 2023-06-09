@@ -142,15 +142,25 @@
         }
 
         function showMessage(msg) {
-            var parsedJson = JSON.parse(msg);
+            const fileReader = new FileReader();
 
-            // If the message contains location and userName, then it is a cursor message
-            if (parsedJson.hasOwnProperty('location') && parsedJson.hasOwnProperty('userName')) {
-                showCursor(parsedJson['userName'], parsedJson['location']);
-            } else if (parsedJson.hasOwnProperty('text')) {
-                // Otherwise, if it has the text key then it contains the notepad text
-                notepad.value = parsedJson['text'];
-            }
+            fileReader.onload = function (event) {
+                const jsonString = event.target.result;
+                try {
+                    var parsedJson = JSON.parse(jsonString);
+                    // If the message contains location and userName, then it is a cursor message
+                    if (parsedJson.hasOwnProperty('location') && parsedJson.hasOwnProperty('userName')) {
+                        showCursor(parsedJson['userName'], parsedJson['location']);
+                    } else if (parsedJson.hasOwnProperty('text')) {
+                        // Otherwise, if it has the text key then it contains the notepad text
+                        notepad.value = parsedJson['text'];
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+
+            fileReader.readAsText(msg);
         }
 
         function sendMessage() {

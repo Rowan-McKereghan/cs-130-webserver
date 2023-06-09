@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+  <script src="//cdn.rawgit.com/dcodeIO/protobuf.js/6.11.3/dist/protobuf.js"></script>
+</head>
+
 <body>
   Server URI: <input class="draw-border" id="uri" size="47" style="margin-bottom: 5px;" type="text">
   Channel: <input class="draw-border" id="channel" value="test" size="47" style="margin-bottom: 5px;" type="text">
@@ -14,163 +18,243 @@
     Message<br>
     <input class="draw-border" id="sendMessage" size="74" value="">
     <button class="echo-button" id="send">Send</button>
-  </div>
-  <script>
-    function generateUUID() {
-      let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-      uuid = uuid.replace(/[xy]/g, function (c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-      return uuid;
-    }
-    function getRandomString(length) {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
+    <form>
+      <input type="radio" id="json-btn" name="group" checked>
+      <label for="json">JSON</label><br>
 
-      for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters.charAt(randomIndex);
+      <input type="radio" id="protobuf-btn" name="group">
+      <label for="protobuf">Protobuf</label><br>
+    </form>
+    <script>
+      var radioButtons = document.getElementsByName('group');
+      var selectedOption = "json-btn";
+      function handleOptionChange(event) {
+        selectedOption = event.target.id;
+        if (selectedOption === "json-btn") {
+          ws.binaryType = "blob";
+        } else {
+          ws.binaryType = "arraybuffer";
+        }
       }
 
-      return result;
-    }
-    var ws = null;
-    function showMessage(msg) {
-      var parsedJson = JSON.parse(msg);
-      let userName = document.getElementById("userName");
-      if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
-        let newMsg = document.createElement("li");
-        newMsg.className = "msg";
-        newMsg.style = `position: relative; max-width: 40%; overflow-wrap: break-word; border-radius: 10px; color: white; background-color: ${parsedJson.userName === userName.value ? "#E000B2" : "#777777"}; margin-top: 1.4rem; padding: 10px; align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"};`;
-        newMsg.innerText = parsedJson['text'] + "\n";
-        let timestamp = document.createElement("p");
-        timestamp.style = "position: absolute; top: 0; color: black; height: 100%; margin: 0; margin-left: 15px; display: flex; align-items: center; ";
-        timestamp.innerText = "00:00";
-        messages.appendChild(newMsg);
-        var l = window.innerWidth - messages.offsetLeft - newMsg.offsetLeft - 10;
-        timestamp.style.left = l + "px"
-        timestamp.className = "ts";
-        newMsg.appendChild(timestamp);
-        if (parsedJson.userName !== userName.value) {
-          let uname = document.createElement("span");
-          uname.style = "position: absolute; top: -1.1rem; color: black; margin: 0; white-space: nowrap; font-size: 13px";
-          uname.innerText = parsedJson["userName"];
-          newMsg.appendChild(uname)
+      for (var i = 0; i < radioButtons.length; i++) {
+        radioButtons[i].addEventListener('change', handleOptionChange);
+      }
+
+      function generateUUID() {
+        let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+        uuid = uuid.replace(/[xy]/g, function (c) {
+          const r = Math.random() * 16 | 0;
+          const v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+        return uuid;
+      }
+      function getRandomString(length) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          result += characters.charAt(randomIndex);
+        }
+
+        return result;
+      }
+      var ws = null;
+
+      function updateDOM(parsedJson) {
+        let userName = document.getElementById("userName");
+        if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
+          let newMsg = document.createElement("li");
+          newMsg.className = "msg";
+          newMsg.style = `position: relative; max-width: 40%; overflow-wrap: break-word; border-radius: 10px; color: white; background-color: ${parsedJson.userName === userName.value ? "#E000B2" : "#777777"}; margin-top: 1.4rem; padding: 10px; align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"}; margin-left: 15px; margin-right: 15px;;`;
+          newMsg.innerText = parsedJson['text'] + "\n";
+          let timestamp = document.createElement("p");
+          timestamp.style = "position: absolute; top: 0; color: black; height: 100%; margin: 0; margin-left: 15px; display: flex; align-items: center; ";
+          timestamp.innerText = "00:00";
+          messages.appendChild(newMsg);
+          var l = window.innerWidth - messages.offsetLeft - newMsg.offsetLeft - 10;
+          timestamp.style.left = l + "px"
+          timestamp.className = "ts";
+          newMsg.appendChild(timestamp);
+          if (parsedJson.userName !== userName.value) {
+            let uname = document.createElement("span");
+            uname.style = "position: absolute; top: -1.1rem; color: black; margin: 0; white-space: nowrap; font-size: 13px";
+            uname.innerText = parsedJson["userName"];
+            newMsg.appendChild(uname)
+          }
         }
         messages.scrollTop = messages.scrollHeight - messages.clientHeight;
       }
 
-    };
-    connect.onclick = function () {
-      ws = new WebSocket(uri.value + "/" + channel.value);
-      ws.onmessage = function (ev) {
-        showMessage(ev.data);
-      };
-      ws.onopen = function (ev) {
-        console.log("Created Connection");
-      };
-      ws.onclose = function (ev) {
-        console.log("Closed Connection");
-      };
-      ws.onerror = function (ev) {
-        console.log(ev);
-      };
-    };
-    disconnect.onclick = function () {
-      ws.close();
-    };
-    send.onclick = function () {
-      ws.send(JSON.stringify({
-        userName: userName.value,
-        text: sendMessage.value
-      }));
-      sendMessage.value = getRandomString(10);
-    };
-    sendMessage.onkeyup = function (ev) {
-      ev.preventDefault();
-      if (ev.keyCode === 13) {
-        send.click();
-      }
-    }
-    window.addEventListener('load', function () {
-      var input = document.getElementById('uri');
-      var hostname = window.location.hostname;
-      var port = window.location.port;
-      var url = "ws://" + hostname + ':' + port;
-      input.value = url;
+      function showMessage(msg) {
+        var jsonBtn = document.getElementById("json-btn");
+        if (selectedOption === "json-btn") {
+          const fileReader = new FileReader();
 
-      var input = document.getElementById('userName');
-      input.value = generateUUID();
+          fileReader.onload = function (event) {
+            const jsonString = event.target.result;
+            try {
+              var parsedJson = JSON.parse(jsonString);
+              updateDOM(parsedJson);
+            } catch (error) {
+              console.log(error);
+            }
+          };
 
-      var input = document.getElementById('sendMessage');
-      input.value = getRandomString(10);
-
-      document.getElementById('connect').click()
-    });
-
-    var startX, startY;
-
-    var msgs = document.getElementsByClassName('msg');
-
-    messages.addEventListener('mousedown', handleSwipeStart);
-
-    messages.addEventListener('mouseup', handleSwipeEnd);
-
-    // reveals timestamp when swiping left similar to iMessage
-    function handleSwipeStart(e) {
-      startX = e.clientX;
-      startY = e.clientY;
-
-      messages.addEventListener('mousemove', handleSwipeMove);
-    }
-
-    function handleSwipeMove(e) {
-      e.preventDefault();
-
-      var currentX, currentY;
-
-      if (e.type === 'mousemove') {
-        currentX = e.clientX;
-        currentY = e.clientY;
-      }
-
-      var deltaX = currentX - startX;
-      var deltaY = currentY - startY;
-
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX < 0) {
-          console.log('Swipe left');
-          Array.from(msgs).forEach(function (msg) {
-            deltaX = Math.max(deltaX, -120);
-            msg.style.transform = 'translate(' + .5 * deltaX + 'px)';
+          fileReader.readAsText(msg);
+        }
+        else {
+          protobuf.load("msg.proto", function (err, root) {
+            var msgType = root.lookup('msg');
+            var msgStr = msgType.decode(new Uint8Array(msg));
+            var parsedJson = msgStr.toJSON();
+            updateDOM(parsedJson);
           });
         }
+      };
+      connect.onclick = function () {
+        ws = new WebSocket(uri.value + "/" + channel.value);
+        ws.onmessage = function (ev) {
+          showMessage(ev.data);
+        };
+        ws.onopen = function (ev) {
+          console.log("Created Connection");
+        };
+        ws.onclose = function (ev) {
+          console.log("Closed Connection");
+        };
+        ws.onerror = function (ev) {
+          console.log(ev);
+        };
+      };
+      disconnect.onclick = function () {
+        ws.close();
+      };
+      var sendActive = true;
+      send.onclick = function () {
+        console.log(sendActive)
+        if (sendActive) {
+          var jsonBtn = document.getElementById("json-btn");
+          if (selectedOption === "json-btn") {
+            ws.send(JSON.stringify({
+              userName: userName.value,
+              text: sendMessage.value,
+              date: Date.now()
+            }));
+            sendMessage.value = getRandomString(10);
+          } else {
+            sendActive = false;
+            setTimeout(() => {
+              sendActive = true;
+              sendMessage.value = getRandomString(10);
+            }, 1000);
+            // no way to trigger a callback after ws.send(), so we are using 
+            // setTimeout to give websocket time to send message
+            protobuf.load("msg.proto", function (err, root) {
+              var msgType = root.lookup('msg');
+
+              var payload = {
+                userName: userName.value,
+                text: sendMessage.value,
+                timestamp: Date.now()
+              };
+              var result = msgType.verify(payload);
+
+              if (result) throw Error(result);
+
+              var msg = msgType.create(payload);
+              var binMsg = msgType.encode(msg).finish();  // this is the binary protobuf message
+              ws.send(binMsg);
+            });
+          }
+        }
+      };
+
+      sendMessage.onkeyup = function (ev) {
+        ev.preventDefault();
+        if (ev.keyCode === 13) { // enter key
+          send.click();
+        }
       }
-    }
+      window.addEventListener('load', function () {
+        var input = document.getElementById('uri');
+        var hostname = window.location.hostname;
+        var port = window.location.port;
+        var url = "ws://" + hostname + ':' + port;
+        input.value = url;
 
-    function handleSwipeEnd() {
-      Array.from(msgs).forEach(function (msg) {
-        msg.style.transition = 'transform .2s';
-        msg.style.transform = null;
+        var input = document.getElementById('userName');
+        input.value = generateUUID();
+
+        var input = document.getElementById('sendMessage');
+        input.value = getRandomString(10);
+
+        document.getElementById('connect').click()
       });
-      messages.removeEventListener('mousemove', handleSwipeMove);
-    }
 
-    // keep timestamp hidden with correct offset when resizing window
-    function updatePosition() {
-      const msgs = document.getElementsByClassName('msg');
-      const timestamps = document.getElementsByClassName('ts');
+      var startX, startY;
 
-      Array.from(timestamps).forEach(function (timestamp, i) {
-        var l = window.innerWidth - messages.offsetLeft - msgs[i].offsetLeft - 10;
-        timestamp.style.left = l + "px";
-      });
-    }
+      var msgs = document.getElementsByClassName('msg');
 
-    window.addEventListener('resize', updatePosition);
-  </script>
+      messages.addEventListener('mousedown', handleSwipeStart);
+
+      messages.addEventListener('mouseup', handleSwipeEnd);
+
+      // reveals timestamp when swiping left similar to iMessage
+      function handleSwipeStart(e) {
+        startX = e.clientX;
+        startY = e.clientY;
+
+        messages.addEventListener('mousemove', handleSwipeMove);
+      }
+
+      function handleSwipeMove(e) {
+        e.preventDefault();
+
+        var currentX, currentY;
+
+        if (e.type === 'mousemove') {
+          currentX = e.clientX;
+          currentY = e.clientY;
+        }
+
+        var deltaX = currentX - startX;
+        var deltaY = currentY - startY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          if (deltaX < 0) {
+            console.log('Swipe left');
+            Array.from(msgs).forEach(function (msg) {
+              deltaX = Math.max(deltaX, -120);
+              msg.style.transform = 'translate(' + .5 * deltaX + 'px)';
+            });
+          }
+        }
+      }
+
+      function handleSwipeEnd() {
+        Array.from(msgs).forEach(function (msg) {
+          msg.style.transition = 'transform .2s';
+          msg.style.transform = null;
+        });
+        messages.removeEventListener('mousemove', handleSwipeMove);
+      }
+
+      // keep timestamp hidden with correct offset when resizing window
+      function updatePosition() {
+        const msgs = document.getElementsByClassName('msg');
+        const timestamps = document.getElementsByClassName('ts');
+
+        Array.from(timestamps).forEach(function (timestamp, i) {
+          var l = window.innerWidth - messages.offsetLeft - msgs[i].offsetLeft - 10;
+          timestamp.style.left = l + "px";
+        });
+      }
+
+      window.addEventListener('resize', updatePosition);
+    </script>
 </body>
 
 </html>

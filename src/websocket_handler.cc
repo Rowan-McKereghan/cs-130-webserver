@@ -27,7 +27,8 @@ void WebsocketHandler::Run(boost::beast::http::request<boost::beast::http::strin
       std::chrono::minutes(15),  // idle_timeout
       true                       // keep_alive_pings
   });
-
+  // need to send messages as binary to be compatible with Protobufs, otherwise we have utf-8 encoding errors
+  ws_.binary(true);
   ws_.set_option(boost::beast::websocket::stream_base::decorator(
       [](boost::beast::websocket::response_type& res) { res.set(boost::beast::http::field::server, "Webserver"); }));
 
