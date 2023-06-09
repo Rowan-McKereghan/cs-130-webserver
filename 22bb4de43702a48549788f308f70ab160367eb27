@@ -56,6 +56,30 @@
       },
       "revId": "22bb4de43702a48549788f308f70ab160367eb27",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0be9eca1_1df816d5",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-09T22:56:16Z",
+      "side": 1,
+      "message": "+1 on this bug appearing, waiting for new patch set",
+      "parentUuid": "022bd8dc_78802639",
+      "range": {
+        "startLine": 42,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "22bb4de43702a48549788f308f70ab160367eb27",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
