@@ -25,6 +25,7 @@
       <input type="radio" id="protobuf-btn" name="group">
       <label for="protobuf">Protobuf</label><br>
     </form>
+    <input type="file" id="imageInput" accept="image/*">
     <script>
       var radioButtons = document.getElementsByName('group');
       var selectedOption = "json-btn";
@@ -63,26 +64,40 @@
       }
       var ws = null;
 
+      var imageStr = null;
+
       function updateDOM(parsedJson) {
         let userName = document.getElementById("userName");
         if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
           let newMsg = document.createElement("li");
-          newMsg.className = "msg";
-          newMsg.style = `position: relative; max-width: 40%; overflow-wrap: break-word; border-radius: 10px; color: white; background-color: ${parsedJson.userName === userName.value ? "#E000B2" : "#777777"}; margin-top: 1.4rem; padding: 10px; align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"}; margin-left: 15px; margin-right: 15px;;`;
-          newMsg.innerText = parsedJson['text'] + "\n";
-          let timestamp = document.createElement("p");
-          timestamp.style = "position: absolute; top: 0; color: black; height: 100%; margin: 0; margin-left: 15px; display: flex; align-items: center; ";
-          timestamp.innerText = "00:00";
-          messages.appendChild(newMsg);
-          var l = window.innerWidth - messages.offsetLeft - newMsg.offsetLeft - 10;
-          timestamp.style.left = l + "px"
-          timestamp.className = "ts";
-          newMsg.appendChild(timestamp);
+          let image = document.createElement("img");
+          let uname = document.createElement("span");
+          if (parsedJson['text'].length > 0) {
+            newMsg.className = "msg";
+            newMsg.style = `position: relative; max-width: 40%; overflow-wrap: break-word; border-radius: 10px; color: white; background-color: ${parsedJson.userName === userName.value ? "#E000B2" : "#777777"}; margin-top: 1.4rem; padding: 10px; align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"}; margin-left: 15px; margin-right: 15px;`;
+            newMsg.innerText = parsedJson['text'] + "\n";
+            let timestamp = document.createElement("p");
+            timestamp.style = "position: absolute; top: 0; color: black; height: 100%; margin: 0; margin-left: 15px; display: flex; align-items: center; ";
+            timestamp.innerText = "00:00";
+            messages.appendChild(newMsg);
+            var l = window.innerWidth - messages.offsetLeft - newMsg.offsetLeft - 10;
+            timestamp.style.left = l + "px"
+            timestamp.className = "ts";
+            newMsg.appendChild(timestamp);
+          }
+          if (parsedJson['image'] !== null) {
+            image.style = `align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"};`
+            image.src = 'data:image/jpg;base64,' + parsedJson['image'];
+            messages.appendChild(image);
+          }
           if (parsedJson.userName !== userName.value) {
-            let uname = document.createElement("span");
             uname.style = "position: absolute; top: -1.1rem; color: black; margin: 0; white-space: nowrap; font-size: 13px";
             uname.innerText = parsedJson["userName"];
-            newMsg.appendChild(uname)
+            if (parsedJson['text'].length > 0) {
+              newMsg.appendChild(uname);
+            } else if (parsedJson['image'] !== null) {
+              messages.appendChild(uname);
+            }
           }
         }
         messages.scrollTop = messages.scrollHeight - messages.clientHeight;
@@ -134,43 +149,75 @@
       };
       var sendActive = true;
       send.onclick = function () {
-        console.log(sendActive)
         if (sendActive) {
-          var jsonBtn = document.getElementById("json-btn");
-          if (selectedOption === "json-btn") {
-            ws.send(JSON.stringify({
-              userName: userName.value,
-              text: sendMessage.value,
-              date: Date.now()
-            }));
-            sendMessage.value = getRandomString(10);
+          var fileInput = document.getElementById('imageInput');
+          var file = fileInput.files[0]; // Access the first selected file
+
+          if (file) {
+            // https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
+            function _arrayBufferToBase64(buffer) {
+              var binary = '';
+              var bytes = new Uint8Array(buffer);
+              var len = bytes.byteLength;
+              for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+              }
+              return window.btoa(binary);
+            }
+
+            // You can also use FileReader to read the file content
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              var fileContent = e.target.result;
+              imageStr = _arrayBufferToBase64(fileContent);
+              formatAndSend();
+              // Perform operations with the file content
+            };
+            reader.readAsArrayBuffer(file); // Read file as array buffer
           } else {
-            sendActive = false;
-            setTimeout(() => {
-              sendActive = true;
-              sendMessage.value = getRandomString(10);
-            }, 1000);
-            // no way to trigger a callback after ws.send(), so we are using 
-            // setTimeout to give websocket time to send message
-            protobuf.load("msg.proto", function (err, root) {
-              var msgType = root.lookup('msg');
-
-              var payload = {
-                userName: userName.value,
-                text: sendMessage.value,
-                timestamp: Date.now()
-              };
-              var result = msgType.verify(payload);
-
-              if (result) throw Error(result);
-
-              var msg = msgType.create(payload);
-              var binMsg = msgType.encode(msg).finish();  // this is the binary protobuf message
-              ws.send(binMsg);
-            });
+            formatAndSend();
           }
         }
+        fileInput.value = null;
       };
+
+      function formatAndSend() {
+        if (selectedOption === "json-btn") {
+          ws.send(JSON.stringify({
+            userName: userName.value,
+            text: sendMessage.value,
+            date: Date.now(),
+            image: imageStr
+          }));
+          imageStr = null;
+          sendMessage.value = getRandomString(10);
+        } else {
+          sendActive = false;
+          setTimeout(() => {
+            sendActive = true;
+            sendMessage.value = getRandomString(10);
+          }, 1000);
+          // no way to trigger a callback after ws.send(), so we are using 
+          // setTimeout to give websocket time to send message
+          protobuf.load("msg.proto", function (err, root) {
+            var msgType = root.lookup('msg');
+            var payload = {
+              userName: userName.value,
+              text: sendMessage.value,
+              timestamp: Date.now(),
+              image: imageStr
+            };
+            imageStr = null;
+            var result = msgType.verify(payload);
+
+            if (result) throw Error(result);
+
+            var msg = msgType.create(payload);
+            var binMsg = msgType.encode(msg).finish();  // this is the binary protobuf message
+            ws.send(binMsg);
+          });
+        }
+      }
 
       sendMessage.onkeyup = function (ev) {
         ev.preventDefault();
@@ -225,7 +272,6 @@
 
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
           if (deltaX < 0) {
-            console.log('Swipe left');
             Array.from(msgs).forEach(function (msg) {
               deltaX = Math.max(deltaX, -120);
               msg.style.transform = 'translate(' + .5 * deltaX + 'px)';
