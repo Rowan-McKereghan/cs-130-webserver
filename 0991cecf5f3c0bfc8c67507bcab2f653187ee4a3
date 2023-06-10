@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09549074_2ec07e1a",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-06-10T05:40:51Z",
+      "side": 1,
+      "message": "Add a sentence about how certain privileged directories cannot be used as root directories",
+      "revId": "0991cecf5f3c0bfc8c67507bcab2f653187ee4a3",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
