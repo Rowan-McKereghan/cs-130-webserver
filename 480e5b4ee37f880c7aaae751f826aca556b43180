@@ -53,6 +53,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1caa270_ef043477",
+        "filename": "src/websocket_info_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T04:46:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1302a2a7_0dedb036",
+      "revId": "480e5b4ee37f880c7aaae751f826aca556b43180",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29fe09ec_97502522",
