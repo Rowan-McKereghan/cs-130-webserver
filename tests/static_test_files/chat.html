@@ -25,6 +25,7 @@
       <input type="radio" id="protobuf-btn" name="group">
       <label for="protobuf">Protobuf</label><br>
     </form>
+    <input type="file" id="imageInput" accept="image/*">
     <button class="echo-button" id="refreshServers">Refresh available servers</button>
     Available Servers
     <div id="servers">
@@ -67,26 +68,40 @@
         }
         var ws = null;
 
+        var imageStr = null;
+
         function updateDOM(parsedJson) {
           let userName = document.getElementById("userName");
           if (parsedJson.hasOwnProperty('text') && parsedJson.hasOwnProperty('userName')) {
             let newMsg = document.createElement("li");
-            newMsg.className = "msg";
-            newMsg.style = `position: relative; max-width: 40%; overflow-wrap: break-word; border-radius: 10px; color: white; background-color: ${parsedJson.userName === userName.value ? "#E000B2" : "#777777"}; margin-top: 1.4rem; padding: 10px; align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"}; margin-left: 15px; margin-right: 15px;;`;
-            newMsg.innerText = parsedJson['text'] + "\n";
-            let timestamp = document.createElement("p");
-            timestamp.style = "position: absolute; top: 0; color: black; height: 100%; margin: 0; margin-left: 15px; display: flex; align-items: center; ";
-            timestamp.innerText = "00:00";
-            messages.appendChild(newMsg);
-            var l = window.innerWidth - messages.offsetLeft - newMsg.offsetLeft - 10;
-            timestamp.style.left = l + "px"
-            timestamp.className = "ts";
-            newMsg.appendChild(timestamp);
+            let image = document.createElement("img");
+            let uname = document.createElement("span");
+            if (parsedJson['text'].length > 0) {
+              newMsg.className = "msg";
+              newMsg.style = `position: relative; max-width: 40%; overflow-wrap: break-word; border-radius: 10px; color: white; background-color: ${parsedJson.userName === userName.value ? "#E000B2" : "#777777"}; margin-top: 1.4rem; padding: 10px; align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"}; margin-left: 15px; margin-right: 15px;`;
+              newMsg.innerText = parsedJson['text'] + "\n";
+              let timestamp = document.createElement("p");
+              timestamp.style = "position: absolute; top: 0; color: black; height: 100%; margin: 0; margin-left: 15px; display: flex; align-items: center; ";
+              timestamp.innerText = "00:00";
+              messages.appendChild(newMsg);
+              var l = window.innerWidth - messages.offsetLeft - newMsg.offsetLeft - 10;
+              timestamp.style.left = l + "px"
+              timestamp.className = "ts";
+              newMsg.appendChild(timestamp);
+            }
+            if (parsedJson['image'] !== null) {
+              image.style = `align-self: ${parsedJson.userName === userName.value ? "flex-end" : "flex-start"};`
+              image.src = 'data:image/jpg;base64,' + parsedJson['image'];
+              messages.appendChild(image);
+            }
             if (parsedJson.userName !== userName.value) {
-              let uname = document.createElement("span");
               uname.style = "position: absolute; top: -1.1rem; color: black; margin: 0; white-space: nowrap; font-size: 13px";
               uname.innerText = parsedJson["userName"];
-              newMsg.appendChild(uname)
+              if (parsedJson['text'].length > 0) {
+                newMsg.appendChild(uname);
+              } else if (parsedJson['image'] !== null) {
+                messages.appendChild(uname);
+              }
             }
           }
           messages.scrollTop = messages.scrollHeight - messages.clientHeight;
@@ -259,7 +274,6 @@
 
           if (Math.abs(deltaX) > Math.abs(deltaY)) {
             if (deltaX < 0) {
-              console.log('Swipe left');
               Array.from(msgs).forEach(function (msg) {
                 deltaX = Math.max(deltaX, -120);
                 msg.style.transform = 'translate(' + .5 * deltaX + 'px)';
