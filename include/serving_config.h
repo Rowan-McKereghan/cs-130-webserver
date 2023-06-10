@@ -1,4 +1,3 @@
-
 #ifndef SERVING_CONFIG_H
 #define SERVING_CONFIG_H
 
@@ -8,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include "global_websocket_state.h"
 #include <vector>
 
 #include "config_parser.h"
@@ -22,7 +22,7 @@ struct ServingConfig {
 
   int port_;
   bool SetPortNumber(NginxConfig* config);
-  int SetPaths(NginxConfig* config);
+  int SetPaths(NginxConfig* config, std::shared_ptr<GlobalWebsocketState>);
 
  private:
   int ValidatePaths();

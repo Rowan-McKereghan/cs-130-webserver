@@ -18,6 +18,7 @@ class GlobalWebsocketState {
   virtual void Add(const std::string& channel, WebsocketHandler* session);
   virtual void Remove(const std::string& channel, WebsocketHandler* session);
   virtual void Broadcast(const std::string& channel, const boost::beast::flat_buffer& message);
+  virtual std::vector<std::string> GetChannels();
 
  private:
   std::unordered_map<std::string, std::pair<std::unique_ptr<std::shared_mutex>, std::unordered_set<WebsocketHandler*>>>
