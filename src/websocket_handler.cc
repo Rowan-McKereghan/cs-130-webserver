@@ -51,7 +51,8 @@ void WebsocketHandler::OnConnect(boost::beast::error_code ec) {
   }
 
   LOG(info) << "Connect Handshake from IP: " << ws_.next_layer().remote_endpoint().address().to_string()
-            << " On Thread ID: " << std::this_thread::get_id() << " Channel: " << this->channel_;
+            << " Channel: " << this->channel_;
+            // << " On Thread ID: " << std::this_thread::get_id() << " Channel: " << this->channel_;
 
   state_->Add(this->channel_, this);
   ws_.async_read(incoming_buffer_,
@@ -76,7 +77,8 @@ void WebsocketHandler::OnRecieve(boost::beast::error_code ec, std::size_t) {
 
 void WebsocketHandler::Broadcast(std::shared_ptr<boost::beast::flat_buffer const> const& message) {
   LOG(info) << "Broadcasting message from IP: " << ws_.next_layer().remote_endpoint().address().to_string()
-            << " On Thread ID: " << std::this_thread::get_id() << " Channel: " << this->channel_;
+            << " Channel: " << this->channel_;
+            // << " On Thread ID: " << std::this_thread::get_id << " Channel: " << this->channel_;
   // Post to strand to prevent concurrent access
   boost::asio::post(strand_, [self = shared_from_this(), message]() { self->OnBroadcast(message); });
 }
