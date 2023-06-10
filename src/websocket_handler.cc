@@ -35,7 +35,7 @@ void WebsocketHandler::Run(boost::beast::http::request<boost::beast::http::strin
   this->channel_ = req.target().to_string();
 
   ws_.async_accept(req, [self = shared_from_this()](boost::system::error_code ec) { self->OnConnect(ec); });
-}
+} 
 
 void WebsocketHandler::LogInternalError(boost::beast::error_code ec, const std::string& message) {
   // Normal operation
