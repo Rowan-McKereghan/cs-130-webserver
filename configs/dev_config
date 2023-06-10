@@ -19,4 +19,8 @@ server {
     location /integration_test TestHandler {
         
     }
+	
+	location /websocket_info WebsocketInfoHandler {
+		
+	}
 }

@@ -56,12 +56,13 @@ int main(int argc, char* argv[]) {
       LOG(info) << "Config file parsed successfully. Port: " << serving_config.port_;
     }
 
-    if (serving_config.SetPaths(&config)) {
+    std::shared_ptr<GlobalWebsocketState> state_(std::make_shared<GlobalWebsocketState>());
+
+    if (serving_config.SetPaths(&config, state_)) {
       LOG(fatal) << "The config file contains invalid static or echoing paths";
       return 1;
     }
 
-    std::shared_ptr<GlobalWebsocketState> state_(std::make_shared<GlobalWebsocketState>());
 
     // Capture serving_config by value to avoid having to store it in the server
     // obj

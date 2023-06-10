@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 #include "logger.h"
 #include "websocket_handler.h"
@@ -58,4 +59,18 @@ void GlobalWebsocketState::Broadcast(const std::string& channel, const boost::be
       sp->Broadcast(message_);
     }
   }
+}
+
+std::vector<std::string> GlobalWebsocketState::GetChannels() {
+  std::unique_lock<std::shared_mutex> map_lock(map_mutex_);
+  std::vector<std::string> channels;
+  for (auto it = map_.begin(); it != map_.end(); it++) {
+	std::string channel = it->first;
+    if (channel.size() > 1) {
+      channel.erase(0, 1);
+    }
+    channel = "\"" + channel + "\"";
+    channels.push_back(channel);
+  }
+  return channels;
 }
