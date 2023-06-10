@@ -8,22 +8,14 @@
 #include "echo_handler.h"
 #include "echo_handler_factory.h"
 #include "gtest/gtest.h"
+#include "not_found_handler.h"
+#include "not_found_handler_factory.h"
+#include "static_handler.h"
+#include "static_handler_factory.h"
 
 TEST(RequestDispatcherTest, RouteRequest) {
-  // std::string req_str =
-  //     "GET /echo2 HTTP/1.1\r\n"
-  //     "Host: localhost\r\n"
-  //     "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) "
-  //     "Gecko/20100101 Firefox/108.0\r\n"
-  //     "Accept: "
-  //     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/"
-  //     "*;q=0.8\r\n"
-  //     "Accept-Language: en-US,en;q=0.5\r\n"
-  //     "Accept-Encoding: gzip, deflate\r\n"
-  //     "Connection: keep-alive\r\n"
-  //     "\r\n";
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
-                                                                   "/echo2",                       // URI
+                                                                   "/echo2?ignore=param",          // URI
                                                                    11};                            // HTTP 1.1
   req.set(boost::beast::http::field::host, "localhost");
   req.set(boost::beast::http::field::user_agent,
@@ -39,7 +31,6 @@ TEST(RequestDispatcherTest, RouteRequest) {
   EchoHandlerFactory* echo_handler_factory = new EchoHandlerFactory();
   ServingConfig serving_config{                                      // echo_paths
                                {{"/echo2", echo_handler_factory}}};  // handler_factories
-  // serving_config.handler_factories["/echo2"] = new EchoHandlerFactory();
   req_dispatcher.RouteRequest(req, res, serving_config, "127.0.0.1");
   boost::beast::http::dynamic_body::value_type req_body;
   boost::beast::ostream(req_body) << req;
@@ -49,18 +40,6 @@ TEST(RequestDispatcherTest, RouteRequest) {
 }
 
 TEST(RequestParserTest, InvalidRequestType) {
-  // std::string req_str =
-  //     "GET /invalid_uri HTTP/1.1\r\n"
-  //     "Host: localhost\r\n"
-  //     "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) "
-  //     "Gecko/20100101 Firefox/108.0\r\n"
-  //     "Accept: "
-  //     "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,"
-  //     "*;q=0.8\r\n"
-  //     "Accept-Language: en-US,en;q=0.5\r\n"
-  //     "Accept-Encoding: gzip, deflate\n"
-  //     "Connection: keep-alive\r\n"
-  //     "\r\n";
   boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
                                                                    "/invalid_uri",                 // URI
                                                                    11};                            // HTTP 1.1
@@ -81,4 +60,50 @@ TEST(RequestParserTest, InvalidRequestType) {
   EXPECT_EQ(res.result_int(), BAD_REQUEST);
   EXPECT_EQ(res.version(), 11);
   delete echo_handler_factory;
+}
+
+// Test URI without a leading slash
+TEST(RequestDispatcherTest, BaseURIRequestTest) {
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "",                             // URI
+                                                                   11};                            // HTTP 1.1
+
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  RequestDispatcher req_dispatcher;
+  NotFoundHandlerFactory* not_found_handler_factory = new NotFoundHandlerFactory();
+  ServingConfig serving_config{                                      // echo_paths
+                               {{"/", not_found_handler_factory}}};  // handler_factories
+  req_dispatcher.RouteRequest(req, res, serving_config, "127.0.0.1");
+  EXPECT_EQ(res.result_int(), NOT_FOUND);
+  EXPECT_EQ(res.version(), 11);
+}
+
+// Test URI without a leading slash
+TEST(RequestDispatcherTest, WrongHTTPVersionRequestTest) {
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "",                             // URI
+                                                                   20};                            // HTTP 2.0
+
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  RequestDispatcher req_dispatcher;
+  ServingConfig serving_config{{}};  // handler_factories
+  req_dispatcher.RouteRequest(req, res, serving_config, "127.0.0.1");
+  EXPECT_EQ(res.result_int(), BAD_REQUEST);
+  EXPECT_EQ(res.version(), 11);
+}
+
+// Test Longest Prefix matching (e.g., for static files)
+TEST(RequestDispatcherTest, LongPathMatchingRequestTest) {
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/static//index.html",          // URI
+                                                                   11};                            // HTTP 1.1
+
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  RequestDispatcher req_dispatcher;
+  NginxConfig config;
+  StaticHandlerFactory* static_handler_factory = new StaticHandlerFactory(&config);
+  ServingConfig serving_config{{{"/static", static_handler_factory}}};  // handler_factories
+  req_dispatcher.RouteRequest(req, res, serving_config, "127.0.0.1");
+  EXPECT_EQ(res.result_int(), NOT_FOUND);
+  EXPECT_EQ(res.version(), 11);
 }
