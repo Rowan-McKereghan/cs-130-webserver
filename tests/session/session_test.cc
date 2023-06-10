@@ -1,8 +1,5 @@
 #include "session.h"
 
-#include <boost/asio.hpp>
-#include <boost/beast/http.hpp>
-#include <boost/filesystem.hpp>
 #include <iostream>
 
 #include "gmock/gmock.h"

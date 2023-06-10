@@ -21,7 +21,7 @@
 
 Session::Session(boost::asio::io_service& io_service, ServingConfig serving_config,
                  std::shared_ptr<GlobalWebsocketState> state)
-    : socket_(io_service),
+   : socket_(io_service),
       strand_(io_service),
       _timer(io_service),
       io_service_(io_service),

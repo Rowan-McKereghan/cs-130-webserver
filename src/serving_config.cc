@@ -24,6 +24,7 @@
 #include "privileged_dirs.h"
 #include "sleep_handler_factory.h"
 #include "static_handler_factory.h"
+#include "websocket_info_handler_factory.h"
 
 bool IsOnlyDigits(const std::string& str) {
   return std::all_of(str.begin(), str.end(), [](char c) { return std::isdigit(c); });
@@ -64,7 +65,7 @@ static bool IsValidURI(const std::string& uri) {
   return boost::regex_match(uri, uri_regex);
 }
 
-int ServingConfig::SetPaths(NginxConfig* config) {
+int ServingConfig::SetPaths(NginxConfig* config, std::shared_ptr<GlobalWebsocketState> state) {
   if (config != nullptr) {  // handle empty config
     /* need to look for this structure:
     server {
@@ -113,7 +114,9 @@ int ServingConfig::SetPaths(NginxConfig* config) {
                 } else if (handler_name == "TestHandler") {
                   // add other test endpoints as subdirectories when necessary
                   handler_factories_[serving_path + "/sleep"] = new SleepHandlerFactory();
-                }
+                } else if (handler_name == "WebsocketInfoHandler") {
+					handler_factories_[serving_path] = new WebsocketInfoHandlerFactory(state);
+				}
               }
             }
           }
