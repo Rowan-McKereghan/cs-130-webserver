@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34d0f084_2b60cb0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T04:34:58Z",
+      "side": 1,
+      "message": "just a couple nits!",
+      "revId": "480e5b4ee37f880c7aaae751f826aca556b43180",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7322d7d_76f60d6c",
+        "filename": "src/websocket_info_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T04:34:58Z",
+      "side": 1,
+      "message": "we\u0027re going to need to unit test this new handler. if evan is going to do it, make a file and add a comment (we are already slightly below 80% test coverage)",
+      "revId": "480e5b4ee37f880c7aaae751f826aca556b43180",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29fe09ec_97502522",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T04:34:58Z",
+      "side": 1,
+      "message": "can you add this new feature to the PRD / design doc at some point? you can mark this resolved i just wanted to give you a heads up.",
+      "revId": "480e5b4ee37f880c7aaae751f826aca556b43180",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
