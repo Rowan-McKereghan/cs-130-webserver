@@ -35,6 +35,24 @@
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dc58397_e25aeeae",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-06-10T02:28:37Z",
+      "side": 1,
+      "message": "I added a debounce mechanism when sending messages via protobufs to hopefully alleviate this issue, althought there isn\u0027t a way to trigger a callback on ws.send(), which is the current problem since it is always async.",
+      "parentUuid": "e477a84e_124c937b",
+      "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a6e2fdf_93c32bcf",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-06-10T00:13:53Z",
       "side": 1,
       "message": "if the message is too long it sends two messages. intuition tells me this error is here but it might also be in chat.html",
+      "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cf57a1b_9ff48047",
+        "filename": "tests/static_test_files/notepad.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-06-10T02:28:37Z",
+      "side": 1,
+      "message": "I can\u0027t reproduce this unfortunately (was able to send the entire declaration of independence in one go), although maybe the debouncer fixed this",
+      "parentUuid": "4a6e2fdf_93c32bcf",
       "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
