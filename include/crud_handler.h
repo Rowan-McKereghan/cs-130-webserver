@@ -22,7 +22,7 @@ class CrudHandler : public I_RequestHandler {
   int GetNextID(std::string entity);
 
   // returns the length of file_path_ (ie /root/entity/ID is length 3, /root/entity is length 2, etc.)
-//  int GetPathLen();
+  //  int GetPathLen();
 
   // Returns a pair with the entity name ("/root/entity") and the ID number in the request
   // If the request didn't include an ID returns -1 for the ID value
@@ -33,11 +33,10 @@ class CrudHandler : public I_RequestHandler {
   StatusCode HandleGet(http::response<http::dynamic_body>& res);
   StatusCode HandlePut(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
   StatusCode HandleDelete(http::response<http::dynamic_body>& res);
-
- private:
   // fills fields in res according to status_code (assumes status code is not OK)
   void ReturnError(StatusCode status_code, http::response<http::dynamic_body>& res);
 
+ private:
   // helper for HandleRequest to select the correct Handle___ method
   StatusCode HandleMethod(const http::request<http::string_body> req, http::response<http::dynamic_body>& res);
 
