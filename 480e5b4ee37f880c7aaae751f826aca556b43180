@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1302a2a7_0dedb036",
+        "filename": "src/websocket_info_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-06-10T04:45:41Z",
+      "side": 1,
+      "message": "I\u0027m going to add tests to this after we merge this in but I can create a test file.",
+      "parentUuid": "e7322d7d_76f60d6c",
+      "revId": "480e5b4ee37f880c7aaae751f826aca556b43180",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29fe09ec_97502522",
         "filename": "tests/static_test_files/chat.html",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2023-06-10T04:34:58Z",
       "side": 1,
       "message": "can you add this new feature to the PRD / design doc at some point? you can mark this resolved i just wanted to give you a heads up.",
+      "revId": "480e5b4ee37f880c7aaae751f826aca556b43180",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53c96bf5_8d23b4b7",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-06-10T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29fe09ec_97502522",
       "revId": "480e5b4ee37f880c7aaae751f826aca556b43180",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
