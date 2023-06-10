@@ -33,6 +33,24 @@
       "message": "rebase off of samarth\u0027s commit once it\u0027s merged.",
       "revId": "afd3800fea06472ec1d62d88d858ccae63bc7746",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "904fc373_8dab0d6b",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000561
+      },
+      "writtenOn": "2023-06-10T05:45:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1f6f1f3_081d2b30",
+      "revId": "afd3800fea06472ec1d62d88d858ccae63bc7746",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
