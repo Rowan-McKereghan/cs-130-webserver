@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abc887f8_eac4b68e",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000490
+      },
+      "writtenOn": "2023-06-10T06:21:30Z",
+      "side": 1,
+      "message": "This is extraneous and is causing the code to fail.",
+      "range": {
+        "startLine": 269,
+        "startChar": 6,
+        "endLine": 269,
+        "endChar": 10
+      },
+      "revId": "1d91e069d59721e5aa3f7f4670f10e83998d40e5",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
