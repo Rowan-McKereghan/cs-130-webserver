@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7998d38_c7fb3ed1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T00:13:53Z",
+      "side": 1,
+      "message": "some bugs in the chat i caught.",
+      "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e477a84e_124c937b",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T00:13:53Z",
+      "side": 1,
+      "message": "Somewhere in this file is an bug, when I switch to protobuf in the UI and try to send a chat message, it sends the auto-generated message ahead of time instead of actually sending what is in the chat box. (i.e., I hit send, and an auto-generated message appears in the send box replacing my message, and also appears on the screen as a sent message).",
+      "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a6e2fdf_93c32bcf",
+        "filename": "tests/static_test_files/notepad.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T00:13:53Z",
+      "side": 1,
+      "message": "if the message is too long it sends two messages. intuition tells me this error is here but it might also be in chat.html",
+      "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
