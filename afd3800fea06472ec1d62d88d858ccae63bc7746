@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7f1c6ac_088a71a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T04:36:08Z",
+      "side": 1,
+      "message": "need to merge/rebase bc i\u0027m going to approve samarth\u0027s CL in a few minutes.",
+      "revId": "afd3800fea06472ec1d62d88d858ccae63bc7746",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1f6f1f3_081d2b30",
+        "filename": "tests/static_test_files/chat.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T04:36:08Z",
+      "side": 1,
+      "message": "rebase off of samarth\u0027s commit once it\u0027s merged.",
+      "revId": "afd3800fea06472ec1d62d88d858ccae63bc7746",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    }
+  ]
+}
