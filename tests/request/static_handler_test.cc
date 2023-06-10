@@ -61,6 +61,58 @@ TEST(StaticHandler, StaticTestPngFile) {
   EXPECT_EQ(it->value().to_string(), "image/png");
   EXPECT_EQ(res.version(), 11);
   EXPECT_EQ(res.result_int(), OK);
+
+}
+
+TEST(StaticHandler, StaticTestHTMLFile) {
+  string req_data = "Irrelevant stuff in request body";
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/static/sample.html",           // URI
+                                                                   11};                            // HTTP 1.1
+  req.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  std::string root = "./static_test_files/sample.html";
+  StaticHandler handler(root);
+  handler.SetHeaders(req, res);
+  auto it = res.find(boost::beast::http::field::content_type);
+  EXPECT_NE(it, res.end());
+  EXPECT_EQ(it->value().to_string(), "text/html");
+  EXPECT_EQ(res.version(), 11);
+  EXPECT_EQ(res.result_int(), OK);
+}
+
+TEST(StaticHandler, StaticTestZipFile) {
+  string req_data = "Irrelevant stuff in request body";
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/static/sample.zip",           // URI
+                                                                   11};                            // HTTP 1.1
+  req.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  std::string root = "./static_test_files/sample.png";
+  StaticHandler handler(root);
+  handler.SetHeaders(req, res);
+  auto it = res.find(boost::beast::http::field::content_type);
+  EXPECT_NE(it, res.end());
+  EXPECT_EQ(it->value().to_string(), "image/png");
+  EXPECT_EQ(res.version(), 11);
+  EXPECT_EQ(res.result_int(), OK);
+}
+
+TEST(StaticHandler, StaticTestPDFFile) {
+  string req_data = "Irrelevant stuff in request body";
+  boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::get,  // GET
+                                                                   "/static/sample.pdf",           // URI
+                                                                   11};                            // HTTP 1.1
+  req.body() = req_data;
+  boost::beast::http::response<boost::beast::http::dynamic_body> res;
+  std::string root = "./static_test_files/sample.pdf";
+  StaticHandler handler(root);
+  handler.SetHeaders(req, res);
+  auto it = res.find(boost::beast::http::field::content_type);
+  EXPECT_NE(it, res.end());
+  EXPECT_EQ(it->value().to_string(), "application/pdf");
+  EXPECT_EQ(res.version(), 11);
+  EXPECT_EQ(res.result_int(), OK);
 }
 
 TEST(StaticHandler, TestStaticHandlerHandleRequestTxtFile) {
