@@ -86,6 +86,24 @@
       "parentUuid": "4a6e2fdf_93c32bcf",
       "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
       "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dabfb7f_47f6f17b",
+        "filename": "tests/static_test_files/notepad.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000509
+      },
+      "writtenOn": "2023-06-10T02:35:12Z",
+      "side": 1,
+      "message": "I think the debounce did fix this because it\u0027s gone on my end too.",
+      "parentUuid": "4cf57a1b_9ff48047",
+      "revId": "21fcda1381882ee4ebf5a4a88cc11d0cedb8beec",
+      "serverId": "8946f097-e5f6-4bfc-a755-dc9633490dc3"
     }
   ]
 }
